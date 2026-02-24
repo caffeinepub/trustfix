@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { servicesData } from '@/data/services';
 
 interface SearchResult {
+  id: string;
   name: string;
   category: string;
+  description: string;
 }
 
 export function useSearchServices(query: string) {
@@ -29,8 +31,10 @@ export function useSearchServices(query: string) {
             service.description.toLowerCase().includes(lowerQuery)
           ) {
             results.push({
+              id: service.id,
               name: service.name,
               category,
+              description: service.description,
             });
           }
         });

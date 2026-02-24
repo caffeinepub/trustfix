@@ -2,109 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-all-8-service-category-card-images-in-servicecategorygrid-component-with-real-professional-service-photos-pest-control-technician-spraying-house-carpenter-working-on-furniture-professional-home-cleaning-in-action-electrician-fixing-switch-wiring-ac-technician-servicing-air-conditioning-unit-washing-machine-fridge-repair-technician-working-plumber-fixing-sink-pipe-painter-rolling-paint-on-wall-use-uploaded-images-if-available-otherwise-generate-or-select-high-quality-stock-photos-ensure-each-category-has-a-distinct-realistic-service-relevant-image-with-object-fit-cover-consistent-height-rounded-corners-and-no-cartoons-illustrations-grey-placeholders-or-broken-images",
-      "featureTitle": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos: pest control technician spraying house, carpenter working on furniture, professional home cleaning in action, electrician fixing switch/wiring, AC technician servicing air conditioning unit, washing machine/fridge repair technician working, plumber fixing sink/pipe, painter rolling paint on wall. Use uploaded images if available, otherwise generate or select high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with object-fit: cover, consistent height, rounded corners, and no cartoons, illustrations, grey placeholders, or broken images.",
+      "featureId": "feature-replace-all-service-card-images-across-all-48-services-with-real-professional-photos-showing-actual-technicians-performing-services-specifically-replace-ac-installation-blank-missing-image-ac-gas-refill-tap-repair-broken-image-furniture-repair-cartoon-workshop-illustration-door-window-fixing-cartoon-diagram-with-multiple-panels-and-all-other-services-with-cartoon-illustrations-blank-images-or-broken-placeholders-use-realistic-high-quality-photos-with-proper-cropping-object-fit-cover-rounded-corners-matching-card-design-do-not-use-cartoons-illustrations-icons-or-placeholders",
+      "featureTitle": "Replace ALL service card images across all 48+ services with real professional photos showing actual technicians performing services. Specifically replace: AC Installation (blank/missing image), AC Gas Refill, Tap Repair (broken image), Furniture Repair (cartoon workshop illustration), Door & Window Fixing (cartoon diagram with multiple panels), and all other services with cartoon illustrations, blank images, or broken placeholders. Use realistic, high-quality photos with proper cropping (object-fit: cover), rounded corners matching card design. Do NOT use cartoons, illustrations, icons, or placeholders.",
       "files": [
-        "frontend/src/components/ServiceCategoryGrid.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-32"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-change-global-background-theme-from-plain-white-to-premium-subtle-gradient-linear-gradient-180deg-f6f8fb-0-eef3f9-50-f1f5f9-100-applied-to-body-element-across-all-pages-home-services-pricing-booking-contact-reviews-keep-all-cards-white-with-soft-shadows-do-not-change-button-colors-navbar-colors-or-text-colors-maintain-professional-clean-service-app-style",
-      "featureTitle": "Change global background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) applied to body element across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all cards white with soft shadows. Do not change button colors, navbar colors, or text colors. Maintain professional clean service-app style.",
-      "files": [
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-33"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-fix-service-dropdown-mobile-scrolling-issue-on-booking-page-and-reviews-page-by-applying-max-height-260px-overflow-y-auto-webkit-overflow-scrolling-touch-overscroll-behavior-contain-to-the-dropdown-menu-element-set-z-index-9999-on-dropdown-to-ensure-it-appears-above-all-other-elements-prevent-page-body-scroll-when-dropdown-is-open-on-mobile-devices",
-      "featureTitle": "Fix service dropdown mobile scrolling issue on Booking page and Reviews page by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown to ensure it appears above all other elements. Prevent page body scroll when dropdown is open on mobile devices.",
-      "files": [
-        "frontend/src/pages/Booking.tsx",
-        "frontend/src/pages/Reviews.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-34"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-smooth-hover-lift-effect-to-all-service-cards-with-transform-translatey-6px-transition-0-3s-ease-and-enhanced-soft-shadow-on-hover-keep-existing-card-colors-and-text-styling-unchanged-apply-this-effect-to-service-cards-on-services-page-and-pricing-page",
-      "featureTitle": "Add smooth hover lift effect to all service cards with transform: translateY(-6px), transition: 0.3s ease, and enhanced soft shadow on hover. Keep existing card colors and text styling unchanged. Apply this effect to service cards on Services page and Pricing page.",
-      "files": [
-        "frontend/src/components/PricingCard.tsx",
-        "frontend/src/components/ServiceCard.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-35"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-verify-and-ensure-booking-form-on-booking-page-works-correctly-form-should-open-whatsapp-at-https-wa-me-918884447229-with-pre-filled-message-containing-name-phone-service-address-and-date-message-fields-verify-form-submission-stores-booking-data-in-motoko-backend-and-email-notifications-remain-active-do-not-change-form-layout-or-styling",
-      "featureTitle": "Verify and ensure booking form on Booking page works correctly: form should open WhatsApp at https://wa.me/918884447229 with pre-filled message containing Name, Phone, Service, Address, and Date/Message fields. Verify form submission stores booking data in Motoko backend and email notifications remain active. Do not change form layout or styling.",
-      "files": [
-        "frontend/src/pages/Booking.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-36"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-optimize-all-service-and-category-images-for-faster-loading-by-compressing-image-files-and-implementing-lazy-loading-for-service-card-images-on-services-page-and-pricing-page-ensure-images-maintain-quality-while-reducing-file-size",
-      "featureTitle": "Optimize all service and category images for faster loading by compressing image files and implementing lazy loading for service card images on Services page and Pricing page. Ensure images maintain quality while reducing file size.",
-      "files": [
-        "frontend/src/components/PricingCard.tsx",
         "frontend/src/components/ServiceCard.tsx",
-        "frontend/src/components/ServiceCategoryGrid.tsx"
+        "frontend/src/data/services.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -115,7 +17,68 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-37"
+        "REQ-38"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-fix-search-bar-functionality-in-the-navigation-menu-to-filter-services-in-real-time-as-the-user-types-display-filtered-results-in-a-dropdown-below-the-search-input-showing-matching-service-names-categories-and-descriptions-clicking-a-search-result-should-navigate-to-that-specific-service-on-the-services-page-or-scroll-to-the-service-card",
+      "featureTitle": "Fix search bar functionality in the navigation menu to filter services in real-time as the user types. Display filtered results in a dropdown below the search input showing matching service names, categories, and descriptions. Clicking a search result should navigate to that specific service on the Services page or scroll to the service card.",
+      "files": [
+        "frontend/src/components/Navbar.tsx",
+        "frontend/src/hooks/useSearchServices.ts",
+        "frontend/src/pages/Services.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-39"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-fix-mobile-dropdown-scrolling-issues-for-service-category-filter-buttons-and-all-service-dropdowns-throughout-the-application-apply-max-height-260px-overflow-y-auto-webkit-overflow-scrolling-touch-overscroll-behavior-contain-and-z-index-9999-to-enable-smooth-scrolling-within-dropdowns-prevent-page-body-scroll-when-a-dropdown-is-open-on-mobile-devices-ensure-dropdown-remains-open-while-scrolling-its-contents",
+      "featureTitle": "Fix mobile dropdown scrolling issues for service category filter buttons and all service dropdowns throughout the application. Apply max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999 to enable smooth scrolling within dropdowns. Prevent page body scroll when a dropdown is open on mobile devices. Ensure dropdown remains open while scrolling its contents.",
+      "files": [
+        "frontend/src/components/Navbar.tsx",
+        "frontend/src/pages/Booking.tsx",
+        "frontend/src/pages/Services.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-40"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-professional-service-photos-for-frontend-public-assets-generated-directory-covering-all-services-that-currently-have-missing-broken-or-cartoon-images-include-realistic-photos-of-ac-installation-technician-mounting-unit-ac-gas-refill-service-in-progress-tap-repair-plumber-fixing-faucet-furniture-repair-technician-working-on-damaged-furniture-door-and-window-fixing-carpenter-installing-door-frame-and-all-other-services-identified-from-the-uploaded-screenshots-as-needing-real-photos-integrate-these-generated-images-into-the-respective-service-cards",
+      "featureTitle": "Generate professional service photos for frontend/public/assets/generated/ directory covering all services that currently have missing, broken, or cartoon images. Include realistic photos of: AC installation technician mounting unit, AC gas refill service in progress, tap repair plumber fixing faucet, furniture repair technician working on damaged furniture, door and window fixing carpenter installing door frame, and all other services identified from the uploaded screenshots as needing real photos. Integrate these generated images into the respective service cards.",
+      "files": [
+        "frontend/src/data/services.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-41"
       ],
       "confidence": "high"
     }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from '@tanstack/react-router';
+import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import { Menu, X, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useSearchServices } from '@/hooks/useSearchServices';
@@ -10,6 +10,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
   const { searchResults, isSearching } = useSearchServices(searchQuery);
 
   useEffect(() => {
@@ -31,6 +32,12 @@ export default function Navbar() {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSearchResultClick = (serviceId: string, category: string) => {
+    setSearchQuery('');
+    setIsMobileMenuOpen(false);
+    navigate({ to: '/services', search: { serviceId, category } });
+  };
 
   return (
     <nav
@@ -83,24 +90,29 @@ export default function Navbar() {
 
             {/* Search Results Dropdown */}
             {searchQuery && searchResults.length > 0 && (
-              <div className="absolute top-full mt-2 w-full bg-white/95 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto">
-                {searchResults.map((result, index) => (
-                  <Link
-                    key={index}
-                    to="/services"
-                    search={{ category: result.category }}
-                    onClick={() => setSearchQuery('')}
-                    className="block px-4 py-3 hover:bg-trustfix-green/10 transition-colors border-b border-gray-100 last:border-0"
+              <div 
+                className="absolute top-full mt-2 w-full bg-white/95 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200 max-h-[260px] overflow-y-auto z-[9999]"
+                style={{
+                  WebkitOverflowScrolling: 'touch',
+                  overscrollBehavior: 'contain',
+                }}
+              >
+                {searchResults.map((result) => (
+                  <button
+                    key={result.id}
+                    onClick={() => handleSearchResultClick(result.id, result.category)}
+                    className="w-full text-left px-4 py-3 hover:bg-trustfix-green/10 transition-colors border-b border-gray-100 last:border-0"
                   >
                     <div className="font-medium text-gray-900">{result.name}</div>
                     <div className="text-sm text-gray-500">{result.category}</div>
-                  </Link>
+                    <div className="text-xs text-gray-400 mt-1 line-clamp-1">{result.description}</div>
+                  </button>
                 ))}
               </div>
             )}
 
             {searchQuery && searchResults.length === 0 && !isSearching && (
-              <div className="absolute top-full mt-2 w-full bg-white/95 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200 px-4 py-3">
+              <div className="absolute top-full mt-2 w-full bg-white/95 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200 px-4 py-3 z-[9999]">
                 <p className="text-sm text-gray-500">No services found</p>
               </div>
             )}
@@ -148,6 +160,28 @@ export default function Navbar() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 pr-4 py-2 w-full bg-white/80 backdrop-blur-sm border-gray-200"
                 />
+
+                {/* Mobile Search Results */}
+                {searchQuery && searchResults.length > 0 && (
+                  <div 
+                    className="mt-2 bg-white/95 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200 max-h-[260px] overflow-y-auto z-[9999]"
+                    style={{
+                      WebkitOverflowScrolling: 'touch',
+                      overscrollBehavior: 'contain',
+                    }}
+                  >
+                    {searchResults.map((result) => (
+                      <button
+                        key={result.id}
+                        onClick={() => handleSearchResultClick(result.id, result.category)}
+                        className="w-full text-left px-4 py-3 hover:bg-trustfix-green/10 transition-colors border-b border-gray-100 last:border-0"
+                      >
+                        <div className="font-medium text-gray-900">{result.name}</div>
+                        <div className="text-sm text-gray-500">{result.category}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

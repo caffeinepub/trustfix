@@ -1,139 +1,108 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix mobile dropdown scrolling and enhance UI with professional images and premium gradient background",
+  "title": "Replace all service images with professional photos and fix search functionality",
   "requirements": [
     {
-      "id": "REQ-32",
-      "summary": "Replace all 8 service category card images in ServiceCategoryGrid with real professional service photos from generated assets",
+      "id": "REQ-38",
+      "summary": "Replace ALL 48+ service card images with real professional photos of technicians performing services",
       "acceptanceCriteria": [
-        "All 8 category cards display realistic professional service photos",
-        "Images use object-fit: cover with consistent height",
-        "No cartoon illustrations, grey placeholders, or broken images",
-        "Each service category has a distinct unique image",
-        "Images load correctly on desktop and mobile"
+        "All 48+ individual service cards display real professional photos of technicians performing that specific service",
+        "No cartoon illustrations (like Furniture Repair workshop scene or Door & Window Fixing diagram panels) remain",
+        "No blank images, broken image placeholders, or grey placeholders remain",
+        "All images use object-fit: cover with consistent dimensions and rounded corners",
+        "Each service has a unique, realistic, service-relevant photo"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
+          "path": "frontend/src/data/services.ts",
           "operation": "modify",
-          "description": "Replace all 8 category card images with generated professional service photos. Update image paths to use: frontend/public/assets/generated/pest-control-service.dim_800x600.png (pest control), frontend/public/assets/generated/carpentry-service.dim_800x600.png (carpentry), frontend/public/assets/generated/cleaning-service.dim_800x600.png (cleaning), frontend/public/assets/generated/electrical-service.dim_800x600.png (electrical), frontend/public/assets/generated/ac-service.dim_800x600.png (AC services), frontend/public/assets/generated/appliance-repair-service.dim_800x600.png (appliances repair), frontend/public/assets/generated/plumbing-service.dim_800x600.png (plumbing), frontend/public/assets/generated/painting-service.dim_800x600.png (painting). Ensure object-fit: cover is applied to all category card images with consistent height and rounded corners. Remove any placeholder or fallback illustrations."
+          "description": "Update all service image paths to reference the generated professional photos in frontend/public/assets/generated/. Replace cartoon illustrations, blank images, and broken placeholders with realistic service photos. Map each service to its corresponding generated image file (e.g., AC Installation → frontend/public/assets/generated/ac-installation.dim_800x600.png, Tap Repair → frontend/public/assets/generated/tap-repair.dim_800x600.png, Furniture Repair → frontend/public/assets/generated/furniture-repair.dim_800x600.png, Door & Window Fixing → frontend/public/assets/generated/door-window-fixing.dim_800x600.png). Ensure all 48+ services reference real professional photos showing technicians performing the actual service work."
+        },
+        {
+          "path": "frontend/src/components/ServiceCard.tsx",
+          "operation": "modify",
+          "description": "Verify the image rendering uses object-fit: cover with proper rounded corners matching the card design. Ensure consistent aspect ratio and dimensions for all service images. Add fallback handling for missing images to prevent broken placeholders from appearing."
         }
       ]
     },
     {
-      "id": "REQ-33",
-      "summary": "Apply premium subtle gradient background across all pages while keeping cards white with soft shadows",
+      "id": "REQ-39",
+      "summary": "Fix search bar to filter services in real-time with dropdown results",
       "acceptanceCriteria": [
-        "Background gradient applied to body element across all pages",
-        "Cards remain white with soft shadows",
-        "Button colors and navbar colors unchanged",
-        "Text colors remain legible and unchanged",
-        "Professional clean appearance maintained"
+        "Search bar filters services in real-time as user types",
+        "Dropdown results appear below the search input showing matching services",
+        "Dropdown displays service name, category, and matches query against service description",
+        "Clicking a search result navigates to the Services page and highlights or scrolls to that service card",
+        "Search dropdown has proper z-index to appear above other elements"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/Navbar.tsx",
           "operation": "modify",
-          "description": "Add global body background gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) to body element. Ensure this gradient applies across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all existing card styling, button colors, navbar colors, and text colors unchanged. Maintain white cards with soft shadows for professional appearance."
+          "description": "Implement real-time search functionality by connecting the search input to the useSearchServices hook. Display filtered results in a dropdown positioned below the search input with proper z-index (z-50 or higher). Show matching service name, category badge, and description snippet in each dropdown item. Add click handlers to navigate to /services with the selected service ID as a URL parameter or hash. Implement keyboard navigation (arrow keys, Enter) for the dropdown. Ensure the dropdown closes when clicking outside or selecting a result."
+        },
+        {
+          "path": "frontend/src/hooks/useSearchServices.ts",
+          "operation": "modify",
+          "description": "Verify the hook correctly filters services by matching the query against service name, category, and description fields. Ensure debouncing is working properly to avoid excessive re-renders. Return an array of matching services with all necessary fields for display in the dropdown (name, category, description, id)."
+        },
+        {
+          "path": "frontend/src/pages/Services.tsx",
+          "operation": "modify",
+          "description": "Add functionality to handle incoming service ID from URL parameters or hash (e.g., /services?service=tap-repair or /services#tap-repair). When a service ID is present, scroll to and highlight the corresponding service card using scrollIntoView with smooth behavior. Apply a temporary highlight animation or border to the target service card to indicate it was selected from search."
         }
       ]
     },
     {
-      "id": "REQ-34",
-      "summary": "Fix service dropdown scrolling on mobile by applying proper overflow, max-height, touch scrolling, and z-index styling to dropdown menu",
+      "id": "REQ-40",
+      "summary": "Fix mobile dropdown scrolling with proper touch handling and body scroll prevention",
       "acceptanceCriteria": [
-        "Dropdown scrolls smoothly on mobile devices (Android and iOS)",
-        "Dropdown has max-height of 260px with vertical scrolling",
-        "Touch scrolling works smoothly with -webkit-overflow-scrolling",
-        "Dropdown appears above all other elements (z-index: 9999)",
-        "Page body does not scroll when dropdown is open",
-        "Dropdown does not close when attempting to scroll within it"
+        "Service category filter buttons (All, Pest Control, Carpentry, etc.) scroll smoothly on mobile",
+        "Service dropdowns on Booking page and Reviews page scroll smoothly without page body scrolling",
+        "Dropdowns have max-height: 260px with vertical scroll enabled",
+        "Touch-based scrolling is smooth with -webkit-overflow-scrolling: touch",
+        "Page content behind dropdown does not scroll when dropdown is open on mobile",
+        "Dropdown remains open and functional while scrolling its contents"
       ],
       "file_operations": [
+        {
+          "path": "frontend/src/pages/Services.tsx",
+          "operation": "modify",
+          "description": "Fix the horizontal scrolling category filter buttons (All, Pest Control, Carpentry, etc.) for mobile by ensuring the container has proper overflow-x: auto, -webkit-overflow-scrolling: touch, and overscroll-behavior-x: contain. The button container should scroll smoothly without affecting page body scroll on mobile devices."
+        },
         {
           "path": "frontend/src/pages/Booking.tsx",
           "operation": "modify",
-          "description": "Fix service dropdown scrolling by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown container. Implement body scroll lock when dropdown is open on mobile to prevent page scrolling while dropdown is active. Ensure dropdown remains open during scroll interactions."
+          "description": "Fix the service selection dropdown on mobile by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999. Add touch event handlers to prevent body scroll when the dropdown is open. Implement useEffect hook that adds/removes 'overflow-hidden' class to document.body when dropdown opens/closes on mobile. Ensure dropdown remains open while scrolling its contents using stopPropagation on scroll events."
         },
         {
           "path": "frontend/src/pages/Reviews.tsx",
           "operation": "modify",
-          "description": "Fix service dropdown scrolling by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the service filter dropdown menu element. Set z-index: 9999 on dropdown container. Implement body scroll lock when dropdown is open on mobile to prevent page scrolling. Ensure dropdown remains open during scroll interactions."
+          "description": "Fix the service filter dropdown on mobile by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999. Add touch event handlers to prevent body scroll when the dropdown is open. Implement useEffect hook that adds/removes 'overflow-hidden' class to document.body when dropdown opens/closes on mobile. Ensure dropdown remains open while scrolling its contents using stopPropagation on scroll events."
+        },
+        {
+          "path": "frontend/src/components/Navbar.tsx",
+          "operation": "modify",
+          "description": "Apply the same mobile dropdown fix to the search results dropdown if it hasn't been addressed in REQ-39. Ensure max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999. Prevent body scroll when dropdown is open on mobile devices."
         }
       ]
     },
     {
-      "id": "REQ-35",
-      "summary": "Add smooth hover lift effect to service cards on Services and Pricing pages",
+      "id": "REQ-41",
+      "summary": "Integrate generated professional service photos into service cards",
       "acceptanceCriteria": [
-        "Service cards lift by 6px on hover",
-        "Transition animation is smooth with 0.3s duration",
-        "Soft shadow appears on hover",
-        "Existing card colors remain unchanged",
-        "Effect applies to both Services and Pricing pages"
+        "Generated images are saved to frontend/public/assets/generated/ directory",
+        "Each generated image shows a realistic technician performing the specific service",
+        "Generated images have appropriate dimensions (minimum 600x400px) for service cards",
+        "Images are properly integrated into service card components replacing placeholders",
+        "All generated images maintain consistent quality and professional appearance"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ServiceCard.tsx",
+          "path": "frontend/src/data/services.ts",
           "operation": "modify",
-          "description": "Add hover lift effect to service cards: transform: translateY(-6px) with transition: all 0.3s ease on hover. Add enhanced soft shadow on hover state (e.g., shadow-lg or custom shadow). Keep all existing card colors, text styling, and layout unchanged. Ensure smooth animation with 0.3s ease timing."
-        },
-        {
-          "path": "frontend/src/components/PricingCard.tsx",
-          "operation": "modify",
-          "description": "Add hover lift effect to pricing cards: transform: translateY(-6px) with transition: all 0.3s ease on hover. Add enhanced soft shadow on hover state (e.g., shadow-lg or custom shadow). Keep all existing card colors, text styling, and layout unchanged. Ensure smooth animation with 0.3s ease timing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-36",
-      "summary": "Verify booking form opens WhatsApp with pre-filled message and ensure backend booking storage and email notifications remain functional",
-      "acceptanceCriteria": [
-        "Form opens WhatsApp link with pre-filled booking details",
-        "WhatsApp message includes Name, Phone, Service, Address, Date/Message",
-        "Booking submission stores data in Motoko backend",
-        "Email notifications remain functional",
-        "Form layout and styling unchanged"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useBookingSubmission.ts",
-          "operation": "modify",
-          "description": "Verify and ensure the booking submission hook correctly constructs WhatsApp URL (https://wa.me/918884447229) with pre-filled message containing all booking details: Name, Phone, Service, Address, and Date/Message fields. Ensure backend actor addBooking method is called with all required parameters. Verify form data is properly passed and stored. Do not change form layout or styling logic."
-        },
-        {
-          "path": "frontend/src/pages/Booking.tsx",
-          "operation": "modify",
-          "description": "Verify booking form submission flow: ensure form captures Name, Phone, Email, Service, Address, and Message fields correctly, calls useBookingSubmission hook, opens WhatsApp link with pre-filled message, and displays success popup. Do not modify form layout, styling, or field structure. Ensure all form validations remain intact."
-        }
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "summary": "Optimize service and category images for faster loading with lazy loading implementation",
-      "acceptanceCriteria": [
-        "All service images are optimized and compressed",
-        "Lazy loading implemented for service card images",
-        "Page load time improves on mobile and desktop",
-        "Image quality remains acceptable",
-        "Images load progressively as user scrolls"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/ServiceCard.tsx",
-          "operation": "modify",
-          "description": "Implement lazy loading for service card images using loading=\"lazy\" attribute on img elements. Ensure images are optimized and load progressively as user scrolls. Maintain image quality while improving page load performance on mobile and desktop."
-        },
-        {
-          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
-          "operation": "modify",
-          "description": "Implement lazy loading for category card images using loading=\"lazy\" attribute on img elements. Ensure category images load progressively as user scrolls down the page. Optimize image loading to improve initial page render time on Services page."
-        },
-        {
-          "path": "frontend/src/components/PricingCard.tsx",
-          "operation": "modify",
-          "description": "Implement lazy loading for pricing card images (if present) using loading=\"lazy\" attribute. Ensure images load efficiently as user scrolls through pricing options on the Pricing page."
+          "description": "Wire the 16 generated professional service photos from frontend/public/assets/generated/ into the services data structure. Map the following generated images to their respective services: frontend/public/assets/generated/ac-installation.dim_800x600.png for AC Installation, frontend/public/assets/generated/ac-gas-refill.dim_800x600.png for AC Gas Refill, frontend/public/assets/generated/tap-repair.dim_800x600.png for Tap Repair, frontend/public/assets/generated/furniture-repair.dim_800x600.png for Furniture Repair, frontend/public/assets/generated/door-window-fixing.dim_800x600.png for Door & Window Fixing, frontend/public/assets/generated/washing-machine-repair.dim_800x600.png for Washing Machine Repair, frontend/public/assets/generated/refrigerator-repair.dim_800x600.png for Refrigerator Repair, frontend/public/assets/generated/microwave-repair.dim_800x600.png for Microwave Repair, frontend/public/assets/generated/water-purifier-service.dim_800x600.png for Water Purifier Service, frontend/public/assets/generated/pipe-leakage.dim_800x600.png for Pipe Leakage, frontend/public/assets/generated/bathroom-plumbing.dim_800x600.png for Bathroom Plumbing, frontend/public/assets/generated/motor-installation.dim_800x600.png for Motor Installation, frontend/public/assets/generated/interior-painting.dim_800x600.png for Interior Painting, frontend/public/assets/generated/exterior-painting.dim_800x600.png for Exterior Painting, frontend/public/assets/generated/wall-putty.dim_800x600.png for Wall Putty, frontend/public/assets/generated/texture-painting.dim_800x600.png for Texture Painting. For any remaining services not covered by the 16 generated images, use existing realistic photos from the assets/generated/ directory as appropriate (e.g., pest-control-tech.dim_800x600.png, carpenter-working.dim_800x600.png, electrician-wiring.dim_800x600.png, plumber-pipes.dim_800x600.png, home-cleaning.dim_800x600.png). Ensure every service references a real professional photo showing a technician performing that specific service."
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
+  "projectStateVersion": 19,
   "summary": "TrustFix Home Services web application - React + TypeScript application for Internet Computer with 6 pages (Home, Services, Pricing, Booking, Contact, Reviews), featuring professional shiny white glassmorphism design, customer review system with approval workflow, booking form with WhatsApp integration and backend storage, search bar for service filtering, and complete branding with uploaded logo and banner images",
   "architectural_notes": [
     "React + TypeScript frontend with React Router for 6-page navigation",
@@ -16,7 +16,7 @@
   ],
   "known_issues": [],
   "isFixRequest": true,
-  "imageRequirements": "## Required Images\n- Professional photo of pest control technician spraying chemicals at house exterior (pest-control-service.dim_800x600.png)\n- Professional photo of carpenter working on wood furniture with tools (carpentry-service.dim_800x600.png)\n- Professional photo of home cleaning service in action with cleaner working (cleaning-service.dim_800x600.png)\n- Professional photo of electrician fixing electrical switch or wiring (electrical-service.dim_800x600.png)\n- Professional photo of AC technician servicing air conditioning unit (ac-service.dim_800x600.png)\n- Professional photo of washing machine or refrigerator repair technician working (appliance-repair-service.dim_800x600.png)\n- Professional photo of plumber fixing sink pipe or tap (plumbing-service.dim_800x600.png)\n- Professional photo of painter rolling paint on wall (painting-service.dim_800x600.png)",
+  "imageRequirements": "## Required Images\n- AC installation technician mounting air conditioning unit on wall (ac-installation.dim_800x600.png)\n- AC gas refill service technician checking refrigerant levels (ac-gas-refill.dim_800x600.png)\n- Plumber repairing leaking tap or faucet with wrench (tap-repair.dim_800x600.png)\n- Furniture repair technician fixing damaged wood furniture with tools (furniture-repair.dim_800x600.png)\n- Carpenter installing door frame and aligning hinges (door-window-fixing.dim_800x600.png)\n- Washing machine repair technician opening and servicing machine (washing-machine-repair.dim_800x600.png)\n- Refrigerator repair technician inspecting cooling system (refrigerator-repair.dim_800x600.png)\n- Microwave repair technician testing and servicing appliance (microwave-repair.dim_800x600.png)\n- Water purifier service technician replacing filter cartridge (water-purifier-service.dim_800x600.png)\n- Plumber fixing pipe leakage with tools and sealant (pipe-leakage.dim_800x600.png)\n- Plumber installing or repairing bathroom fixtures (bathroom-plumbing.dim_800x600.png)\n- Electrician installing water motor or pump system (motor-installation.dim_800x600.png)\n- Interior painting technician rolling paint on interior wall (interior-painting.dim_800x600.png)\n- Exterior painting worker painting house exterior walls (exterior-painting.dim_800x600.png)\n- Wall putty application worker smoothing wall surface (wall-putty.dim_800x600.png)\n- Texture painting technician applying decorative wall texture (texture-painting.dim_800x600.png)",
   "existing_features": [
     {
       "id": "feature-create-a-sticky-navbar-with-trustfix-logo-file-00000000d2747206831923d1f7e53476-png-navigation-menu-home-services-pricing-booking-contact-reviews-and-real-time-search-bar-that-filters-services-by-name-and-category-with-dropdown-results",
@@ -297,6 +297,38 @@
         "REQ-37"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-all-service-card-images-across-all-48-services-with-real-professional-photos-showing-actual-technicians-performing-services-specifically-replace-ac-installation-blank-missing-image-ac-gas-refill-tap-repair-broken-image-furniture-repair-cartoon-workshop-illustration-door-window-fixing-cartoon-diagram-with-multiple-panels-and-all-other-services-with-cartoon-illustrations-blank-images-or-broken-placeholders-use-realistic-high-quality-photos-with-proper-cropping-object-fit-cover-rounded-corners-matching-card-design-do-not-use-cartoons-illustrations-icons-or-placeholders",
+      "title": "Replace ALL service card images across all 48+ services with real professional photos showing actual technicians performing services. Specifically replace: AC Installation (blank/missing image), AC Gas Refill, Tap Repair (broken image), Furniture Repair (cartoon workshop illustration), Door & Window Fixing (cartoon diagram with multiple panels), and all other services with cartoon illustrations, blank images, or broken placeholders. Use realistic, high-quality photos with proper cropping (object-fit: cover), rounded corners matching card design. Do NOT use cartoons, illustrations, icons, or placeholders.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-search-bar-functionality-in-the-navigation-menu-to-filter-services-in-real-time-as-the-user-types-display-filtered-results-in-a-dropdown-below-the-search-input-showing-matching-service-names-categories-and-descriptions-clicking-a-search-result-should-navigate-to-that-specific-service-on-the-services-page-or-scroll-to-the-service-card",
+      "title": "Fix search bar functionality in the navigation menu to filter services in real-time as the user types. Display filtered results in a dropdown below the search input showing matching service names, categories, and descriptions. Clicking a search result should navigate to that specific service on the Services page or scroll to the service card.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-mobile-dropdown-scrolling-issues-for-service-category-filter-buttons-and-all-service-dropdowns-throughout-the-application-apply-max-height-260px-overflow-y-auto-webkit-overflow-scrolling-touch-overscroll-behavior-contain-and-z-index-9999-to-enable-smooth-scrolling-within-dropdowns-prevent-page-body-scroll-when-a-dropdown-is-open-on-mobile-devices-ensure-dropdown-remains-open-while-scrolling-its-contents",
+      "title": "Fix mobile dropdown scrolling issues for service category filter buttons and all service dropdowns throughout the application. Apply max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999 to enable smooth scrolling within dropdowns. Prevent page body scroll when a dropdown is open on mobile devices. Ensure dropdown remains open while scrolling its contents.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-professional-service-photos-for-frontend-public-assets-generated-directory-covering-all-services-that-currently-have-missing-broken-or-cartoon-images-include-realistic-photos-of-ac-installation-technician-mounting-unit-ac-gas-refill-service-in-progress-tap-repair-plumber-fixing-faucet-furniture-repair-technician-working-on-damaged-furniture-door-and-window-fixing-carpenter-installing-door-frame-and-all-other-services-identified-from-the-uploaded-screenshots-as-needing-real-photos-integrate-these-generated-images-into-the-respective-service-cards",
+      "title": "Generate professional service photos for frontend/public/assets/generated/ directory covering all services that currently have missing, broken, or cartoon images. Include realistic photos of: AC installation technician mounting unit, AC gas refill service in progress, tap repair plumber fixing faucet, furniture repair technician working on damaged furniture, door and window fixing carpenter installing door frame, and all other services identified from the uploaded screenshots as needing real photos. Integrate these generated images into the respective service cards.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -533,6 +565,30 @@
       "id": "AR-43",
       "summary": "Optimize images for faster loading and implement lazy loading for service images",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Replace ALL subcategory images (48+ service cards) with real professional service photos showing actual technicians performing services - no cartoons, illustrations, icons, or placeholders",
+      "reqIds": [
+        "AR-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Fix search bar to filter services in real-time while typing, show dropdown results below search input, and navigate to selected service when clicked",
+      "reqIds": [
+        "AR-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Fix mobile dropdown scrolling with max-height: 260px, smooth touch scrolling, z-index: 9999, prevent page body scroll, and keep dropdown open while scrolling",
+      "reqIds": [
+        "AR-40"
+      ],
       "status": "pending"
     }
   ],

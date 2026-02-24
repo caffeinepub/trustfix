@@ -1,170 +1,132 @@
 {
   "kind": "build_request",
-  "title": "Fix mobile dropdown scrolling and enhance UI with professional images and premium gradient background",
-  "projectName": "TrustFix Services",
+  "title": "Replace all service images with professional photos and fix search functionality",
+  "projectName": "TrustFix Home Services",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-32",
-      "text": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos: pest control technician spraying house, carpenter working on furniture, professional home cleaning in action, electrician fixing switch/wiring, AC technician servicing air conditioning unit, washing machine/fridge repair technician working, plumber fixing sink/pipe, painter rolling paint on wall. Use uploaded images if available, otherwise generate or select high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with object-fit: cover, consistent height, rounded corners, and no cartoons, illustrations, grey placeholders, or broken images.",
+      "id": "REQ-38",
+      "text": "Replace ALL service card images across all 48+ services with real professional photos showing actual technicians performing services. Specifically replace: AC Installation (blank/missing image), AC Gas Refill, Tap Repair (broken image), Furniture Repair (cartoon workshop illustration), Door & Window Fixing (cartoon diagram with multiple panels), and all other services with cartoon illustrations, blank images, or broken placeholders. Use realistic, high-quality photos with proper cropping (object-fit: cover), rounded corners matching card design. Do NOT use cartoons, illustrations, icons, or placeholders.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-build-request"
+          "msg-user-final-build"
         ],
         "quotes": [
-          "Replace ALL subcategory images with real professional photos (NO cartoons, NO illustrations)",
-          "Use different images for each service"
+          "All sub categories images replace add new",
+          "Don't use any cartoon or animated images please. Add real one like service photos"
         ]
       },
       "acceptanceCriteria": [
-        "All 8 category cards display realistic professional service photos",
-        "Images use object-fit: cover with consistent height",
-        "No cartoon illustrations, grey placeholders, or broken images",
-        "Each service category has a distinct unique image",
-        "Images load correctly on desktop and mobile"
+        "All 48+ individual service cards display real professional photos of technicians performing that specific service",
+        "No cartoon illustrations (like Furniture Repair workshop scene or Door & Window Fixing diagram panels) remain",
+        "No blank images, broken image placeholders, or grey placeholders remain",
+        "All images use object-fit: cover with consistent dimensions and rounded corners",
+        "Each service has a unique, realistic, service-relevant photo"
       ]
     },
     {
-      "id": "REQ-33",
-      "text": "Change global background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) applied to body element across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all cards white with soft shadows. Do not change button colors, navbar colors, or text colors. Maintain professional clean service-app style.",
+      "id": "REQ-39",
+      "text": "Fix search bar functionality in the navigation menu to filter services in real-time as the user types. Display filtered results in a dropdown below the search input showing matching service names, categories, and descriptions. Clicking a search result should navigate to that specific service on the Services page or scroll to the service card.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-build-request"
+          "msg-user-final-build"
         ],
         "quotes": [
-          "Use subtle premium gradient: body background: linear-gradient(180deg,#f6f8fb,#eef3f9)",
-          "Cards remain white with soft shadow",
-          "Keep professional clean service-app style"
+          "Search services - Not filtering services when you type",
+          "Not showing dropdown results"
         ]
       },
       "acceptanceCriteria": [
-        "Background gradient applied to body element across all pages",
-        "Cards remain white with soft shadows",
-        "Button colors and navbar colors unchanged",
-        "Text colors remain legible and unchanged",
-        "Professional clean appearance maintained"
+        "Search bar filters services in real-time as user types",
+        "Dropdown results appear below the search input showing matching services",
+        "Dropdown displays service name, category, and matches query against service description",
+        "Clicking a search result navigates to the Services page and highlights or scrolls to that service card",
+        "Search dropdown has proper z-index to appear above other elements"
       ]
     },
     {
-      "id": "REQ-34",
-      "text": "Fix service dropdown mobile scrolling issue on Booking page and Reviews page by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown to ensure it appears above all other elements. Prevent page body scroll when dropdown is open on mobile devices.",
+      "id": "REQ-40",
+      "text": "Fix mobile dropdown scrolling issues for service category filter buttons and all service dropdowns throughout the application. Apply max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999 to enable smooth scrolling within dropdowns. Prevent page body scroll when a dropdown is open on mobile devices. Ensure dropdown remains open while scrolling its contents.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-build-request",
-          "msg-user-screenshot"
+          "msg-user-final-build"
         ],
         "quotes": [
-          "Service dropdown must scroll on mobile",
-          "Add: max-height:260px; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain",
-          "Dropdown z-index:9999",
-          "Prevent page scroll while dropdown open"
+          "Having scrolling issues on mobile",
+          "Service dropdown must scroll smoothly on mobile. Page behind should NOT scroll. Dropdown should stay open while scrolling."
         ]
       },
       "acceptanceCriteria": [
-        "Dropdown scrolls smoothly on mobile devices (Android and iOS)",
-        "Dropdown has max-height of 260px with vertical scrolling",
-        "Touch scrolling works smoothly with -webkit-overflow-scrolling",
-        "Dropdown appears above all other elements (z-index: 9999)",
-        "Page body does not scroll when dropdown is open",
-        "Dropdown does not close when attempting to scroll within it"
+        "Service category filter buttons (All, Pest Control, Carpentry, etc.) scroll smoothly on mobile",
+        "Service dropdowns on Booking page and Reviews page scroll smoothly without page body scrolling",
+        "Dropdowns have max-height: 260px with vertical scroll enabled",
+        "Touch-based scrolling is smooth with -webkit-overflow-scrolling: touch",
+        "Page content behind dropdown does not scroll when dropdown is open on mobile",
+        "Dropdown remains open and functional while scrolling its contents"
       ]
     },
     {
-      "id": "REQ-35",
-      "text": "Add smooth hover lift effect to all service cards with transform: translateY(-6px), transition: 0.3s ease, and enhanced soft shadow on hover. Keep existing card colors and text styling unchanged. Apply this effect to service cards on Services page and Pricing page.",
+      "id": "REQ-41",
+      "text": "Generate professional service photos for frontend/public/assets/generated/ directory covering all services that currently have missing, broken, or cartoon images. Include realistic photos of: AC installation technician mounting unit, AC gas refill service in progress, tap repair plumber fixing faucet, furniture repair technician working on damaged furniture, door and window fixing carpenter installing door frame, and all other services identified from the uploaded screenshots as needing real photos. Integrate these generated images into the respective service cards.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-build-request"
+          "msg-user-final-build"
         ],
         "quotes": [
-          "Add smooth hover lift effect: transform: translateY(-6px); transition: .3s ease",
-          "Add soft shadow",
-          "Keep existing colors"
+          "Add real one like service photos",
+          "Every service card MUST show a real photo"
         ]
       },
       "acceptanceCriteria": [
-        "Service cards lift by 6px on hover",
-        "Transition animation is smooth with 0.3s duration",
-        "Soft shadow appears on hover",
-        "Existing card colors remain unchanged",
-        "Effect applies to both Services and Pricing pages"
-      ]
-    },
-    {
-      "id": "REQ-36",
-      "text": "Verify and ensure booking form on Booking page works correctly: form should open WhatsApp at https://wa.me/918884447229 with pre-filled message containing Name, Phone, Service, Address, and Date/Message fields. Verify form submission stores booking data in Motoko backend and email notifications remain active. Do not change form layout or styling.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-user-build-request"
-        ],
-        "quotes": [
-          "Ensure booking form works properly",
-          "Ensure form sends WhatsApp message with: Name Phone Service Address Date",
-          "Keep email notification active"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Form opens WhatsApp link with pre-filled booking details",
-        "WhatsApp message includes Name, Phone, Service, Address, Date/Message",
-        "Booking submission stores data in Motoko backend",
-        "Email notifications remain functional",
-        "Form layout and styling unchanged"
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "text": "Optimize all service and category images for faster loading by compressing image files and implementing lazy loading for service card images on Services page and Pricing page. Ensure images maintain quality while reducing file size.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-user-build-request"
-        ],
-        "quotes": [
-          "Optimize images for faster load",
-          "Lazy load service images"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All service images are optimized and compressed",
-        "Lazy loading implemented for service card images",
-        "Page load time improves on mobile and desktop",
-        "Image quality remains acceptable",
-        "Images load progressively as user scrolls"
+        "Generated images are saved to frontend/public/assets/generated/ directory",
+        "Each generated image shows a realistic technician performing the specific service",
+        "Generated images have appropriate dimensions (minimum 600x400px) for service cards",
+        "Images are properly integrated into service card components replacing placeholders",
+        "All generated images maintain consistent quality and professional appearance"
       ]
     }
   ],
   "constraints": [
-    "Do NOT change layout, structure, or spacing of existing components",
-    "Do NOT modify TrustFix logo or hero banner image",
-    "Do NOT rebuild site structure or add new pages",
-    "Do NOT add admin dashboard or admin panel",
-    "Do NOT change navbar colors, button colors, or core branding colors",
-    "Keep all existing features and functionality intact",
-    "Maintain single-actor backend architecture"
+    "Do NOT modify TrustFix logo (file_00000000d2747206831923d1f7e53476.png)",
+    "Do NOT modify banner image (IMG-20260218-WA0000.jpg)",
+    "Do NOT change admin panel functionality or layout",
+    "Do NOT modify existing layout structure, spacing, or card designs",
+    "Keep all existing styling, button colors, navbar colors, and text colors unchanged",
+    "Do NOT change WhatsApp integration URL (https://wa.me/918884447229)",
+    "Do NOT modify contact details (Phone: 8884447229, Email: htrustfix@gmail.com)",
+    "Only fix the three specific issues: service images, search functionality, and mobile dropdown scrolling"
   ],
   "nonGoals": [
-    "Rebuilding the entire site",
-    "Adding admin dashboard or management panel",
-    "Changing site structure or page routing",
-    "Modifying logo or hero banner",
-    "Adding new pages or features beyond the fixes specified",
-    "Changing core brand colors or button styling beyond hover effects"
+    "Changing the overall layout or page structure",
+    "Modifying the glassmorphism design system",
+    "Altering the booking form structure or WhatsApp integration logic",
+    "Changing navigation menu structure or footer content",
+    "Modifying the reviews system or approval workflow",
+    "Adding new pages or removing existing pages",
+    "Changing pricing information or service descriptions"
   ],
   "imageRequirements": {
     "required": [
-      "Professional photo of pest control technician spraying chemicals at house exterior (pest-control-service.dim_800x600.png)",
-      "Professional photo of carpenter working on wood furniture with tools (carpentry-service.dim_800x600.png)",
-      "Professional photo of home cleaning service in action with cleaner working (cleaning-service.dim_800x600.png)",
-      "Professional photo of electrician fixing electrical switch or wiring (electrical-service.dim_800x600.png)",
-      "Professional photo of AC technician servicing air conditioning unit (ac-service.dim_800x600.png)",
-      "Professional photo of washing machine or refrigerator repair technician working (appliance-repair-service.dim_800x600.png)",
-      "Professional photo of plumber fixing sink pipe or tap (plumbing-service.dim_800x600.png)",
-      "Professional photo of painter rolling paint on wall (painting-service.dim_800x600.png)"
+      "AC installation technician mounting air conditioning unit on wall (ac-installation.dim_800x600.png)",
+      "AC gas refill service technician checking refrigerant levels (ac-gas-refill.dim_800x600.png)",
+      "Plumber repairing leaking tap or faucet with wrench (tap-repair.dim_800x600.png)",
+      "Furniture repair technician fixing damaged wood furniture with tools (furniture-repair.dim_800x600.png)",
+      "Carpenter installing door frame and aligning hinges (door-window-fixing.dim_800x600.png)",
+      "Washing machine repair technician opening and servicing machine (washing-machine-repair.dim_800x600.png)",
+      "Refrigerator repair technician inspecting cooling system (refrigerator-repair.dim_800x600.png)",
+      "Microwave repair technician testing and servicing appliance (microwave-repair.dim_800x600.png)",
+      "Water purifier service technician replacing filter cartridge (water-purifier-service.dim_800x600.png)",
+      "Plumber fixing pipe leakage with tools and sealant (pipe-leakage.dim_800x600.png)",
+      "Plumber installing or repairing bathroom fixtures (bathroom-plumbing.dim_800x600.png)",
+      "Electrician installing water motor or pump system (motor-installation.dim_800x600.png)",
+      "Interior painting technician rolling paint on interior wall (interior-painting.dim_800x600.png)",
+      "Exterior painting worker painting house exterior walls (exterior-painting.dim_800x600.png)",
+      "Wall putty application worker smoothing wall surface (wall-putty.dim_800x600.png)",
+      "Texture painting technician applying decorative wall texture (texture-painting.dim_800x600.png)"
     ],
     "edits": []
   }

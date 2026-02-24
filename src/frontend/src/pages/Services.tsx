@@ -1,18 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearch } from '@tanstack/react-router';
 import ServiceCard from '@/components/ServiceCard';
 import { servicesData } from '@/data/services';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Services() {
-  const search = useSearch({ strict: false }) as { category?: string };
+  const search = useSearch({ strict: false }) as { category?: string; serviceId?: string };
   const [activeCategory, setActiveCategory] = useState<string>('All');
+  const serviceRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
     if (search.category) {
       setActiveCategory(search.category);
     }
   }, [search.category]);
+
+  useEffect(() => {
+    if (search.serviceId && search.category) {
+      // Wait for the category to be set and DOM to update
+      const timer = setTimeout(() => {
+        const serviceId = search.serviceId;
+        if (serviceId) {
+          const serviceElement = serviceRefs.current[serviceId];
+          if (serviceElement) {
+            serviceElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Add highlight animation
+            serviceElement.classList.add('ring-4', 'ring-trustfix-orange', 'ring-offset-4');
+            setTimeout(() => {
+              serviceElement.classList.remove('ring-4', 'ring-trustfix-orange', 'ring-offset-4');
+            }, 2000);
+          }
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [search.serviceId, search.category, activeCategory]);
 
   const categories = ['All', ...Object.keys(servicesData)];
 
@@ -34,22 +56,32 @@ export default function Services() {
         </div>
 
         <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
-          <TabsList className="flex flex-wrap justify-center gap-2 mb-12 glass-panel p-2 rounded-lg shadow-glass">
-            {categories.map((category) => (
-              <TabsTrigger
-                key={category}
-                value={category}
-                className="data-[state=active]:bg-trustfix-green data-[state=active]:text-white"
-              >
-                {category}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="mb-12 overflow-x-auto -webkit-overflow-scrolling-touch overscroll-behavior-x-contain">
+            <TabsList className="flex flex-nowrap justify-start md:justify-center gap-2 glass-panel p-2 rounded-lg shadow-glass min-w-max">
+              {categories.map((category) => (
+                <TabsTrigger
+                  key={category}
+                  value={category}
+                  className="data-[state=active]:bg-trustfix-green data-[state=active]:text-white whitespace-nowrap"
+                >
+                  {category}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
           <TabsContent value={activeCategory}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map((service, index) => (
-                <ServiceCard key={index} service={service} />
+                <div
+                  key={service.id}
+                  ref={(el) => {
+                    serviceRefs.current[service.id] = el;
+                  }}
+                  className="transition-all duration-300"
+                >
+                  <ServiceCard service={service} />
+                </div>
               ))}
             </div>
           </TabsContent>

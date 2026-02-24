@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 
 interface ServiceCardProps {
   service: {
+    id: string;
     name: string;
     description: string;
     price: string;
@@ -21,6 +22,10 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           src={service.image}
           alt={service.name}
           loading="lazy"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/assets/generated/pest-control-tech.dim_800x600.png';
+          }}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <Badge className="absolute top-4 left-4 bg-trustfix-green text-white">

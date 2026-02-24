@@ -1,88 +1,68 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-24T02:02:09.286Z",
+  "generatedAt": "2026-02-24T02:32:49.771Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 6,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-32",
-        "summary": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos: pest control technician spraying house, carpenter working on furniture, professional home cleaning in action, electrician fixing switch/wiring, AC technician servicing air conditioning unit, washing machine/fridge repair technician working, plumber fixing sink/pipe, painter rolling paint on wall. Use uploaded images if available, otherwise generate or select high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with object-fit: cover, consistent height, rounded corners, and no cartoons, illustrations, grey placeholders, or broken images.",
+        "id": "REQ-38",
+        "summary": "Replace ALL service card images across all 48+ services with real professional photos showing actual technicians performing services. Specifically replace: AC Installation (blank/missing image), AC Gas Refill, Tap Repair (broken image), Furniture Repair (cartoon workshop illustration), Door & Window Fixing (cartoon diagram with multiple panels), and all other services with cartoon illustrations, blank images, or broken placeholders. Use realistic, high-quality photos with proper cropping (object-fit: cover), rounded corners matching card design. Do NOT use cartoons, illustrations, icons, or placeholders.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ServiceCategoryGrid.tsx"
+          "frontend/src/data/services.ts",
+          "frontend/src/components/ServiceCard.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/ServiceCategoryGrid.tsx"
+          "frontend/src/data/services.ts",
+          "frontend/src/components/ServiceCard.tsx"
         ]
       },
       {
-        "id": "REQ-33",
-        "summary": "Change global background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) applied to body element across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all cards white with soft shadows. Do not change button colors, navbar colors, or text colors. Maintain professional clean service-app style.",
+        "id": "REQ-39",
+        "summary": "Fix search bar functionality in the navigation menu to filter services in real-time as the user types. Display filtered results in a dropdown below the search input showing matching service names, categories, and descriptions. Clicking a search result should navigate to that specific service on the Services page or scroll to the service card.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css"
+          "frontend/src/components/Navbar.tsx",
+          "frontend/src/hooks/useSearchServices.ts",
+          "frontend/src/pages/Services.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/index.css"
+          "frontend/src/components/Navbar.tsx",
+          "frontend/src/hooks/useSearchServices.ts",
+          "frontend/src/pages/Services.tsx"
         ]
       },
       {
-        "id": "REQ-34",
-        "summary": "Fix service dropdown mobile scrolling issue on Booking page and Reviews page by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown to ensure it appears above all other elements. Prevent page body scroll when dropdown is open on mobile devices.",
+        "id": "REQ-40",
+        "summary": "Fix mobile dropdown scrolling issues for service category filter buttons and all service dropdowns throughout the application. Apply max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, and z-index: 9999 to enable smooth scrolling within dropdowns. Prevent page body scroll when a dropdown is open on mobile devices. Ensure dropdown remains open while scrolling its contents.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/pages/Services.tsx",
           "frontend/src/pages/Booking.tsx",
-          "frontend/src/pages/Reviews.tsx"
+          "frontend/src/pages/Reviews.tsx",
+          "frontend/src/components/Navbar.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/pages/Services.tsx",
           "frontend/src/pages/Booking.tsx",
-          "frontend/src/pages/Reviews.tsx"
+          "frontend/src/components/Navbar.tsx"
         ]
       },
       {
-        "id": "REQ-35",
-        "summary": "Add smooth hover lift effect to all service cards with transform: translateY(-6px), transition: 0.3s ease, and enhanced soft shadow on hover. Keep existing card colors and text styling unchanged. Apply this effect to service cards on Services page and Pricing page.",
+        "id": "REQ-41",
+        "summary": "Generate professional service photos for frontend/public/assets/generated/ directory covering all services that currently have missing, broken, or cartoon images. Include realistic photos of: AC installation technician mounting unit, AC gas refill service in progress, tap repair plumber fixing faucet, furniture repair technician working on damaged furniture, door and window fixing carpenter installing door frame, and all other services identified from the uploaded screenshots as needing real photos. Integrate these generated images into the respective service cards.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ServiceCard.tsx",
-          "frontend/src/components/PricingCard.tsx"
+          "frontend/src/data/services.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/ServiceCard.tsx",
-          "frontend/src/components/PricingCard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-36",
-        "summary": "Verify and ensure booking form on Booking page works correctly: form should open WhatsApp at https://wa.me/918884447229 with pre-filled message containing Name, Phone, Service, Address, and Date/Message fields. Verify form submission stores booking data in Motoko backend and email notifications remain active. Do not change form layout or styling.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useBookingSubmission.ts",
-          "frontend/src/pages/Booking.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Booking.tsx"
-        ]
-      },
-      {
-        "id": "REQ-37",
-        "summary": "Optimize all service and category images for faster loading by compressing image files and implementing lazy loading for service card images on Services page and Pricing page. Ensure images maintain quality while reducing file size.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/ServiceCard.tsx",
-          "frontend/src/components/ServiceCategoryGrid.tsx",
-          "frontend/src/components/PricingCard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/ServiceCard.tsx",
-          "frontend/src/components/ServiceCategoryGrid.tsx",
-          "frontend/src/components/PricingCard.tsx"
+          "frontend/src/data/services.ts"
         ]
       }
     ]
@@ -92,20 +72,27 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/ac-service.dim_800x600.png",
-    "frontend/public/assets/generated/appliance-repair-service.dim_800x600.png",
-    "frontend/public/assets/generated/carpentry-service.dim_800x600.png",
-    "frontend/public/assets/generated/cleaning-service.dim_800x600.png",
-    "frontend/public/assets/generated/electrical-service.dim_800x600.png",
-    "frontend/public/assets/generated/painting-service.dim_800x600.png",
-    "frontend/public/assets/generated/pest-control-service.dim_800x600.png",
-    "frontend/public/assets/generated/plumbing-service.dim_800x600.png",
-    "frontend/src/components/PricingCard.tsx",
+    "frontend/public/assets/generated/ac-gas-refill.dim_800x600.png",
+    "frontend/public/assets/generated/ac-installation.dim_800x600.png",
+    "frontend/public/assets/generated/bathroom-plumbing.dim_800x600.png",
+    "frontend/public/assets/generated/door-window-fixing.dim_800x600.png",
+    "frontend/public/assets/generated/exterior-painting.dim_800x600.png",
+    "frontend/public/assets/generated/furniture-repair.dim_800x600.png",
+    "frontend/public/assets/generated/interior-painting.dim_800x600.png",
+    "frontend/public/assets/generated/microwave-repair.dim_800x600.png",
+    "frontend/public/assets/generated/motor-installation.dim_800x600.png",
+    "frontend/public/assets/generated/pipe-leakage.dim_800x600.png",
+    "frontend/public/assets/generated/refrigerator-repair.dim_800x600.png",
+    "frontend/public/assets/generated/tap-repair.dim_800x600.png",
+    "frontend/public/assets/generated/wall-putty.dim_800x600.png",
+    "frontend/public/assets/generated/washing-machine-repair.dim_800x600.png",
+    "frontend/public/assets/generated/water-purifier-service.dim_800x600.png",
+    "frontend/src/components/Navbar.tsx",
     "frontend/src/components/ServiceCard.tsx",
-    "frontend/src/components/ServiceCategoryGrid.tsx",
-    "frontend/src/index.css",
+    "frontend/src/data/services.ts",
+    "frontend/src/hooks/useSearchServices.ts",
     "frontend/src/pages/Booking.tsx",
-    "frontend/src/pages/Reviews.tsx",
+    "frontend/src/pages/Services.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
