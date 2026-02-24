@@ -15,11 +15,12 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <Card className="group overflow-hidden bg-white/80 backdrop-blur-sm border-gray-200 hover:border-trustfix-green transition-all duration-300 hover:shadow-xl flex flex-col">
+    <Card className="group overflow-hidden bg-white/80 backdrop-blur-sm border-gray-200 hover:border-trustfix-green transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 flex flex-col">
       <div className="relative h-48 overflow-hidden">
         <img
           src={service.image}
           alt={service.name}
+          loading="lazy"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <Badge className="absolute top-4 left-4 bg-trustfix-green text-white">

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 17,
   "summary": "TrustFix Home Services web application - React + TypeScript application for Internet Computer with 6 pages (Home, Services, Pricing, Booking, Contact, Reviews), featuring professional shiny white glassmorphism design, customer review system with approval workflow, booking form with WhatsApp integration and backend storage, search bar for service filtering, and complete branding with uploaded logo and banner images",
   "architectural_notes": [
     "React + TypeScript frontend with React Router for 6-page navigation",
@@ -14,12 +14,9 @@
     "Contact details: Phone 8884447229, Email htrustfix@gmail.com",
     "Contact details standardized: Phone 8884447229, Email htrustfix@gmail.com, Address: 12th Cross, Mookambika Nagar, Bangalore"
   ],
-  "known_issues": [
-    "Category images showing blank/old placeholders instead of professional service photos",
-    "Background remains pure white instead of premium gradient theme"
-  ],
+  "known_issues": [],
   "isFixRequest": true,
-  "imageRequirements": "## Required Images\n- Professional pest control technician working at a residential property, realistic photo style (pest-control-tech.dim_800x600.png)\n- Skilled carpenter working with wood and tools in a workshop, realistic photo style (carpenter-working.dim_800x600.png)\n- Professional home cleaning service in action with cleaners and equipment, realistic photo style (home-cleaning.dim_800x600.png)\n- Electrician fixing electrical wiring and panels, realistic photo style (electrician-wiring.dim_800x600.png)\n- AC technician servicing an air conditioning unit, realistic photo style (ac-technician.dim_800x600.png)\n- Appliance repair technician working on household appliances, realistic photo style (appliance-repair.dim_800x600.png)\n- Plumber fixing pipes and plumbing fixtures, realistic photo style (plumber-pipes.dim_800x600.png)\n- Professional house painting in progress with painter and equipment, realistic photo style (house-painting.dim_800x600.png)",
+  "imageRequirements": "## Required Images\n- Professional photo of pest control technician spraying chemicals at house exterior (pest-control-service.dim_800x600.png)\n- Professional photo of carpenter working on wood furniture with tools (carpentry-service.dim_800x600.png)\n- Professional photo of home cleaning service in action with cleaner working (cleaning-service.dim_800x600.png)\n- Professional photo of electrician fixing electrical switch or wiring (electrical-service.dim_800x600.png)\n- Professional photo of AC technician servicing air conditioning unit (ac-service.dim_800x600.png)\n- Professional photo of washing machine or refrigerator repair technician working (appliance-repair-service.dim_800x600.png)\n- Professional photo of plumber fixing sink pipe or tap (plumbing-service.dim_800x600.png)\n- Professional photo of painter rolling paint on wall (painting-service.dim_800x600.png)",
   "existing_features": [
     {
       "id": "feature-create-a-sticky-navbar-with-trustfix-logo-file-00000000d2747206831923d1f7e53476-png-navigation-menu-home-services-pricing-booking-contact-reviews-and-real-time-search-bar-that-filters-services-by-name-and-category-with-dropdown-results",
@@ -186,6 +183,118 @@
       "title": "Rebuild frontend with cache-busting techniques to force immediate UI refresh and ensure all visual changes (category images and background theme) are visible without browser cache issues.",
       "reqIds": [
         "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-all-8-service-category-card-images-in-servicecategorygrid-component-with-real-professional-service-photos-showing-pest-control-technician-spraying-house-carpenter-fixing-wood-furniture-professional-home-cleaning-electrician-fixing-switch-wiring-ac-technician-servicing-unit-washing-machine-fridge-repair-technician-plumber-fixing-pipe-tap-and-painter-rolling-wall-use-uploaded-images-first-then-fallback-to-high-quality-stock-photos-ensuring-each-service-has-a-distinct-realistic-high-quality-service-relevant-image-with-proper-cropping-object-fit-cover-and-no-grey-placeholders",
+      "title": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos showing: pest control technician spraying house, carpenter fixing wood furniture, professional home cleaning, electrician fixing switch/wiring, AC technician servicing unit, washing machine/fridge repair technician, plumber fixing pipe/tap, and painter rolling wall. Use uploaded images first, then fallback to high-quality stock photos ensuring each service has a distinct, realistic, high-quality, service-relevant image with proper cropping (object-fit: cover) and no grey placeholders.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-global-background-gradient-linear-gradient-180deg-f8fafc-0-eef2f7-50-f1f5f9-100-throughout-the-application-on-all-pages-home-services-pricing-booking-contact-reviews-while-keeping-cards-white-text-colors-unchanged-and-no-modifications-to-buttons-or-navbar-colors",
+      "title": "Apply global background gradient `linear-gradient(180deg, #f8fafc 0%, #eef2f7 50%, #f1f5f9 100%)` throughout the application on all pages (Home, Services, Pricing, Booking, Contact, Reviews) while keeping cards white, text colors unchanged, and no modifications to buttons or navbar colors.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cache-busting-techniques-in-the-frontend-build-to-force-immediate-ui-refresh-and-ensure-all-visual-changes-category-images-and-background-gradient-are-visible-without-browser-cache-issues",
+      "title": "Implement cache-busting techniques in the frontend build to force immediate UI refresh and ensure all visual changes (category images and background gradient) are visible without browser cache issues.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-professional-realistic-images-to-all-8-service-category-cards-in-servicecategorygrid-component-showing-pest-control-technician-spraying-at-house-carpenter-fixing-wood-furniture-with-tools-professional-home-cleaning-in-action-electrician-fixing-electrical-switch-or-wiring-ac-technician-servicing-air-conditioning-unit-washing-machine-or-refrigerator-repair-technician-working-plumber-fixing-pipe-or-tap-and-painter-rolling-paint-on-wall-use-uploaded-images-if-available-otherwise-select-appropriate-high-quality-stock-photos-ensure-each-category-has-a-distinct-realistic-service-relevant-image-with-proper-cropping-object-fit-cover-rounded-corners-matching-card-design-and-no-grey-placeholders-or-cartoon-illustrations",
+      "title": "Add professional realistic images to all 8 service category cards in ServiceCategoryGrid component showing: pest control technician spraying at house, carpenter fixing wood furniture with tools, professional home cleaning in action, electrician fixing electrical switch or wiring, AC technician servicing air conditioning unit, washing machine or refrigerator repair technician working, plumber fixing pipe or tap, and painter rolling paint on wall. Use uploaded images if available, otherwise select appropriate high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with proper cropping (object-fit: cover), rounded corners matching card design, and no grey placeholders or cartoon illustrations.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-unique-professional-realistic-images-to-all-48-individual-service-cards-across-all-8-categories-pest-control-carpentry-cleaning-electrical-ac-services-appliances-repair-plumbing-painting-each-service-must-have-its-own-distinct-image-that-matches-the-specific-service-type-e-g-termite-control-shows-house-termite-treatment-bed-bug-treatment-shows-mattress-inspection-switch-repair-shows-electrician-fixing-socket-ac-service-shows-technician-cleaning-ac-unit-tap-repair-shows-plumber-fixing-tap-interior-painting-shows-painter-using-roller-use-uploaded-images-where-available-otherwise-select-appropriate-high-quality-stock-photos-ensure-proper-cropping-object-fit-cover-rounded-corners-matching-card-design-and-no-duplicate-images-cartoons-or-blank-placeholders",
+      "title": "Add unique professional realistic images to ALL 48+ individual service cards across all 8 categories (Pest Control, Carpentry, Cleaning, Electrical, AC Services, Appliances Repair, Plumbing, Painting). Each service must have its own distinct image that matches the specific service type (e.g., termite control shows house termite treatment, bed bug treatment shows mattress inspection, switch repair shows electrician fixing socket, AC service shows technician cleaning AC unit, tap repair shows plumber fixing tap, interior painting shows painter using roller). Use uploaded images where available, otherwise select appropriate high-quality stock photos. Ensure proper cropping (object-fit: cover), rounded corners matching card design, and no duplicate images, cartoons, or blank placeholders.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-max-height-250px-and-overflow-y-auto-to-all-service-dropdown-elements-select-dropdown-menu-service-dropdown-to-enable-vertical-scrolling-when-the-dropdown-content-exceeds-250px-height",
+      "title": "Apply max-height: 250px and overflow-y: auto to all service dropdown elements (select, .dropdown-menu, .service-dropdown) to enable vertical scrolling when the dropdown content exceeds 250px height",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-set-z-index-9999-on-dropdown-menu-to-ensure-the-dropdown-appears-above-all-other-page-elements",
+      "title": "Set z-index: 9999 on .dropdown-menu to ensure the dropdown appears above all other page elements",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-webkit-overflow-scrolling-touch-to-dropdown-menu-for-smooth-touch-based-scrolling-on-mobile-devices",
+      "title": "Add -webkit-overflow-scrolling: touch to .dropdown-menu for smooth touch-based scrolling on mobile devices",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-all-8-service-category-card-images-in-servicecategorygrid-component-with-real-professional-service-photos-pest-control-technician-spraying-house-carpenter-working-on-furniture-professional-home-cleaning-in-action-electrician-fixing-switch-wiring-ac-technician-servicing-air-conditioning-unit-washing-machine-fridge-repair-technician-working-plumber-fixing-sink-pipe-painter-rolling-paint-on-wall-use-uploaded-images-if-available-otherwise-generate-or-select-high-quality-stock-photos-ensure-each-category-has-a-distinct-realistic-service-relevant-image-with-object-fit-cover-consistent-height-rounded-corners-and-no-cartoons-illustrations-grey-placeholders-or-broken-images",
+      "title": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos: pest control technician spraying house, carpenter working on furniture, professional home cleaning in action, electrician fixing switch/wiring, AC technician servicing air conditioning unit, washing machine/fridge repair technician working, plumber fixing sink/pipe, painter rolling paint on wall. Use uploaded images if available, otherwise generate or select high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with object-fit: cover, consistent height, rounded corners, and no cartoons, illustrations, grey placeholders, or broken images.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-global-background-theme-from-plain-white-to-premium-subtle-gradient-linear-gradient-180deg-f6f8fb-0-eef3f9-50-f1f5f9-100-applied-to-body-element-across-all-pages-home-services-pricing-booking-contact-reviews-keep-all-cards-white-with-soft-shadows-do-not-change-button-colors-navbar-colors-or-text-colors-maintain-professional-clean-service-app-style",
+      "title": "Change global background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) applied to body element across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all cards white with soft shadows. Do not change button colors, navbar colors, or text colors. Maintain professional clean service-app style.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-service-dropdown-mobile-scrolling-issue-on-booking-page-and-reviews-page-by-applying-max-height-260px-overflow-y-auto-webkit-overflow-scrolling-touch-overscroll-behavior-contain-to-the-dropdown-menu-element-set-z-index-9999-on-dropdown-to-ensure-it-appears-above-all-other-elements-prevent-page-body-scroll-when-dropdown-is-open-on-mobile-devices",
+      "title": "Fix service dropdown mobile scrolling issue on Booking page and Reviews page by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown to ensure it appears above all other elements. Prevent page body scroll when dropdown is open on mobile devices.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-smooth-hover-lift-effect-to-all-service-cards-with-transform-translatey-6px-transition-0-3s-ease-and-enhanced-soft-shadow-on-hover-keep-existing-card-colors-and-text-styling-unchanged-apply-this-effect-to-service-cards-on-services-page-and-pricing-page",
+      "title": "Add smooth hover lift effect to all service cards with transform: translateY(-6px), transition: 0.3s ease, and enhanced soft shadow on hover. Keep existing card colors and text styling unchanged. Apply this effect to service cards on Services page and Pricing page.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-and-ensure-booking-form-on-booking-page-works-correctly-form-should-open-whatsapp-at-https-wa-me-918884447229-with-pre-filled-message-containing-name-phone-service-address-and-date-message-fields-verify-form-submission-stores-booking-data-in-motoko-backend-and-email-notifications-remain-active-do-not-change-form-layout-or-styling",
+      "title": "Verify and ensure booking form on Booking page works correctly: form should open WhatsApp at https://wa.me/918884447229 with pre-filled message containing Name, Phone, Service, Address, and Date/Message fields. Verify form submission stores booking data in Motoko backend and email notifications remain active. Do not change form layout or styling.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-all-service-and-category-images-for-faster-loading-by-compressing-image-files-and-implementing-lazy-loading-for-service-card-images-on-services-page-and-pricing-page-ensure-images-maintain-quality-while-reducing-file-size",
+      "title": "Optimize all service and category images for faster loading by compressing image files and implementing lazy loading for service card images on Services page and Pricing page. Ensure images maintain quality while reducing file size.",
+      "reqIds": [
+        "REQ-37"
       ],
       "version": 1
     }
@@ -363,6 +472,67 @@
       "reqIds": [
         "AR-21"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Add professional realistic images to all 8 service category cards and all 48+ individual service cards across all categories while keeping layout, spacing, logos, hero banner, and all other styling unchanged",
+      "reqIds": [
+        "AR-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Fix 'Select Service' dropdown to be scrollable with max-height: 250px, vertical overflow scrolling, smooth touch scrolling for mobile, z-index: 9999, without changing layout or colors",
+      "reqIds": [
+        "AR-6",
+        "AR-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Replace ALL subcategory images with real professional service photos (pest control technician spraying, carpenter working, professional cleaning, electrician fixing wiring, AC technician servicing, appliance repair, plumber fixing pipe, painter working) ensuring no cartoons, illustrations, or broken images, with consistent height and object-fit: cover",
+      "reqIds": [
+        "AR-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Change background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb, #eef3f9) with cards remaining white with soft shadows, maintaining professional clean service-app style without full green pages",
+      "reqIds": [
+        "AR-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Fix service dropdown mobile scroll by adding max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain, z-index: 9999, and prevent page scroll while dropdown is open",
+      "reqIds": [
+        "AR-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Add smooth hover lift effect to service cards with transform: translateY(-6px), transition: 0.3s ease, and soft shadow while keeping existing colors",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Ensure booking form works properly with WhatsApp integration (wa.me/918884447229) sending Name, Phone, Service, Address, Date and keeping email notification active",
+      "reqIds": [
+        "AR-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Optimize images for faster loading and implement lazy loading for service images",
+      "reqIds": [],
       "status": "pending"
     }
   ],

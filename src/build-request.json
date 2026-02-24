@@ -1,96 +1,170 @@
 {
   "kind": "build_request",
-  "title": "Fix TrustFix category images and premium background theme",
-  "projectName": "TrustFix Home Services",
+  "title": "Fix mobile dropdown scrolling and enhance UI with professional images and premium gradient background",
+  "projectName": "TrustFix Services",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-21",
-      "text": "Replace all 8 category card images in ServiceCategoryGrid component with real professional service photos: pest control technician at work, carpenter working with tools, home cleaning service in action, electrician fixing wiring, AC technician servicing unit, appliance repair technician working, plumber fixing pipe, and house painting in progress. Use uploaded images first, then fallback to high-quality stock photos. Ensure each category has a distinct, visible professional image with no blank placeholders or cartoon icons.",
+      "id": "REQ-32",
+      "text": "Replace all 8 service category card images in ServiceCategoryGrid component with real professional service photos: pest control technician spraying house, carpenter working on furniture, professional home cleaning in action, electrician fixing switch/wiring, AC technician servicing air conditioning unit, washing machine/fridge repair technician working, plumber fixing sink/pipe, painter rolling paint on wall. Use uploaded images if available, otherwise generate or select high-quality stock photos. Ensure each category has a distinct, realistic, service-relevant image with object-fit: cover, consistent height, rounded corners, and no cartoons, illustrations, grey placeholders, or broken images.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-build-request"
         ],
         "quotes": [
-          "Replace ALL category images with REAL professional photos",
-          "Categories that MUST have images: Pest Control → pest control technician image, Carpentry → carpenter working image, Cleaning → home cleaning service image, Electrical → electrician fixing wiring image, AC Services → AC technician servicing unit image, Appliances Repair → technician repairing appliance image, Plumbing → plumber fixing pipe image, Painting → house painting image"
+          "Replace ALL subcategory images with real professional photos (NO cartoons, NO illustrations)",
+          "Use different images for each service"
         ]
       },
       "acceptanceCriteria": [
-        "All 8 category cards display professional service photos",
-        "Each category has a different, relevant image",
-        "Images are visible immediately on page load",
-        "Images are responsive and properly sized",
-        "No grey placeholders or cartoon icons remain"
+        "All 8 category cards display realistic professional service photos",
+        "Images use object-fit: cover with consistent height",
+        "No cartoon illustrations, grey placeholders, or broken images",
+        "Each service category has a distinct unique image",
+        "Images load correctly on desktop and mobile"
       ]
     },
     {
-      "id": "REQ-22",
-      "text": "Replace pure white background throughout the application with a premium subtle gradient (white to very light grey OR white to very light green tint) with soft glass panels and shadows. Apply this background theme consistently across all pages (Home, Services, Pricing, Booking, Contact, Reviews) while maintaining the professional TrustFix glassmorphism design aesthetic.",
+      "id": "REQ-33",
+      "text": "Change global background theme from plain white to premium subtle gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) applied to body element across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all cards white with soft shadows. Do not change button colors, navbar colors, or text colors. Maintain professional clean service-app style.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-build-request"
         ],
         "quotes": [
-          "Replace with premium background: Option A: soft gradient white → very light grey OR Option B: white → very light green tint",
-          "Add: subtle glass panels, soft shadows, maintain professional TrustFix look",
-          "Apply on ALL pages"
+          "Use subtle premium gradient: body background: linear-gradient(180deg,#f6f8fb,#eef3f9)",
+          "Cards remain white with soft shadow",
+          "Keep professional clean service-app style"
         ]
       },
       "acceptanceCriteria": [
-        "Background is no longer pure white",
-        "Subtle gradient is applied (white to light grey or white to light green tint)",
-        "Soft glass panels with backdrop blur are visible",
-        "Soft shadows enhance depth without overwhelming content",
-        "Theme is consistent across all 6 pages",
-        "Professional appearance is maintained"
+        "Background gradient applied to body element across all pages",
+        "Cards remain white with soft shadows",
+        "Button colors and navbar colors unchanged",
+        "Text colors remain legible and unchanged",
+        "Professional clean appearance maintained"
       ]
     },
     {
-      "id": "REQ-23",
-      "text": "Rebuild frontend with cache-busting techniques to force immediate UI refresh and ensure all visual changes (category images and background theme) are visible without browser cache issues.",
+      "id": "REQ-34",
+      "text": "Fix service dropdown mobile scrolling issue on Booking page and Reviews page by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown to ensure it appears above all other elements. Prevent page body scroll when dropdown is open on mobile devices.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-build-request",
+          "msg-user-screenshot"
         ],
         "quotes": [
-          "After updating: rebuild frontend, refresh styles, ensure changes visible without cache issues"
+          "Service dropdown must scroll on mobile",
+          "Add: max-height:260px; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain",
+          "Dropdown z-index:9999",
+          "Prevent page scroll while dropdown open"
         ]
       },
       "acceptanceCriteria": [
-        "Frontend is rebuilt with latest changes",
-        "Visual updates are immediately visible on deployment",
-        "No cached styles or images prevent new visuals from displaying"
+        "Dropdown scrolls smoothly on mobile devices (Android and iOS)",
+        "Dropdown has max-height of 260px with vertical scrolling",
+        "Touch scrolling works smoothly with -webkit-overflow-scrolling",
+        "Dropdown appears above all other elements (z-index: 9999)",
+        "Page body does not scroll when dropdown is open",
+        "Dropdown does not close when attempting to scroll within it"
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "text": "Add smooth hover lift effect to all service cards with transform: translateY(-6px), transition: 0.3s ease, and enhanced soft shadow on hover. Keep existing card colors and text styling unchanged. Apply this effect to service cards on Services page and Pricing page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-build-request"
+        ],
+        "quotes": [
+          "Add smooth hover lift effect: transform: translateY(-6px); transition: .3s ease",
+          "Add soft shadow",
+          "Keep existing colors"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Service cards lift by 6px on hover",
+        "Transition animation is smooth with 0.3s duration",
+        "Soft shadow appears on hover",
+        "Existing card colors remain unchanged",
+        "Effect applies to both Services and Pricing pages"
+      ]
+    },
+    {
+      "id": "REQ-36",
+      "text": "Verify and ensure booking form on Booking page works correctly: form should open WhatsApp at https://wa.me/918884447229 with pre-filled message containing Name, Phone, Service, Address, and Date/Message fields. Verify form submission stores booking data in Motoko backend and email notifications remain active. Do not change form layout or styling.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-build-request"
+        ],
+        "quotes": [
+          "Ensure booking form works properly",
+          "Ensure form sends WhatsApp message with: Name Phone Service Address Date",
+          "Keep email notification active"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form opens WhatsApp link with pre-filled booking details",
+        "WhatsApp message includes Name, Phone, Service, Address, Date/Message",
+        "Booking submission stores data in Motoko backend",
+        "Email notifications remain functional",
+        "Form layout and styling unchanged"
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "text": "Optimize all service and category images for faster loading by compressing image files and implementing lazy loading for service card images on Services page and Pricing page. Ensure images maintain quality while reducing file size.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-build-request"
+        ],
+        "quotes": [
+          "Optimize images for faster load",
+          "Lazy load service images"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All service images are optimized and compressed",
+        "Lazy loading implemented for service card images",
+        "Page load time improves on mobile and desktop",
+        "Image quality remains acceptable",
+        "Images load progressively as user scrolls"
       ]
     }
   ],
   "constraints": [
-    "Do NOT redesign layout or structure",
-    "Do NOT change existing page organization",
-    "ONLY fix category images and background theme",
-    "Preserve all existing functionality and features",
-    "Maintain professional TrustFix branding and glassmorphism design system"
+    "Do NOT change layout, structure, or spacing of existing components",
+    "Do NOT modify TrustFix logo or hero banner image",
+    "Do NOT rebuild site structure or add new pages",
+    "Do NOT add admin dashboard or admin panel",
+    "Do NOT change navbar colors, button colors, or core branding colors",
+    "Keep all existing features and functionality intact",
+    "Maintain single-actor backend architecture"
   ],
   "nonGoals": [
-    "Redesigning page layouts",
-    "Changing navigation structure",
-    "Modifying form functionality",
-    "Altering booking or review workflows",
-    "Changing color scheme beyond background gradient"
+    "Rebuilding the entire site",
+    "Adding admin dashboard or management panel",
+    "Changing site structure or page routing",
+    "Modifying logo or hero banner",
+    "Adding new pages or features beyond the fixes specified",
+    "Changing core brand colors or button styling beyond hover effects"
   ],
   "imageRequirements": {
     "required": [
-      "Professional pest control technician working at a residential property, realistic photo style (pest-control-tech.dim_800x600.png)",
-      "Skilled carpenter working with wood and tools in a workshop, realistic photo style (carpenter-working.dim_800x600.png)",
-      "Professional home cleaning service in action with cleaners and equipment, realistic photo style (home-cleaning.dim_800x600.png)",
-      "Electrician fixing electrical wiring and panels, realistic photo style (electrician-wiring.dim_800x600.png)",
-      "AC technician servicing an air conditioning unit, realistic photo style (ac-technician.dim_800x600.png)",
-      "Appliance repair technician working on household appliances, realistic photo style (appliance-repair.dim_800x600.png)",
-      "Plumber fixing pipes and plumbing fixtures, realistic photo style (plumber-pipes.dim_800x600.png)",
-      "Professional house painting in progress with painter and equipment, realistic photo style (house-painting.dim_800x600.png)"
+      "Professional photo of pest control technician spraying chemicals at house exterior (pest-control-service.dim_800x600.png)",
+      "Professional photo of carpenter working on wood furniture with tools (carpentry-service.dim_800x600.png)",
+      "Professional photo of home cleaning service in action with cleaner working (cleaning-service.dim_800x600.png)",
+      "Professional photo of electrician fixing electrical switch or wiring (electrical-service.dim_800x600.png)",
+      "Professional photo of AC technician servicing air conditioning unit (ac-service.dim_800x600.png)",
+      "Professional photo of washing machine or refrigerator repair technician working (appliance-repair-service.dim_800x600.png)",
+      "Professional photo of plumber fixing sink pipe or tap (plumbing-service.dim_800x600.png)",
+      "Professional photo of painter rolling paint on wall (painting-service.dim_800x600.png)"
     ],
     "edits": []
   }

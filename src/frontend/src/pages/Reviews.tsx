@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 import { useGetApprovedReviews } from '@/hooks/useQueries';
 import ReviewCard from '@/components/ReviewCard';
 import WriteReviewForm from '@/components/WriteReviewForm';
@@ -10,6 +11,7 @@ import { servicesData } from '@/data/services';
 
 export default function Reviews() {
   const [filterCategory, setFilterCategory] = useState<string>('All');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { data: reviews, isLoading } = useGetApprovedReviews();
 
   const categories = ['All', ...Object.keys(servicesData)];
@@ -24,6 +26,17 @@ export default function Reviews() {
       ? reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length
       : 0;
 
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isDropdownOpen]);
+
   return (
     <div className="min-h-screen py-16 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -32,32 +45,39 @@ export default function Reviews() {
           <p className="text-gray-600 max-w-2xl mx-auto">
             See what our customers have to say about our services
           </p>
+
+          {reviews && reviews.length > 0 && (
+            <Card className="glass-panel border-gray-200 shadow-glass-lg mt-8 max-w-md mx-auto">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-center gap-2">
+                  <Star className="h-8 w-8 fill-trustfix-orange text-trustfix-orange" />
+                  <span className="text-4xl font-bold text-gray-900">{averageRating.toFixed(1)}</span>
+                </div>
+                <p className="text-gray-600 mt-2">Average Rating from {reviews.length} reviews</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
-        {/* Average Rating */}
-        {reviews && reviews.length > 0 && (
-          <Card className="glass-panel bg-gradient-to-br from-trustfix-green/10 to-trustfix-orange/10 border-gray-200 mb-8 shadow-glass">
-            <CardContent className="p-8 text-center">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <Star className="h-8 w-8 fill-yellow-400 text-yellow-400" />
-                <span className="text-5xl font-bold text-gray-900">
-                  {averageRating.toFixed(1)}
-                </span>
-              </div>
-              <p className="text-gray-600">
-                Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
-              </p>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Filter */}
         <div className="mb-8">
-          <Select value={filterCategory} onValueChange={setFilterCategory}>
-            <SelectTrigger className="w-full md:w-64 glass-panel shadow-glass">
-              <SelectValue placeholder="Filter by category" />
+          <Label htmlFor="category-filter" className="text-lg font-semibold mb-2 block">
+            Filter by Service
+          </Label>
+          <Select 
+            value={filterCategory} 
+            onValueChange={setFilterCategory}
+            onOpenChange={setIsDropdownOpen}
+          >
+            <SelectTrigger className="max-w-xs">
+              <SelectValue placeholder="Select category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent 
+              className="max-h-[260px] overflow-y-auto z-[9999]"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                overscrollBehavior: 'contain',
+              }}
+            >
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -67,40 +87,33 @@ export default function Reviews() {
           </Select>
         </div>
 
-        {/* Reviews Grid */}
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="glass-panel shadow-glass">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {isLoading ? (
+            Array.from({ length: 6 }).map((_, index) => (
+              <Card key={index} className="glass-panel border-gray-200 shadow-glass-lg">
                 <CardContent className="p-6">
-                  <Skeleton className="h-20 w-full mb-4" />
-                  <Skeleton className="h-4 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
+                  <div className="flex items-center gap-4 mb-4">
+                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <div className="flex-1">
+                      <Skeleton className="h-4 w-32 mb-2" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-20 w-full" />
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        ) : filteredReviews.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {filteredReviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
-          </div>
-        ) : (
-          <Card className="glass-panel border-gray-200 mb-12 shadow-glass">
-            <CardContent className="p-12 text-center">
-              <p className="text-gray-500">
-                {filterCategory === 'All'
-                  ? 'No reviews yet. Be the first to share your experience!'
-                  : `No reviews for ${filterCategory} yet.`}
-              </p>
-            </CardContent>
-          </Card>
-        )}
+            ))
+          ) : filteredReviews.length > 0 ? (
+            filteredReviews.map((review) => <ReviewCard key={review.id} review={review} />)
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">No reviews found for this category.</p>
+            </div>
+          )}
+        </div>
 
-        {/* Write Review Form */}
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Write a Review</h2>
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Write a Review</h2>
           <WriteReviewForm />
         </div>
       </div>

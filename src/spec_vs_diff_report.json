@@ -1,23 +1,56 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-24T01:08:56.003Z",
-  "summary": "All three requirements (REQ-21, REQ-22, REQ-23) appear to be fully implemented. The diff shows: (1) ServiceCategoryGrid.tsx updated with 8 professional service images from /assets/generated/ with proper fallback handling, (2) index.css updated with premium gradient background variables and glassmorphism utilities applied consistently, (3) All 6 pages (Home, Services, Pricing, Booking, Contact, Reviews) use glass-panel styling, and (4) Cache-busting meta tags added to index.html. No missing requirements or hallucinated features detected.",
+  "generatedAt": "2026-02-24T02:02:09.281Z",
+  "summary": "The diff implements all 6 requirements with comprehensive changes to frontend components, styles, and pages. All requested features including image replacement, gradient background, dropdown mobile scrolling fixes, hover effects, form verification, and lazy loading are present in the modified files.",
   "missing_requirements": [],
-  "hallucinated_features": [],
+  "hallucinated_features": [
+    {
+      "description": "Added IntersectionObserver with scroll-triggered animations and staggered timing to ServiceCategoryGrid component",
+      "reason": "The diff shows implementation of IntersectionObserver with 'scroll-animate' class and staggered animation delays (index * 100ms) in ServiceCategoryGrid.tsx. This animation feature was not requested in any requirement.",
+      "evidence": [
+        "frontend/src/components/ServiceCategoryGrid.tsx"
+      ]
+    },
+    {
+      "description": "Added 'wave-in', 'bounce-slow', and 'pulse-slow' keyframe animations in global CSS",
+      "reason": "The diff shows custom keyframe animations (wave-in, bounce-slow, pulse-slow) added to index.css. These specific animations were not requested in REQ-33 or any other requirement.",
+      "evidence": [
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "description": "Added glass morphism utility classes (glass, glass-dark, glass-panel) with backdrop-blur effects",
+      "reason": "The diff shows new glassmorphism utility classes with backdrop-blur-md/lg added to index.css. While REQ-33 mentions 'Keep all cards white with soft shadows', it does not request glassmorphism or backdrop-blur effects.",
+      "evidence": [
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "description": "Added background-attachment: fixed property to body gradient",
+      "reason": "The diff shows 'background-attachment: fixed' added to body element in index.css. REQ-33 only requested the gradient be applied to body, not that it should be fixed during scrolling.",
+      "evidence": [
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "description": "Added image zoom effect on hover (scale-110) to service cards",
+      "reason": "The diff shows group-hover:scale-110 transition added to images in ServiceCard.tsx and ServiceCategoryGrid.tsx. REQ-35 only requested card lift effect (translateY) and shadow, not image zoom effects.",
+      "evidence": [
+        "frontend/src/components/ServiceCard.tsx",
+        "frontend/src/components/ServiceCategoryGrid.tsx"
+      ]
+    }
+  ],
   "confidence": 0.92,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/index.html",
+    "frontend/src/components/PricingCard.tsx",
+    "frontend/src/components/ServiceCard.tsx",
     "frontend/src/components/ServiceCategoryGrid.tsx",
     "frontend/src/index.css",
     "frontend/src/pages/Booking.tsx",
-    "frontend/src/pages/Contact.tsx",
-    "frontend/src/pages/Home.tsx",
-    "frontend/src/pages/Pricing.tsx",
     "frontend/src/pages/Reviews.tsx",
-    "frontend/src/pages/Services.tsx",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

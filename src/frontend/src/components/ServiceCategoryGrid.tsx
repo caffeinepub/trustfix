@@ -6,56 +6,56 @@ import { useState, useEffect, useRef } from 'react';
 const categories = [
   {
     name: 'Pest Control',
-    image: '/assets/generated/pest-control-tech.dim_800x600.png',
+    image: '/assets/generated/pest-control-service.dim_800x600.png',
     icon: ShieldAlert,
     path: '/services',
     category: 'Pest Control',
   },
   {
     name: 'Carpentry',
-    image: '/assets/generated/carpenter-working.dim_800x600.png',
+    image: '/assets/generated/carpentry-service.dim_800x600.png',
     icon: Hammer,
     path: '/services',
     category: 'Carpentry',
   },
   {
     name: 'Cleaning',
-    image: '/assets/generated/home-cleaning.dim_800x600.png',
+    image: '/assets/generated/cleaning-service.dim_800x600.png',
     icon: Sparkles,
     path: '/services',
     category: 'Cleaning',
   },
   {
     name: 'Electrical',
-    image: '/assets/generated/electrician-wiring.dim_800x600.png',
+    image: '/assets/generated/electrical-service.dim_800x600.png',
     icon: Zap,
     path: '/services',
     category: 'Electrical',
   },
   {
     name: 'AC Services',
-    image: '/assets/generated/ac-technician.dim_800x600.png',
+    image: '/assets/generated/ac-service.dim_800x600.png',
     icon: Snowflake,
     path: '/services',
     category: 'AC Services',
   },
   {
     name: 'Appliances Repair',
-    image: '/assets/generated/appliance-repair.dim_800x600.png',
+    image: '/assets/generated/appliance-repair-service.dim_800x600.png',
     icon: Wrench,
     path: '/services',
     category: 'Appliances Repair',
   },
   {
     name: 'Plumbing',
-    image: '/assets/generated/plumber-pipes.dim_800x600.png',
+    image: '/assets/generated/plumbing-service.dim_800x600.png',
     icon: Droplet,
     path: '/services',
     category: 'Plumbing',
   },
   {
     name: 'Painting',
-    image: '/assets/generated/house-painting.dim_800x600.png',
+    image: '/assets/generated/painting-service.dim_800x600.png',
     icon: Paintbrush,
     path: '/services',
     category: 'Painting',
@@ -127,6 +127,7 @@ export default function ServiceCategoryGrid() {
                       <img
                         src={category.image}
                         alt={category.name}
+                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={() => handleImageError(category.name)}
                       />

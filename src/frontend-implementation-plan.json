@@ -1,98 +1,139 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix TrustFix category images and premium background theme",
+  "title": "Fix mobile dropdown scrolling and enhance UI with professional images and premium gradient background",
   "requirements": [
     {
-      "id": "REQ-21",
-      "summary": "Replace all 8 category card images in ServiceCategoryGrid with professional service photos",
+      "id": "REQ-32",
+      "summary": "Replace all 8 service category card images in ServiceCategoryGrid with real professional service photos from generated assets",
       "acceptanceCriteria": [
-        "All 8 category cards display professional service photos",
-        "Each category has a different, relevant image",
-        "Images are visible immediately on page load",
-        "Images are responsive and properly sized",
-        "No grey placeholders or cartoon icons remain"
+        "All 8 category cards display realistic professional service photos",
+        "Images use object-fit: cover with consistent height",
+        "No cartoon illustrations, grey placeholders, or broken images",
+        "Each service category has a distinct unique image",
+        "Images load correctly on desktop and mobile"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/ServiceCategoryGrid.tsx",
           "operation": "modify",
-          "description": "Update the categories array to use the generated professional service photos. Replace image paths for all 8 categories: Pest Control uses frontend/public/assets/generated/pest-control-category.dim_400x300.png, Carpentry uses frontend/public/assets/generated/carpentry-category.dim_400x300.png, Cleaning uses frontend/public/assets/generated/cleaning-category.dim_400x300.png, Electrical uses frontend/public/assets/generated/electrical-category.dim_400x300.png, AC Services uses frontend/public/assets/generated/ac-services-category.dim_400x300.png, Appliances Repair uses frontend/public/assets/generated/appliances-repair-category.dim_400x300.png, Plumbing uses frontend/public/assets/generated/plumbing-category.dim_400x300.png, and Painting uses frontend/public/assets/generated/painting-category.dim_400x300.png. Ensure images are properly referenced and loaded."
+          "description": "Replace all 8 category card images with generated professional service photos. Update image paths to use: frontend/public/assets/generated/pest-control-service.dim_800x600.png (pest control), frontend/public/assets/generated/carpentry-service.dim_800x600.png (carpentry), frontend/public/assets/generated/cleaning-service.dim_800x600.png (cleaning), frontend/public/assets/generated/electrical-service.dim_800x600.png (electrical), frontend/public/assets/generated/ac-service.dim_800x600.png (AC services), frontend/public/assets/generated/appliance-repair-service.dim_800x600.png (appliances repair), frontend/public/assets/generated/plumbing-service.dim_800x600.png (plumbing), frontend/public/assets/generated/painting-service.dim_800x600.png (painting). Ensure object-fit: cover is applied to all category card images with consistent height and rounded corners. Remove any placeholder or fallback illustrations."
         }
       ]
     },
     {
-      "id": "REQ-22",
-      "summary": "Replace pure white background with premium subtle gradient and glass panels across all pages",
+      "id": "REQ-33",
+      "summary": "Apply premium subtle gradient background across all pages while keeping cards white with soft shadows",
       "acceptanceCriteria": [
-        "Background is no longer pure white",
-        "Subtle gradient is applied (white to light grey or white to light green tint)",
-        "Soft glass panels with backdrop blur are visible",
-        "Soft shadows enhance depth without overwhelming content",
-        "Theme is consistent across all 6 pages",
-        "Professional appearance is maintained"
+        "Background gradient applied to body element across all pages",
+        "Cards remain white with soft shadows",
+        "Button colors and navbar colors unchanged",
+        "Text colors remain legible and unchanged",
+        "Professional clean appearance maintained"
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add global background gradient styles to the body element. Implement a subtle gradient from white to very light grey (or white to very light green tint). Enhance existing glassmorphism utilities with soft shadow definitions that complement the new background. Ensure the gradient creates a premium feel while maintaining the professional TrustFix aesthetic."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Add custom gradient color stops to the Tailwind theme configuration to support the premium background gradient (white to light grey or white to light green tint). Define soft shadow utilities that work harmoniously with glass panels and the new background gradient."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Apply the premium background gradient to the main layout wrapper so it appears consistently across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Ensure the gradient and glass panel styling integrate seamlessly with existing watermarked logo background and other layout elements."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "modify",
-          "description": "Verify that HeroSection, ServiceCategoryGrid, and FeaturedReviewsCarousel sections display properly against the new premium background gradient. Adjust any section-specific backgrounds or glass panels if needed to maintain visual hierarchy and readability."
-        },
-        {
-          "path": "frontend/src/pages/Services.tsx",
-          "operation": "modify",
-          "description": "Ensure service category tabs and ServiceCard grid components work well with the new premium background gradient. Apply glass panel effects to service cards if needed to enhance depth and maintain professional appearance."
-        },
-        {
-          "path": "frontend/src/pages/Pricing.tsx",
-          "operation": "modify",
-          "description": "Verify PricingCard components display properly against the premium background gradient. Apply soft shadows and glass panel effects to pricing cards to enhance visual hierarchy."
-        },
-        {
-          "path": "frontend/src/pages/Booking.tsx",
-          "operation": "modify",
-          "description": "Ensure the booking form displays properly against the new premium background gradient. Apply glass panel effects to the form container to maintain consistency with the overall design theme."
-        },
-        {
-          "path": "frontend/src/pages/Contact.tsx",
-          "operation": "modify",
-          "description": "Verify contact information sections and contact form work well with the premium background gradient. Apply glass panel effects to content sections to enhance readability and maintain professional appearance."
-        },
-        {
-          "path": "frontend/src/pages/Reviews.tsx",
-          "operation": "modify",
-          "description": "Ensure ReviewCard grid and WriteReviewForm component display properly against the new premium background gradient. Apply glass panel effects and soft shadows to review cards and form sections to maintain visual consistency."
+          "description": "Add global body background gradient: linear-gradient(180deg, #f6f8fb 0%, #eef3f9 50%, #f1f5f9 100%) to body element. Ensure this gradient applies across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Keep all existing card styling, button colors, navbar colors, and text colors unchanged. Maintain white cards with soft shadows for professional appearance."
         }
       ]
     },
     {
-      "id": "REQ-23",
-      "summary": "Rebuild frontend with cache-busting to ensure visual changes are immediately visible",
+      "id": "REQ-34",
+      "summary": "Fix service dropdown scrolling on mobile by applying proper overflow, max-height, touch scrolling, and z-index styling to dropdown menu",
       "acceptanceCriteria": [
-        "Frontend is rebuilt with latest changes",
-        "Visual updates are immediately visible on deployment",
-        "No cached styles or images prevent new visuals from displaying"
+        "Dropdown scrolls smoothly on mobile devices (Android and iOS)",
+        "Dropdown has max-height of 260px with vertical scrolling",
+        "Touch scrolling works smoothly with -webkit-overflow-scrolling",
+        "Dropdown appears above all other elements (z-index: 9999)",
+        "Page body does not scroll when dropdown is open",
+        "Dropdown does not close when attempting to scroll within it"
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/pages/Booking.tsx",
           "operation": "modify",
-          "description": "Add cache-busting meta tags to prevent browser caching of styles and assets. Include no-cache directives in the HTML head to ensure fresh content loads on every visit. This ensures the new category images and background gradient are visible immediately without requiring hard refresh."
+          "description": "Fix service dropdown scrolling by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the dropdown menu element. Set z-index: 9999 on dropdown container. Implement body scroll lock when dropdown is open on mobile to prevent page scrolling while dropdown is active. Ensure dropdown remains open during scroll interactions."
+        },
+        {
+          "path": "frontend/src/pages/Reviews.tsx",
+          "operation": "modify",
+          "description": "Fix service dropdown scrolling by applying max-height: 260px, overflow-y: auto, -webkit-overflow-scrolling: touch, overscroll-behavior: contain to the service filter dropdown menu element. Set z-index: 9999 on dropdown container. Implement body scroll lock when dropdown is open on mobile to prevent page scrolling. Ensure dropdown remains open during scroll interactions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "summary": "Add smooth hover lift effect to service cards on Services and Pricing pages",
+      "acceptanceCriteria": [
+        "Service cards lift by 6px on hover",
+        "Transition animation is smooth with 0.3s duration",
+        "Soft shadow appears on hover",
+        "Existing card colors remain unchanged",
+        "Effect applies to both Services and Pricing pages"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ServiceCard.tsx",
+          "operation": "modify",
+          "description": "Add hover lift effect to service cards: transform: translateY(-6px) with transition: all 0.3s ease on hover. Add enhanced soft shadow on hover state (e.g., shadow-lg or custom shadow). Keep all existing card colors, text styling, and layout unchanged. Ensure smooth animation with 0.3s ease timing."
+        },
+        {
+          "path": "frontend/src/components/PricingCard.tsx",
+          "operation": "modify",
+          "description": "Add hover lift effect to pricing cards: transform: translateY(-6px) with transition: all 0.3s ease on hover. Add enhanced soft shadow on hover state (e.g., shadow-lg or custom shadow). Keep all existing card colors, text styling, and layout unchanged. Ensure smooth animation with 0.3s ease timing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-36",
+      "summary": "Verify booking form opens WhatsApp with pre-filled message and ensure backend booking storage and email notifications remain functional",
+      "acceptanceCriteria": [
+        "Form opens WhatsApp link with pre-filled booking details",
+        "WhatsApp message includes Name, Phone, Service, Address, Date/Message",
+        "Booking submission stores data in Motoko backend",
+        "Email notifications remain functional",
+        "Form layout and styling unchanged"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBookingSubmission.ts",
+          "operation": "modify",
+          "description": "Verify and ensure the booking submission hook correctly constructs WhatsApp URL (https://wa.me/918884447229) with pre-filled message containing all booking details: Name, Phone, Service, Address, and Date/Message fields. Ensure backend actor addBooking method is called with all required parameters. Verify form data is properly passed and stored. Do not change form layout or styling logic."
+        },
+        {
+          "path": "frontend/src/pages/Booking.tsx",
+          "operation": "modify",
+          "description": "Verify booking form submission flow: ensure form captures Name, Phone, Email, Service, Address, and Message fields correctly, calls useBookingSubmission hook, opens WhatsApp link with pre-filled message, and displays success popup. Do not modify form layout, styling, or field structure. Ensure all form validations remain intact."
+        }
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "summary": "Optimize service and category images for faster loading with lazy loading implementation",
+      "acceptanceCriteria": [
+        "All service images are optimized and compressed",
+        "Lazy loading implemented for service card images",
+        "Page load time improves on mobile and desktop",
+        "Image quality remains acceptable",
+        "Images load progressively as user scrolls"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ServiceCard.tsx",
+          "operation": "modify",
+          "description": "Implement lazy loading for service card images using loading=\"lazy\" attribute on img elements. Ensure images are optimized and load progressively as user scrolls. Maintain image quality while improving page load performance on mobile and desktop."
+        },
+        {
+          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
+          "operation": "modify",
+          "description": "Implement lazy loading for category card images using loading=\"lazy\" attribute on img elements. Ensure category images load progressively as user scrolls down the page. Optimize image loading to improve initial page render time on Services page."
+        },
+        {
+          "path": "frontend/src/components/PricingCard.tsx",
+          "operation": "modify",
+          "description": "Implement lazy loading for pricing card images (if present) using loading=\"lazy\" attribute. Ensure images load efficiently as user scrolls through pricing options on the Pricing page."
         }
       ]
     }

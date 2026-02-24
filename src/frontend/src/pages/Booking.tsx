@@ -20,6 +20,7 @@ export default function Booking() {
     address: '',
     message: '',
   });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const { submitBooking, isSubmitting, isSuccess, reset } = useBookingSubmission();
 
@@ -28,6 +29,17 @@ export default function Booking() {
       setFormData((prev) => ({ ...prev, service: search.service || '' }));
     }
   }, [search.service]);
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isDropdownOpen]);
 
   const allServices = Object.entries(servicesData).flatMap(([category, services]) =>
     services.map((service) => ({ name: service.name, category }))
@@ -94,11 +106,21 @@ export default function Booking() {
 
               <div className="space-y-2">
                 <Label htmlFor="service">Select Service *</Label>
-                <Select value={formData.service} onValueChange={(value) => handleChange('service', value)}>
+                <Select 
+                  value={formData.service} 
+                  onValueChange={(value) => handleChange('service', value)}
+                  onOpenChange={setIsDropdownOpen}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a service" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent 
+                    className="max-h-[260px] overflow-y-auto z-[9999]"
+                    style={{
+                      WebkitOverflowScrolling: 'touch',
+                      overscrollBehavior: 'contain',
+                    }}
+                  >
                     {allServices.map((service, index) => (
                       <SelectItem key={index} value={service.name}>
                         {service.name} ({service.category})
