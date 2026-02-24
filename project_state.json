@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "TrustFix website project. Adding a floating left-side call button with green circular style, phone icon, fixed positioning, and tel:8884447229 functionality.",
+  "architectural_notes": [
+    "Floating call button: fixed middle-left, #25D366 green, white phone icon, shadow + hover scale, tel:8884447229, aria-label='Call TrustFix', must not overlap right-side WhatsApp button on mobile"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-new-floatingcallbutton-component-at-frontend-src-components-floatingcallbutton-tsx-the-button-must-be-circular-fixed-to-the-middle-left-of-the-screen-position-fixed-left-1rem-top-50-transform-translatey-50-with-a-green-background-25d366-a-white-phone-svg-icon-a-subtle-drop-shadow-and-a-smooth-scale-up-hover-effect-it-must-stay-fixed-while-scrolling-on-both-desktop-and-mobile-on-click-it-triggers-window-location-href-tel-8884447229-on-mobile-a-long-press-pointerdown-held-500ms-should-also-trigger-the-call-the-button-must-have-aria-label-call-trustfix-and-a-visible-tooltip-with-text-call-trustfix-that-appears-on-hover-focus-button-size-should-be-responsive-e-g-52px-on-mobile-60px-on-desktop",
+      "title": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-floatingcallbutton-component-to-frontend-src-components-layout-tsx-alongside-the-existing-floatingwhatsappbutton-the-call-button-must-not-overlap-the-whatsapp-button-on-the-right-side-on-mobile-both-buttons-must-maintain-safe-margins-from-the-bottom-navigation-bar-minimum-80px-from-bottom-and-from-each-other-the-call-button-is-on-the-left-the-whatsapp-button-remains-on-the-right-they-must-never-visually-conflict",
+      "title": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Floating left-side call button (green circular, white phone icon, tel:8884447229, fixed scroll, mobile-safe, accessibility labels)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "TrustFix",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

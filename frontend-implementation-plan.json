@@ -1,0 +1,45 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add Floating Left-Side Call Button to TrustFix Website",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create a FloatingCallButton component with circular green design, phone icon, fixed middle-left positioning, hover effects, click-to-call functionality, mobile long-press support, tooltip, and responsive sizing",
+      "acceptanceCriteria": [
+        "Button is circular with #25D366 background and a white phone icon",
+        "Button is fixed at middle-left of the viewport and does not scroll with the page",
+        "Clicking the button initiates a call to tel:8884447229",
+        "Long-pressing the button on mobile (≥500ms) also triggers the call",
+        "Button has aria-label='Call TrustFix'",
+        "A tooltip reading 'Call TrustFix' appears on hover and focus",
+        "Button has a visible drop shadow and scales up smoothly on hover",
+        "Button size is 52px on mobile and 60px on desktop"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FloatingCallButton.tsx",
+          "operation": "create",
+          "description": "Create a new React component that renders a circular, fixed-position call button on the middle-left of the screen. The button must use `position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)` for positioning, have a #25D366 background color, contain a white phone SVG icon, and include a drop shadow. Implement a smooth scale-up hover effect using CSS transitions. On click, trigger `window.location.href = 'tel:8884447229'`. For mobile long-press support, use pointerdown and pointerup events with a 500ms timer. Include `aria-label='Call TrustFix'` for accessibility. Add a tooltip that displays 'Call TrustFix' on hover and focus states. Make the button size responsive: 52px (w-13 h-13) on mobile and 60px (md:w-15 md:h-15) on desktop using Tailwind classes. Ensure the button has sufficient z-index to stay above other content."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Integrate FloatingCallButton into Layout.tsx alongside the existing FloatingWhatsAppButton with proper positioning to prevent overlap and maintain safe margins on mobile",
+      "acceptanceCriteria": [
+        "FloatingCallButton is rendered in Layout.tsx",
+        "Call button (left) and WhatsApp button (right) do not overlap on any screen size",
+        "Both buttons maintain at least 80px clearance from the bottom on mobile",
+        "No existing design elements are altered"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Import and add the FloatingCallButton component alongside the existing FloatingWhatsAppButton. The FloatingCallButton will position itself on the middle-left, while the FloatingWhatsAppButton remains in the bottom-right. Verify that both buttons maintain at least 80px clearance from the bottom on mobile viewports to avoid conflicts with bottom navigation bars. Since the call button uses middle-left positioning and the WhatsApp button uses bottom-right positioning, they should naturally avoid overlap. Ensure no changes are made to the existing FloatingWhatsAppButton component or any other Layout elements such as Navbar, Footer, or the watermark background."
+        }
+      ]
+    }
+  ]
+}

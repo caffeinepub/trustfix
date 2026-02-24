@@ -1,0 +1,49 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T17:42:41.604Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/FloatingCallButton.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/FloatingCallButton.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/FloatingCallButton.tsx",
+    "frontend/src/components/Layout.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

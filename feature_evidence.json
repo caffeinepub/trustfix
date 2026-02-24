@@ -1,0 +1,43 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-new-floatingcallbutton-component-at-frontend-src-components-floatingcallbutton-tsx-the-button-must-be-circular-fixed-to-the-middle-left-of-the-screen-position-fixed-left-1rem-top-50-transform-translatey-50-with-a-green-background-25d366-a-white-phone-svg-icon-a-subtle-drop-shadow-and-a-smooth-scale-up-hover-effect-it-must-stay-fixed-while-scrolling-on-both-desktop-and-mobile-on-click-it-triggers-window-location-href-tel-8884447229-on-mobile-a-long-press-pointerdown-held-500ms-should-also-trigger-the-call-the-button-must-have-aria-label-call-trustfix-and-a-visible-tooltip-with-text-call-trustfix-that-appears-on-hover-focus-button-size-should-be-responsive-e-g-52px-on-mobile-60px-on-desktop",
+      "featureTitle": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+      "files": [
+        "frontend/src/components/FloatingCallButton.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-the-floatingcallbutton-component-to-frontend-src-components-layout-tsx-alongside-the-existing-floatingwhatsappbutton-the-call-button-must-not-overlap-the-whatsapp-button-on-the-right-side-on-mobile-both-buttons-must-maintain-safe-margins-from-the-bottom-navigation-bar-minimum-80px-from-bottom-and-from-each-other-the-call-button-is-on-the-left-the-whatsapp-button-remains-on-the-right-they-must-never-visually-conflict",
+      "featureTitle": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+      "files": [
+        "frontend/src/components/Layout.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

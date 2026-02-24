@@ -1,0 +1,75 @@
+{
+  "kind": "build_request",
+  "title": "Add Floating Left-Side Call Button to TrustFix Website",
+  "projectName": "TrustFix",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add a floating CALL button on the LEFT side (mobile + desktop)",
+          "Position: middle-left of screen",
+          "Style: circular button, green background (#25D366 style), white phone icon",
+          "Add subtle shadow + smooth hover scale effect",
+          "Button must stay fixed while scrolling",
+          "On click → directly call: tel:8884447229",
+          "Long press on mobile should also show call option",
+          "Add tooltip text: \"Call TrustFix\"",
+          "Add aria-label=\"Call TrustFix\""
+        ]
+      },
+      "acceptanceCriteria": [
+        "Button is circular with #25D366 background and a white phone icon",
+        "Button is fixed at middle-left of the viewport and does not scroll with the page",
+        "Clicking the button initiates a call to tel:8884447229",
+        "Long-pressing the button on mobile (≥500ms) also triggers the call",
+        "Button has aria-label='Call TrustFix'",
+        "A tooltip reading 'Call TrustFix' appears on hover and focus",
+        "Button has a visible drop shadow and scales up smoothly on hover",
+        "Button size is 52px on mobile and 60px on desktop"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Do NOT overlap WhatsApp button on right side",
+          "Keep safe margin from bottom navigation bars",
+          "Keep existing design unchanged"
+        ]
+      },
+      "acceptanceCriteria": [
+        "FloatingCallButton is rendered in Layout.tsx",
+        "Call button (left) and WhatsApp button (right) do not overlap on any screen size",
+        "Both buttons maintain at least 80px clearance from the bottom on mobile",
+        "No existing design elements are altered"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify any existing components, pages, or styles beyond adding the FloatingCallButton and updating Layout.tsx to include it.",
+    "Do not alter the FloatingWhatsAppButton component or its positioning.",
+    "Immutable paths (frontend/src/hooks/*, frontend/src/main.tsx, frontend/src/components/ui) must not be touched."
+  ],
+  "nonGoals": [
+    "No changes to backend logic, data models, or APIs.",
+    "No changes to any existing page content, navigation, or styling.",
+    "No WhatsApp integration or modification of the existing WhatsApp button.",
+    "No new pages or routes."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
