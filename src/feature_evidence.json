@@ -1,0 +1,69 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-replace-all-8-category-card-images-in-servicecategorygrid-component-with-real-professional-service-photos-pest-control-technician-at-work-carpenter-working-with-tools-home-cleaning-service-in-action-electrician-fixing-wiring-ac-technician-servicing-unit-appliance-repair-technician-working-plumber-fixing-pipe-and-house-painting-in-progress-use-uploaded-images-first-then-fallback-to-high-quality-stock-photos-ensure-each-category-has-a-distinct-visible-professional-image-with-no-blank-placeholders-or-cartoon-icons",
+      "featureTitle": "Replace all 8 category card images in ServiceCategoryGrid component with real professional service photos: pest control technician at work, carpenter working with tools, home cleaning service in action, electrician fixing wiring, AC technician servicing unit, appliance repair technician working, plumber fixing pipe, and house painting in progress. Use uploaded images first, then fallback to high-quality stock photos. Ensure each category has a distinct, visible professional image with no blank placeholders or cartoon icons.",
+      "files": [
+        "frontend/src/components/ServiceCategoryGrid.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-21"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-replace-pure-white-background-throughout-the-application-with-a-premium-subtle-gradient-white-to-very-light-grey-or-white-to-very-light-green-tint-with-soft-glass-panels-and-shadows-apply-this-background-theme-consistently-across-all-pages-home-services-pricing-booking-contact-reviews-while-maintaining-the-professional-trustfix-glassmorphism-design-aesthetic",
+      "featureTitle": "Replace pure white background throughout the application with a premium subtle gradient (white to very light grey OR white to very light green tint) with soft glass panels and shadows. Apply this background theme consistently across all pages (Home, Services, Pricing, Booking, Contact, Reviews) while maintaining the professional TrustFix glassmorphism design aesthetic.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/pages/Booking.tsx",
+        "frontend/src/pages/Contact.tsx",
+        "frontend/src/pages/Home.tsx",
+        "frontend/src/pages/Pricing.tsx",
+        "frontend/src/pages/Reviews.tsx",
+        "frontend/src/pages/Services.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-rebuild-frontend-with-cache-busting-techniques-to-force-immediate-ui-refresh-and-ensure-all-visual-changes-category-images-and-background-theme-are-visible-without-browser-cache-issues",
+      "featureTitle": "Rebuild frontend with cache-busting techniques to force immediate UI refresh and ensure all visual changes (category images and background theme) are visible without browser cache issues.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-23"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

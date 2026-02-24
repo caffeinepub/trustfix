@@ -1,0 +1,373 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 9,
+  "summary": "TrustFix Home Services web application - React + TypeScript application for Internet Computer with 6 pages (Home, Services, Pricing, Booking, Contact, Reviews), featuring professional shiny white glassmorphism design, customer review system with approval workflow, booking form with WhatsApp integration and backend storage, search bar for service filtering, and complete branding with uploaded logo and banner images",
+  "architectural_notes": [
+    "React + TypeScript frontend with React Router for 6-page navigation",
+    "Motoko backend canister for storing bookings and customer reviews with approval status",
+    "Tailwind CSS for styling with glassmorphism design system",
+    "React Context for global search state management",
+    "WhatsApp integration for booking form (wa.me/918884447229)",
+    "Image assets: uploaded TrustFix logo (file_00000000d2747206831923d1f7e53476.png) and banner (IMG-20260218-WA0000.jpg), placeholder images for services",
+    "Review system with approval workflow: customers submit, admin approves, featured carousel on home page",
+    "Search functionality: real-time debounced filtering of services by name/category",
+    "Contact details: Phone 8884447229, Email htrustfix@gmail.com",
+    "Contact details standardized: Phone 8884447229, Email htrustfix@gmail.com, Address: 12th Cross, Mookambika Nagar, Bangalore"
+  ],
+  "known_issues": [
+    "Category images showing blank/old placeholders instead of professional service photos",
+    "Background remains pure white instead of premium gradient theme"
+  ],
+  "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- Professional pest control technician working at a residential property, realistic photo style (pest-control-tech.dim_800x600.png)\n- Skilled carpenter working with wood and tools in a workshop, realistic photo style (carpenter-working.dim_800x600.png)\n- Professional home cleaning service in action with cleaners and equipment, realistic photo style (home-cleaning.dim_800x600.png)\n- Electrician fixing electrical wiring and panels, realistic photo style (electrician-wiring.dim_800x600.png)\n- AC technician servicing an air conditioning unit, realistic photo style (ac-technician.dim_800x600.png)\n- Appliance repair technician working on household appliances, realistic photo style (appliance-repair.dim_800x600.png)\n- Plumber fixing pipes and plumbing fixtures, realistic photo style (plumber-pipes.dim_800x600.png)\n- Professional house painting in progress with painter and equipment, realistic photo style (house-painting.dim_800x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-sticky-navbar-with-trustfix-logo-file-00000000d2747206831923d1f7e53476-png-navigation-menu-home-services-pricing-booking-contact-reviews-and-real-time-search-bar-that-filters-services-by-name-and-category-with-dropdown-results",
+      "title": "Create a sticky navbar with TrustFix logo (file_00000000d2747206831923d1f7e53476.png), navigation menu (Home | Services | Pricing | Booking | Contact | Reviews), and real-time search bar that filters services by name and category with dropdown results",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-home-page-with-hero-section-using-uploaded-banner-image-img-20260218-wa0000-jpg-as-full-width-background-heading-trustfix-home-services-cta-book-now-button-8-service-category-cards-grid-pest-control-carpentry-cleaning-electrical-ac-services-appliances-repair-plumbing-painting-with-images-and-hover-animations-and-featured-reviews-carousel-displaying-3-6-testimonials-with-auto-scroll",
+      "title": "Build Home page with hero section using uploaded banner image (IMG-20260218-WA0000.jpg) as full-width background, heading 'TrustFix Home Services', CTA 'Book Now' button, 8 service category cards grid (Pest Control, Carpentry, Cleaning, Electrical, AC Services, Appliances Repair, Plumbing, Painting) with images and hover animations, and featured reviews carousel displaying 3-6 testimonials with auto-scroll",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-services-page-with-48-services-organized-across-8-categories-pest-control-6-services-carpentry-4-services-cleaning-4-services-electrical-4-services-ac-services-4-services-appliances-repair-4-services-plumbing-4-services-painting-4-services-each-service-card-displaying-category-label-service-image-service-name-one-line-description-starting-price-in-and-book-now-button",
+      "title": "Create Services page with 48+ services organized across 8 categories (Pest Control: 6 services, Carpentry: 4 services, Cleaning: 4 services, Electrical: 4 services, AC Services: 4 services, Appliances Repair: 4 services, Plumbing: 4 services, Painting: 4 services), each service card displaying category label, service image, service name, one-line description, starting price in ₹, and Book Now button",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-pricing-page-displaying-all-services-grouped-by-8-categories-showing-service-name-starting-price-in-short-note-and-book-button-for-each-service-with-disclaimer-final-price-depends-on-inspection",
+      "title": "Build Pricing page displaying all services grouped by 8 categories, showing service name, starting price in ₹, short note, and Book button for each service, with disclaimer 'Final price depends on inspection'",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-booking-page-with-form-collecting-name-phone-email-service-dropdown-address-message-fields-that-opens-whatsapp-https-wa-me-918884447229-with-prefilled-booking-details-stores-booking-submission-in-motoko-backend-and-displays-success-popup-with-checkmark-animation",
+      "title": "Create Booking page with form collecting Name, Phone, Email, Service (dropdown), Address, Message fields that opens WhatsApp (https://wa.me/918884447229) with prefilled booking details, stores booking submission in Motoko backend, and displays success popup with checkmark animation",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-contact-page-displaying-phone-8884447229-email-htrustfix-gmail-com-location-placeholder-google-maps-embed-placeholder-and-quick-contact-form-with-name-email-message-fields",
+      "title": "Build Contact page displaying phone (8884447229), email (htrustfix@gmail.com), location placeholder, Google Maps embed placeholder, and quick contact form with Name, Email, Message fields",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-reviews-page-displaying-all-approved-customer-reviews-with-filter-by-service-category-average-rating-display-at-top-and-write-a-review-form-with-fields-name-service-used-dropdown-rating-1-5-clickable-stars-review-message-optional-photo-upload",
+      "title": "Create Reviews page displaying all approved customer reviews with filter by service category, average rating display at top, and 'Write a Review' form with fields: Name, Service Used (dropdown), Rating (1-5 clickable stars), Review message, Optional photo upload",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-footer-component-with-trustfix-logo-file-00000000d2747206831923d1f7e53476-png-contact-details-phone-8884447229-email-htrustfix-gmail-com-location-placeholder-social-media-icons-facebook-instagram-whatsapp-youtube-google-maps-with-grayscale-to-color-hover-effect-and-payment-badges-upi-google-pay-phonepe-paytm-visa-mastercard-displayed-on-all-pages",
+      "title": "Create footer component with TrustFix logo (file_00000000d2747206831923d1f7e53476.png), contact details (Phone: 8884447229, Email: htrustfix@gmail.com, Location placeholder), social media icons (Facebook, Instagram, WhatsApp, YouTube, Google Maps) with grayscale-to-color hover effect, and payment badges (UPI, Google Pay, PhonePe, Paytm, Visa, Mastercard) displayed on all pages",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-professional-shiny-white-glassmorphism-design-system-throughout-the-application-with-soft-shadows-smooth-hover-animations-glass-card-effects-backdrop-filter-blur-with-semi-transparent-backgrounds-and-trustfix-logo-file-00000000d2747206831923d1f7e53476-png-as-faint-watermark-background-3-5-opacity-on-every-page",
+      "title": "Apply professional shiny white glassmorphism design system throughout the application with soft shadows, smooth hover animations, glass card effects (backdrop-filter blur with semi-transparent backgrounds), and TrustFix logo (file_00000000d2747206831923d1f7e53476.png) as faint watermark background (3-5% opacity) on every page",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-react-router-navigation-for-6-pages-home-services-pricing-booking-contact-reviews-with-smooth-page-transitions-and-maintain-scroll-position-on-navigation",
+      "title": "Implement React Router navigation for 6 pages (Home, Services, Pricing, Booking, Contact, Reviews) with smooth page transitions and maintain scroll position on navigation",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-floating-whatsapp-button-fixed-to-bottom-right-corner-on-all-pages-that-opens-chat-at-https-wa-me-918884447229-with-smooth-entrance-animation-and-hover-effect",
+      "title": "Add floating WhatsApp button fixed to bottom-right corner on all pages that opens chat at https://wa.me/918884447229 with smooth entrance animation and hover effect",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-professional-service-category-images-to-all-8-category-cards-in-servicecategorygrid-component-using-uploaded-images-first-then-fallback-to-appropriate-stock-images-if-any-are-missing-ensuring-no-blank-grey-placeholders-remain",
+      "title": "Add professional service category images to all 8 category cards in ServiceCategoryGrid component, using uploaded images first, then fallback to appropriate stock images if any are missing, ensuring no blank grey placeholders remain",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-clean-outline-svg-icon-fallbacks-for-service-categories-using-heroicons-lucide-material-style-with-mappings-pest-control-shield-bug-outline-carpentry-hammer-cleaning-sparkle-brush-electrical-lightning-bolt-ac-services-snowflake-ac-unit-appliances-repair-gear-wrench-plumbing-pipe-wrench-painting-paint-roller-displayed-only-if-category-image-is-still-missing",
+      "title": "Implement clean outline SVG icon fallbacks for service categories using Heroicons/Lucide/Material style with mappings: Pest Control → shield/bug outline, Carpentry → hammer, Cleaning → sparkle/brush, Electrical → lightning bolt, AC Services → snowflake/AC unit, Appliances Repair → gear/wrench, Plumbing → pipe/wrench, Painting → paint roller, displayed only if category image is still missing",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-background-styling-from-pure-white-to-attractive-premium-background-using-subtle-white-to-light-grey-gradient-soft-beige-tint-or-very-light-glassmorphism-panels-while-maintaining-clean-professional-appearance",
+      "title": "Enhance background styling from pure white to attractive premium background using subtle white to light grey gradient, soft beige tint, or very light glassmorphism panels while maintaining clean professional appearance",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-all-contact-details-throughout-the-application-to-phone-8884447229-email-htrustfix-gmail-com-address-12th-cross-mookambika-nagar-bangalore-in-footer-component-contact-page-booking-page-whatsapp-links-and-header-contact-strip-if-it-exists",
+      "title": "Update all contact details throughout the application to Phone: 8884447229, Email: htrustfix@gmail.com, Address: 12th Cross, Mookambika Nagar, Bangalore in Footer component, Contact page, Booking page, WhatsApp links, and header contact strip if it exists",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-embed-responsive-google-map-on-contact-page-for-the-address-12th-cross-mookambika-nagar-bangalore-with-full-width-and-rounded-corners",
+      "title": "Embed responsive Google Map on Contact page for the address '12th Cross Mookambika Nagar Bangalore' with full width and rounded corners",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-placeholder-social-media-icons-with-official-whatsapp-facebook-and-instagram-svg-icons-in-official-brand-colors-add-them-to-footer-component-and-floatingwhatsappbutton-and-implement-smooth-hover-animations",
+      "title": "Replace placeholder social media icons with official WhatsApp, Facebook, and Instagram SVG icons in official brand colors, add them to Footer component and FloatingWhatsAppButton, and implement smooth hover animations",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-visible-banner-or-footer-line-displaying-trustfix-services-available-all-over-bangalore-24-7-support-text-throughout-the-application",
+      "title": "Add visible banner or footer line displaying 'TrustFix Services Available All Over Bangalore — 24/7 Support' text throughout the application",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-all-8-category-card-images-in-servicecategorygrid-component-with-real-professional-service-photos-pest-control-technician-at-work-carpenter-working-with-tools-home-cleaning-service-in-action-electrician-fixing-wiring-ac-technician-servicing-unit-appliance-repair-technician-working-plumber-fixing-pipe-and-house-painting-in-progress-use-uploaded-images-first-then-fallback-to-high-quality-stock-photos-ensure-each-category-has-a-distinct-visible-professional-image-with-no-blank-placeholders-or-cartoon-icons",
+      "title": "Replace all 8 category card images in ServiceCategoryGrid component with real professional service photos: pest control technician at work, carpenter working with tools, home cleaning service in action, electrician fixing wiring, AC technician servicing unit, appliance repair technician working, plumber fixing pipe, and house painting in progress. Use uploaded images first, then fallback to high-quality stock photos. Ensure each category has a distinct, visible professional image with no blank placeholders or cartoon icons.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-pure-white-background-throughout-the-application-with-a-premium-subtle-gradient-white-to-very-light-grey-or-white-to-very-light-green-tint-with-soft-glass-panels-and-shadows-apply-this-background-theme-consistently-across-all-pages-home-services-pricing-booking-contact-reviews-while-maintaining-the-professional-trustfix-glassmorphism-design-aesthetic",
+      "title": "Replace pure white background throughout the application with a premium subtle gradient (white to very light grey OR white to very light green tint) with soft glass panels and shadows. Apply this background theme consistently across all pages (Home, Services, Pricing, Booking, Contact, Reviews) while maintaining the professional TrustFix glassmorphism design aesthetic.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rebuild-frontend-with-cache-busting-techniques-to-force-immediate-ui-refresh-and-ensure-all-visual-changes-category-images-and-background-theme-are-visible-without-browser-cache-issues",
+      "title": "Rebuild frontend with cache-busting techniques to force immediate UI refresh and ensure all visual changes (category images and background theme) are visible without browser cache issues.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Build 6-page TrustFix Home Services website with React + TypeScript",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement sticky navbar with logo, navigation menu, and real-time search bar filtering services",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Create Home page with hero banner, 8 service categories grid, and featured reviews carousel",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Build Services page with 48+ services across 8 categories (Pest Control, Carpentry, Cleaning, Electrical, AC Services, Appliances Repair, Plumbing, Painting) with images, descriptions, and prices",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Create Pricing page with services grouped by category and starting prices",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Build Booking page with form that opens WhatsApp (wa.me/918884447229), stores data in Motoko backend, and shows success popup",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Create Contact page with contact details (8884447229, htrustfix@gmail.com), map placeholder, and quick contact form",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Build Reviews page with customer review submission form (name, service, 1-5 stars, text, optional photo), backend storage with approval workflow, category filter, and average rating display",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement footer with logo, contact info, social icons (Facebook, Instagram, WhatsApp, YouTube, Google Maps), and payment badges (UPI, Google Pay, PhonePe, Paytm, Visa, Mastercard)",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Apply professional shiny white glassmorphism design with smooth animations, soft shadows, and hover effects throughout application",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Implement Motoko backend to store and manage bookings with fields (name, phone, email, service, address, message, timestamp), customer reviews with fields (name, service, rating, reviewText, photoUrl optional, date, approvalStatus), and provide query methods to retrieve approved reviews and all bookings",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Add professional photos to all 8 service category cards with fallback to stock images if uploaded images missing",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Implement clean outline SVG icon fallbacks for categories using Heroicons/Lucide style (shield for Pest Control, hammer for Carpentry, sparkle for Cleaning, lightning for Electrical, snowflake for AC, gear for Appliances, pipe for Plumbing, paint roller for Painting)",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Enhance background from pure white to subtle gradient or soft beige tint while maintaining professional glassmorphism design",
+      "reqIds": [
+        "AR-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Update all contact details throughout application to Phone: 8884447229, Email: htrustfix@gmail.com, Address: 12th Cross, Mookambika Nagar, Bangalore (footer, contact page, booking page, WhatsApp links, header)",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Embed responsive Google Map on Contact page for address: 12th Cross Mookambika Nagar Bangalore with full width and rounded corners",
+      "reqIds": [
+        "AR-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Replace placeholder social icons with official WhatsApp, Facebook, Instagram SVG icons in official colors with smooth hover animations in footer and floating WhatsApp button",
+      "reqIds": [
+        "AR-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Add 5 realistic customer reviews with names, services used, 5-star ratings, and positive feedback text displayed in featured slider on Home and full list on Reviews page",
+      "reqIds": [
+        "AR-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add visible banner or footer line stating 'TrustFix Services Available All Over Bangalore — 24/7 Support'",
+      "reqIds": [
+        "AR-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Add 5 realistic customer reviews to the backend with fields: Customer Name, Service Used, 5-star rating, and short positive review text covering themes like fast service, affordable price, polite staff, on-time visit, satisfied customer, displaying them in the featured slider on Home page and full list on Reviews page",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Replace all 8 category card images with real professional service photos (pest control technician, carpenter working, home cleaning service, electrician fixing wiring, AC technician servicing unit, appliance repair technician, plumber fixing pipe, house painting), using uploaded images first then stock photos as fallback, ensuring no placeholders or cartoon icons",
+      "reqIds": [
+        "AR-19"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Replace pure white background with premium subtle gradient (white to very light grey OR white to very light green tint) with soft glass panels and shadows across all pages while maintaining professional TrustFix look",
+      "reqIds": [
+        "AR-21"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "TrustFix",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

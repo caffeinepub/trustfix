@@ -1,0 +1,100 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix TrustFix category images and premium background theme",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "summary": "Replace all 8 category card images in ServiceCategoryGrid with professional service photos",
+      "acceptanceCriteria": [
+        "All 8 category cards display professional service photos",
+        "Each category has a different, relevant image",
+        "Images are visible immediately on page load",
+        "Images are responsive and properly sized",
+        "No grey placeholders or cartoon icons remain"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
+          "operation": "modify",
+          "description": "Update the categories array to use the generated professional service photos. Replace image paths for all 8 categories: Pest Control uses frontend/public/assets/generated/pest-control-category.dim_400x300.png, Carpentry uses frontend/public/assets/generated/carpentry-category.dim_400x300.png, Cleaning uses frontend/public/assets/generated/cleaning-category.dim_400x300.png, Electrical uses frontend/public/assets/generated/electrical-category.dim_400x300.png, AC Services uses frontend/public/assets/generated/ac-services-category.dim_400x300.png, Appliances Repair uses frontend/public/assets/generated/appliances-repair-category.dim_400x300.png, Plumbing uses frontend/public/assets/generated/plumbing-category.dim_400x300.png, and Painting uses frontend/public/assets/generated/painting-category.dim_400x300.png. Ensure images are properly referenced and loaded."
+        }
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "summary": "Replace pure white background with premium subtle gradient and glass panels across all pages",
+      "acceptanceCriteria": [
+        "Background is no longer pure white",
+        "Subtle gradient is applied (white to light grey or white to light green tint)",
+        "Soft glass panels with backdrop blur are visible",
+        "Soft shadows enhance depth without overwhelming content",
+        "Theme is consistent across all 6 pages",
+        "Professional appearance is maintained"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add global background gradient styles to the body element. Implement a subtle gradient from white to very light grey (or white to very light green tint). Enhance existing glassmorphism utilities with soft shadow definitions that complement the new background. Ensure the gradient creates a premium feel while maintaining the professional TrustFix aesthetic."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Add custom gradient color stops to the Tailwind theme configuration to support the premium background gradient (white to light grey or white to light green tint). Define soft shadow utilities that work harmoniously with glass panels and the new background gradient."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Apply the premium background gradient to the main layout wrapper so it appears consistently across all pages (Home, Services, Pricing, Booking, Contact, Reviews). Ensure the gradient and glass panel styling integrate seamlessly with existing watermarked logo background and other layout elements."
+        },
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Verify that HeroSection, ServiceCategoryGrid, and FeaturedReviewsCarousel sections display properly against the new premium background gradient. Adjust any section-specific backgrounds or glass panels if needed to maintain visual hierarchy and readability."
+        },
+        {
+          "path": "frontend/src/pages/Services.tsx",
+          "operation": "modify",
+          "description": "Ensure service category tabs and ServiceCard grid components work well with the new premium background gradient. Apply glass panel effects to service cards if needed to enhance depth and maintain professional appearance."
+        },
+        {
+          "path": "frontend/src/pages/Pricing.tsx",
+          "operation": "modify",
+          "description": "Verify PricingCard components display properly against the premium background gradient. Apply soft shadows and glass panel effects to pricing cards to enhance visual hierarchy."
+        },
+        {
+          "path": "frontend/src/pages/Booking.tsx",
+          "operation": "modify",
+          "description": "Ensure the booking form displays properly against the new premium background gradient. Apply glass panel effects to the form container to maintain consistency with the overall design theme."
+        },
+        {
+          "path": "frontend/src/pages/Contact.tsx",
+          "operation": "modify",
+          "description": "Verify contact information sections and contact form work well with the premium background gradient. Apply glass panel effects to content sections to enhance readability and maintain professional appearance."
+        },
+        {
+          "path": "frontend/src/pages/Reviews.tsx",
+          "operation": "modify",
+          "description": "Ensure ReviewCard grid and WriteReviewForm component display properly against the new premium background gradient. Apply glass panel effects and soft shadows to review cards and form sections to maintain visual consistency."
+        }
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "summary": "Rebuild frontend with cache-busting to ensure visual changes are immediately visible",
+      "acceptanceCriteria": [
+        "Frontend is rebuilt with latest changes",
+        "Visual updates are immediately visible on deployment",
+        "No cached styles or images prevent new visuals from displaying"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Add cache-busting meta tags to prevent browser caching of styles and assets. Include no-cache directives in the HTML head to ensure fresh content loads on every visit. This ensures the new category images and background gradient are visible immediately without requiring hard refresh."
+        }
+      ]
+    }
+  ]
+}
