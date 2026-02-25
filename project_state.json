@@ -1,34 +1,45 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "TrustFix home services app. Maintaining existing design while updating: painting prices (reduced by ₹1/sqft), cleaning prices (Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, home cleaning tiers, villa/commercial/carpet show free inspection flow), service click isolation (Pest Control/Cleaning/Painting show only their subcategories), booking form with property type options, and all buttons linking to WhatsApp https://wa.me/918884447229.",
+  "summary": "TrustFix website update: adding Book Now popup booking form with WhatsApp integration on all subcategory cards (Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, Plumbing). Form collects Customer Name, Mobile Number, Address, Selected Service (auto-filled), Property Type, Date, Time, Notes. On submit, auto-opens WhatsApp to 918884447229 with URL-encoded prefilled message. All existing design, layout, colors, logo, banner, images, service order, pricing, and animations preserved.",
   "architectural_notes": [
-    "Do NOT redesign or change layout, colors, header, or cards — only modify data and behavior"
+    "Book Now button on subcategory cards opens a popup modal form (not a new page)",
+    "On form submit, open WhatsApp chat to 918884447229 with URL-encoded prefilled message containing all form fields",
+    "Selected Service field in booking form is auto-filled from the clicked subcategory card",
+    "Do NOT change design, colors, logo, banner, images, service order, pricing, animations, or floating WhatsApp button"
   ],
   "known_issues": [],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-in-frontend-src-data-services-ts-reduce-every-painting-package-price-by-exactly-1-for-example-18-sqft-17-sqft-19-18-17-16-13-12-9-8-5-4-apply-to-all-painting-service-entries-do-not-change-any-other-field-layout-or-card-design",
-      "title": "In frontend/src/data/services.ts, reduce every painting package price by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Apply to all painting service entries. Do not change any other field, layout, or card design.",
+      "id": "feature-create-a-reusable-bookingformpopup-component-that-renders-as-a-modal-overlay-not-a-new-page-the-popup-must-include-these-fields-customer-name-required-text-mobile-number-required-tel-address-required-text-textarea-selected-service-auto-filled-from-the-clicked-subcategory-read-only-text-property-type-dropdown-1bhk-2bhk-3bhk-square-feet-villa-commercial-preferred-date-date-picker-preferred-time-time-picker-and-notes-textarea-include-a-close-dismiss-button-the-popup-must-be-accessible-and-closeable-by-clicking-the-backdrop",
+      "title": "Create a reusable BookingFormPopup component that renders as a modal overlay (not a new page). The popup must include these fields: Customer Name (required, text), Mobile Number (required, tel), Address (required, text/textarea), Selected Service (auto-filled from the clicked subcategory, read-only text), Property Type (dropdown: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date picker), Preferred Time (time picker), and Notes (textarea). Include a close/dismiss button. The popup must be accessible and closeable by clicking the backdrop.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-in-frontend-src-data-services-ts-and-frontend-src-components-cleaningservicecard-tsx-update-cleaning-service-prices-to-bathroom-449-sofa-699-mattress-799-kitchen-1499-for-home-cleaning-set-prices-to-1bhk-vacant-2499-1bhk-occupied-3499-2bhk-vacant-3999-2bhk-occupied-4999-3bhk-vacant-5999-3bhk-occupied-6999-for-villa-commercial-and-carpet-cleaning-entries-replace-the-price-display-with-the-flow-label-free-inspection-quote-service-do-not-change-card-layout-or-design",
-      "title": "In frontend/src/data/services.ts and frontend/src/components/CleaningServiceCard.tsx, update cleaning service prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning, set prices to: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, replace the price display with the flow label 'Free Inspection → Quote → Service'. Do not change card layout or design.",
+      "id": "feature-on-bookingformpopup-submission-do-not-navigate-away-or-show-a-thank-you-page-instead-construct-a-url-encoded-whatsapp-message-and-automatically-open-https-wa-me-918884447229-text-encoded-message-in-a-new-tab-the-message-must-follow-this-format-exactly-hello-trustfix-i-want-to-book-a-service-name-customer-name-phone-mobile-number-address-address-service-service-name-property-type-property-type-date-date-time-time-notes-notes-all-field-values-must-be-url-encoded-using-encodeuricomponent",
+      "title": "On BookingFormPopup submission, do NOT navigate away or show a thank-you page. Instead, construct a URL-encoded WhatsApp message and automatically open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab. The message must follow this format exactly:\n\nHello TrustFix,\nI want to book a service.\n\nName: {Customer Name}\nPhone: {Mobile Number}\nAddress: {Address}\nService: {Service Name}\nProperty Type: {Property Type}\nDate: {Date}\nTime: {Time}\nNotes: {Notes}\n\nAll field values must be URL-encoded using encodeURIComponent.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-update-every-button-and-cta-in-the-frontend-including-free-inspection-book-now-call-and-the-floating-whatsapp-button-to-open-the-url-https-wa-me-918884447229-verify-this-applies-to-floatingwhatsappbutton-tsx-herosection-tsx-pestcontrolcard-tsx-cleaningservicecard-tsx-paintingservicecard-tsx-servicecard-tsx-subcategorycard-tsx-and-any-other-component-with-a-booking-or-call-cta-do-not-change-button-appearance-or-layout",
-      "title": "Update every button and CTA in the frontend — including 'Free Inspection', 'Book Now', 'Call', and the floating WhatsApp button — to open the URL https://wa.me/918884447229. Verify this applies to: FloatingWhatsAppButton.tsx, HeroSection.tsx, PestControlCard.tsx, CleaningServiceCard.tsx, PaintingServiceCard.tsx, ServiceCard.tsx, SubcategoryCard.tsx, and any other component with a booking or call CTA. Do not change button appearance or layout.",
+      "id": "feature-add-a-book-now-button-to-every-subcategory-card-across-all-service-categories-cleaning-painting-pest-control-electrical-carpentry-ac-appliances-and-plumbing-this-applies-to-the-subcategorycard-component-and-any-specialized-card-components-cleaningservicecard-paintingservicecard-pestcontrolcard-each-button-must-pass-the-service-subcategory-name-to-the-bookingformpopup-as-the-auto-filled-selected-service-value-the-button-styling-must-be-consistent-with-the-existing-site-design-do-not-alter-existing-card-layout-colors-images-pricing-or-animations",
+      "title": "Add a 'Book Now' button to every subcategory card across all service categories: Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, and Plumbing. This applies to the SubcategoryCard component and any specialized card components (CleaningServiceCard, PaintingServiceCard, PestControlCard). Each button must pass the service/subcategory name to the BookingFormPopup as the auto-filled Selected Service value. The button styling must be consistent with the existing site design (do not alter existing card layout, colors, images, pricing, or animations).",
       "reqIds": [
-        "REQ-5"
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-bookingformpopup-state-open-closed-and-selected-service-name-into-the-services-page-and-any-page-that-renders-subcategory-cards-home-services-use-react-state-to-manage-popup-visibility-and-the-currently-selected-service-name-the-floating-whatsapp-button-floatingwhatsappbutton-and-floatingcallbutton-must-remain-completely-unchanged",
+      "title": "Wire the BookingFormPopup state (open/closed and selected service name) into the Services page and any page that renders subcategory cards (Home, Services). Use React state to manage popup visibility and the currently selected service name. The floating WhatsApp button (FloatingWhatsAppButton and FloatingCallButton) must remain completely unchanged.",
+      "reqIds": [
+        "REQ-4"
       ],
       "version": 1
     }
@@ -36,48 +47,8 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Reduce all painting package prices by ₹1/sqft",
+      "summary": "Add Book Now popup booking form on all subcategory cards (Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, Plumbing) with WhatsApp auto-message integration",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Update cleaning prices: Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, home cleaning tiers, villa/commercial/carpet show free inspection flow",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Service click isolation: clicking Pest Control/Cleaning/Painting shows only that service's subcategories",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Booking form property type options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial (for Pest Control/Cleaning/Painting only)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "All buttons (Free Inspection, Book Now, Call, Floating) must open WhatsApp: https://wa.me/918884447229",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-8",
-      "summary": "In frontend/src/pages/Services.tsx, ensure that when a user navigates to or selects the Pest Control, Cleaning, or Painting service, only that service's own subcategory cards are rendered. No cards or sections from other services must appear on the same view. The service detail page must be fully isolated per service.",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-9",
-      "summary": "In frontend/src/pages/Booking.tsx, for bookings where the service type is Pest Control, Cleaning, or Painting, add a 'Property Type' select field with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial. This field should only be visible when one of these three service types is selected. Do not change the booking form layout for other service types.",
-      "reqIds": [
-        "REQ-4"
-      ],
       "status": "pending"
     }
   ],

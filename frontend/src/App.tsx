@@ -23,7 +23,20 @@ const homeRoute = createRoute({
   component: Home,
 });
 
+// Services list route (with optional category search param)
 const servicesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/services',
+  component: Services,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      category: typeof search.category === 'string' ? search.category : undefined,
+    } as { category?: string };
+  },
+});
+
+// Legacy route kept for any existing deep links
+const servicesDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/services/$serviceId',
   component: Services,
@@ -50,6 +63,7 @@ const reviewsRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   homeRoute,
   servicesRoute,
+  servicesDetailRoute,
   bookingRoute,
   contactRoute,
   reviewsRoute,

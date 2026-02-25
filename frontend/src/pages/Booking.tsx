@@ -1,257 +1,281 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { useActor } from '../hooks/useActor';
-import { useMutation } from '@tanstack/react-query';
-import { ServiceType, PropertyType } from '../backend';
-import { getWhatsAppLink, PHONE_NUMBER } from '../data/services';
+import { Calendar, Clock, MapPin, Phone, User, FileText, Home, ChevronDown } from 'lucide-react';
 
-const bookingServices = [
-  { value: ServiceType.pestControl, label: 'Pest Control', hasPropertyType: true },
-  { value: ServiceType.deepCleaning, label: 'Cleaning', hasPropertyType: true },
-  { value: ServiceType.painting, label: 'Painting', hasPropertyType: true },
-  { value: ServiceType.carpetUpholstery, label: 'Carpet & Upholstery', hasPropertyType: false },
-  { value: ServiceType.other, label: 'Other Services', hasPropertyType: false },
+const WHATSAPP_URL = 'https://wa.me/918884447229';
+
+const SERVICES_WITH_PROPERTY = ['pest-control', 'cleaning', 'painting', 'Pest Control', 'Cleaning', 'Painting'];
+
+const serviceOptions = [
+  { value: 'pest-control', label: 'Pest Control' },
+  { value: 'cleaning', label: 'Cleaning' },
+  { value: 'painting', label: 'Painting' },
+  { value: 'electrical', label: 'Electrical' },
+  { value: 'carpentry', label: 'Carpentry' },
+  { value: 'ac-services', label: 'AC Services' },
+  { value: 'appliances-repair', label: 'Appliances Repair' },
+  { value: 'plumbing', label: 'Plumbing' },
 ];
 
-const propertyTypes = [
-  { value: PropertyType.oneBhk, label: '1BHK' },
-  { value: PropertyType.twoBhk, label: '2BHK' },
-  { value: PropertyType.threeBhk, label: '3BHK' },
-  { value: PropertyType.squareFeet, label: 'Square Feet' },
-  { value: PropertyType.villa, label: 'Villa' },
-  { value: PropertyType.commercial, label: 'Commercial' },
+const propertyOptions = [
+  { value: '1bhk', label: '1BHK' },
+  { value: '2bhk', label: '2BHK' },
+  { value: '3bhk', label: '3BHK' },
+  { value: 'square-feet', label: 'Square Feet' },
+  { value: 'villa', label: 'Villa' },
+  { value: 'commercial', label: 'Commercial' },
+];
+
+const timeSlots = [
+  '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM',
+  '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM',
+  '4:00 PM', '5:00 PM', '6:00 PM',
 ];
 
 export default function Booking() {
-  const { actor } = useActor();
-  const navigate = useNavigate();
-
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [service, setService] = useState<ServiceType>(ServiceType.deepCleaning);
-  const [propertyType, setPropertyType] = useState<PropertyType>(PropertyType.oneBhk);
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [notes, setNotes] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const selectedService = bookingServices.find((s) => s.value === service);
-  const showPropertyType = selectedService?.hasPropertyType ?? false;
-
-  const mutation = useMutation({
-    mutationFn: async () => {
-      if (!actor) throw new Error('Not connected');
-      await actor.addBooking(name, phone, address, service, propertyType, date, time, notes);
-    },
-    onSuccess: () => {
-      const propLabel = showPropertyType
-        ? propertyTypes.find((p) => p.value === propertyType)?.label || ''
-        : '';
-      const msg = `Hello TrustFix! I've submitted a booking request.\n\nName: ${name}\nPhone: ${phone}\nService: ${selectedService?.label}\n${propLabel ? `Property: ${propLabel}\n` : ''}Address: ${address}\nDate: ${date}\nTime: ${time}\n${notes ? `Notes: ${notes}` : ''}`;
-      window.open(getWhatsAppLink(msg), '_blank');
-      setSubmitted(true);
-    },
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    service: '',
+    propertyType: '',
+    squareFeet: '',
+    date: '',
+    time: '',
+    notes: '',
   });
 
-  const handleQuoteOnly = () => {
-    const msg = `Hello TrustFix! I need ${selectedService?.label} service. Please provide a quote.\n\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
-    window.open(getWhatsAppLink(msg), '_blank');
+  const showPropertyType = SERVICES_WITH_PROPERTY.includes(formData.service);
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      // Reset property type when service changes to non-property service
+      if (field === 'service' && !SERVICES_WITH_PROPERTY.includes(value)) {
+        updated.propertyType = '';
+        updated.squareFeet = '';
+      }
+      return updated;
+    });
   };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-        <div className="bg-white rounded-2xl shadow-card p-8 max-w-md w-full text-center">
-          <div className="text-5xl mb-4">🎉</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
-          <p className="text-gray-500 mb-6 text-sm">
-            Your booking request has been submitted. Our team will contact you shortly.
-          </p>
-          <div className="flex flex-col gap-3">
-            <a
-              href={`tel:${PHONE_NUMBER}`}
-              className="bg-brand-blue text-white font-semibold py-3 rounded-xl hover:bg-brand-blue-dark transition-colors"
-            >
-              📞 Call Now
-            </a>
-            <button
-              onClick={() => navigate({ to: '/' })}
-              className="border border-gray-200 text-gray-700 font-medium py-3 rounded-xl hover:bg-gray-50 transition-colors"
-            >
-              Back to Home
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const service = serviceOptions.find((s) => s.value === formData.service)?.label || formData.service;
+    const property = propertyOptions.find((p) => p.value === formData.propertyType)?.label || formData.propertyType;
+
+    let message = `Hi TrustFix! I'd like to book a service.\n\n`;
+    message += `*Name:* ${formData.name}\n`;
+    message += `*Phone:* ${formData.phone}\n`;
+    message += `*Service:* ${service}\n`;
+    if (showPropertyType && formData.propertyType) {
+      message += `*Property Type:* ${property}\n`;
+    }
+    if (showPropertyType && formData.squareFeet) {
+      message += `*Square Feet:* ${formData.squareFeet}\n`;
+    }
+    message += `*Address:* ${formData.address}\n`;
+    message += `*Date:* ${formData.date}\n`;
+    message += `*Time:* ${formData.time}\n`;
+    if (formData.notes) {
+      message += `*Notes:* ${formData.notes}\n`;
+    }
+
+    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-10 px-4">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Book a Service</h1>
-          <p className="text-gray-500 text-sm">Fill in the details and we'll get back to you shortly</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Book a Service</h1>
+          <p className="text-gray-500">Fill in the details below and we'll confirm via WhatsApp</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-6 sm:p-8">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (showPropertyType) {
-                mutation.mutate();
-              } else {
-                handleQuoteOnly();
-              }
-            }}
-            className="space-y-5"
-          >
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder="Your full name"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
-              />
-            </div>
+        {/* Disclaimer */}
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+          <Phone size={18} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-green-800">WhatsApp Booking</p>
+            <p className="text-xs text-green-700 mt-0.5">
+              Your booking details will be sent directly to our team via WhatsApp for instant confirmation.
+            </p>
+          </div>
+        </div>
 
-            {/* Phone */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                placeholder="10-digit mobile number"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
-              />
-            </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-5">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              <span className="flex items-center gap-2"><User size={15} /> Full Name *</span>
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              placeholder="Enter your full name"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors"
+            />
+          </div>
 
-            {/* Service */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Service *</label>
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              <span className="flex items-center gap-2"><Phone size={15} /> Phone Number *</span>
+            </label>
+            <input
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={(e) => handleChange('phone', e.target.value)}
+              placeholder="Enter your phone number"
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors"
+            />
+          </div>
+
+          {/* Service */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              <span className="flex items-center gap-2"><FileText size={15} /> Service Required *</span>
+            </label>
+            <div className="relative">
               <select
-                value={service}
-                onChange={(e) => setService(e.target.value as ServiceType)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
+                required
+                value={formData.service}
+                onChange={(e) => handleChange('service', e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors appearance-none bg-white"
               >
-                {bookingServices.map((s) => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
+                <option value="">Select a service</option>
+                {serviceOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
+          </div>
 
-            {/* Property Type — only for Pest Control, Cleaning, Painting */}
-            {showPropertyType && (
+          {/* Property Type — only for Pest Control, Cleaning, Painting */}
+          {showPropertyType && (
+            <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Property Type *</label>
-                <select
-                  value={propertyType}
-                  onChange={(e) => setPropertyType(e.target.value as PropertyType)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
-                >
-                  {propertyTypes.map((p) => (
-                    <option key={p.value} value={p.value}>{p.label}</option>
-                  ))}
-                </select>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <span className="flex items-center gap-2"><Home size={15} /> Property Type</span>
+                </label>
+                <div className="relative">
+                  <select
+                    value={formData.propertyType}
+                    onChange={(e) => handleChange('propertyType', e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors appearance-none bg-white"
+                  >
+                    <option value="">Select property type</option>
+                    {propertyOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
               </div>
-            )}
 
-            {/* Address */}
+              {/* Square Feet — shown when Square Feet is selected */}
+              {formData.propertyType === 'square-feet' && (
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    Square Feet Area
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.squareFeet}
+                    onChange={(e) => handleChange('squareFeet', e.target.value)}
+                    placeholder="Enter area in sq.ft"
+                    min="1"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors"
+                  />
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              <span className="flex items-center gap-2"><MapPin size={15} /> Address *</span>
+            </label>
+            <textarea
+              required
+              value={formData.address}
+              onChange={(e) => handleChange('address', e.target.value)}
+              placeholder="Enter your full address"
+              rows={2}
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors resize-none"
+            />
+          </div>
+
+          {/* Date & Time */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
-              <textarea
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <span className="flex items-center gap-2"><Calendar size={15} /> Date *</span>
+              </label>
+              <input
+                type="date"
                 required
-                rows={2}
-                placeholder="Your full address"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue resize-none"
+                min={today}
+                value={formData.date}
+                onChange={(e) => handleChange('date', e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors"
               />
             </div>
-
-            {/* Date & Time */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <span className="flex items-center gap-2"><Clock size={15} /> Time *</span>
+              </label>
+              <div className="relative">
                 <select
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue"
+                  required
+                  value={formData.time}
+                  onChange={(e) => handleChange('time', e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors appearance-none bg-white"
                 >
                   <option value="">Select time</option>
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="10:00 AM">10:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="12:00 PM">12:00 PM</option>
-                  <option value="2:00 PM">2:00 PM</option>
-                  <option value="3:00 PM">3:00 PM</option>
-                  <option value="4:00 PM">4:00 PM</option>
-                  <option value="5:00 PM">5:00 PM</option>
+                  {timeSlots.map((slot) => (
+                    <option key={slot} value={slot}>{slot}</option>
+                  ))}
                 </select>
+                <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
               </div>
             </div>
+          </div>
 
-            {/* Notes */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={3}
-                placeholder="Any specific requirements or notes..."
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue resize-none"
-              />
-            </div>
+          {/* Notes */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              <span className="flex items-center gap-2"><FileText size={15} /> Additional Notes</span>
+            </label>
+            <textarea
+              value={formData.notes}
+              onChange={(e) => handleChange('notes', e.target.value)}
+              placeholder="Any specific requirements or details..."
+              rows={3}
+              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-colors resize-none"
+            />
+          </div>
 
-            {/* Submit */}
-            {showPropertyType ? (
-              <button
-                type="submit"
-                disabled={mutation.isPending || !name || !phone || !address}
-                className="w-full bg-brand-blue text-white font-bold py-4 rounded-xl hover:bg-brand-blue-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base"
-              >
-                {mutation.isPending ? (
-                  <>
-                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Booking...
-                  </>
-                ) : '📅 Confirm Booking'}
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={!name || !phone}
-                className="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base"
-              >
-                💬 Get Quote on WhatsApp
-              </button>
-            )}
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 text-base shadow-md"
+          >
+            <Phone size={18} />
+            Send Booking via WhatsApp
+          </button>
+        </form>
 
-            {mutation.isError && (
-              <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
-            )}
-          </form>
-        </div>
-
-        <p className="text-center text-gray-400 text-xs mt-4">
-          By submitting, you agree to be contacted by TrustFix for service-related communication.
+        <p className="text-center text-xs text-gray-400 mt-4">
+          By submitting, you agree to be contacted via WhatsApp for booking confirmation.
         </p>
       </div>
     </div>

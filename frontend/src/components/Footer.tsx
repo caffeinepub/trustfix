@@ -1,5 +1,5 @@
 import { Phone, MessageCircle, Heart } from 'lucide-react';
-import { PHONE_NUMBER, WHATSAPP_NUMBER, getWhatsAppLink, services } from '../data/services';
+import { PHONE_NUMBER, WHATSAPP_NUMBER, getWhatsAppLink, categoryOrder, servicesData } from '../data/services';
 import { SiFacebook, SiInstagram } from 'react-icons/si';
 
 export default function Footer() {
@@ -29,7 +29,9 @@ export default function Footer() {
             </p>
             <div className="space-y-2">
               <a
-                href={`tel:${PHONE_NUMBER}`}
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 text-white/90 hover:text-white text-sm transition-colors"
               >
                 <Phone size={16} />
@@ -59,16 +61,20 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Our Services</h3>
             <ul className="space-y-2">
-              {services.map((service) => (
-                <li key={service.id}>
-                  <a
-                    href={`/services/${service.id}`}
-                    className="text-white/80 hover:text-white text-sm transition-colors"
-                  >
-                    {service.name}
-                  </a>
-                </li>
-              ))}
+              {categoryOrder.map((id) => {
+                const cat = servicesData[id];
+                if (!cat) return null;
+                return (
+                  <li key={id}>
+                    <a
+                      href={`/services?category=${id}`}
+                      className="text-white/80 hover:text-white text-sm transition-colors"
+                    >
+                      {cat.name}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -77,6 +83,7 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><a href="/" className="text-white/80 hover:text-white text-sm transition-colors">Home</a></li>
+              <li><a href="/services" className="text-white/80 hover:text-white text-sm transition-colors">Services</a></li>
               <li><a href="/booking" className="text-white/80 hover:text-white text-sm transition-colors">Book a Service</a></li>
               <li><a href="/reviews" className="text-white/80 hover:text-white text-sm transition-colors">Reviews</a></li>
               <li><a href="/contact" className="text-white/80 hover:text-white text-sm transition-colors">Contact Us</a></li>

@@ -1,117 +1,109 @@
 {
   "kind": "build_request",
-  "title": "TrustFix: Price updates, service isolation, booking form options, and WhatsApp button wiring",
+  "title": "Add Book Now Popup Booking Form with WhatsApp Integration on All Subcategory Cards",
   "projectName": "TrustFix",
-  "priority": "high",
+  "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "In frontend/src/data/services.ts, reduce every painting package price by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Apply to all painting service entries. Do not change any other field, layout, or card design.",
+      "text": "Create a reusable BookingFormPopup component that renders as a modal overlay (not a new page). The popup must include these fields: Customer Name (required, text), Mobile Number (required, tel), Address (required, text/textarea), Selected Service (auto-filled from the clicked subcategory, read-only text), Property Type (dropdown: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date picker), Preferred Time (time picker), and Notes (textarea). Include a close/dismiss button. The popup must be accessible and closeable by clicking the backdrop.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-9"
         ],
         "quotes": [
-          "All painting package prices must be ₹1 LESS"
+          "Open a POPUP BOOKING FORM (not new page)",
+          "Form fields: Customer Name, Mobile Number, Address, Selected Service (auto-filled from clicked card), Property Type dropdown, Preferred Date, Preferred Time, Notes"
         ]
       },
       "acceptanceCriteria": [
-        "Every painting package price shown in the UI is exactly ₹1 lower than before.",
-        "No painting card layout, color, or image is changed.",
-        "No other service prices are affected."
+        "BookingFormPopup renders as a centered modal overlay with a semi-transparent backdrop",
+        "All listed fields are present and functional",
+        "Selected Service field is auto-filled and read-only based on which subcategory triggered the popup",
+        "Property Type dropdown shows exactly: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial",
+        "Customer Name and Mobile Number are marked as required and prevent submission if empty",
+        "Popup can be closed via a close button or clicking the backdrop"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "In frontend/src/data/services.ts and frontend/src/components/CleaningServiceCard.tsx, update cleaning service prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning, set prices to: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, replace the price display with the flow label 'Free Inspection → Quote → Service'. Do not change card layout or design.",
+      "text": "On BookingFormPopup submission, do NOT navigate away or show a thank-you page. Instead, construct a URL-encoded WhatsApp message and automatically open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab. The message must follow this format exactly:\n\nHello TrustFix,\nI want to book a service.\n\nName: {Customer Name}\nPhone: {Mobile Number}\nAddress: {Address}\nService: {Service Name}\nProperty Type: {Property Type}\nDate: {Date}\nTime: {Time}\nNotes: {Notes}\n\nAll field values must be URL-encoded using encodeURIComponent.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-9"
         ],
         "quotes": [
-          "CLEANING PRICES UPDATE",
-          "Villa / Commercial / Carpet: Show \"Free inspection → Quote → Service\""
+          "After user submits form: Automatically open WhatsApp chat to: 918884447229",
+          "WhatsApp message must include: Customer Name, Mobile, Address, Service selected, Property type, Date, Time, Notes",
+          "Message should be prefilled and URL-encoded"
         ]
       },
       "acceptanceCriteria": [
-        "Bathroom shows ₹449, Sofa shows ₹699, Mattress shows ₹799, Kitchen shows ₹1499.",
-        "Home cleaning cards show all six BHK/occupancy tiers with the correct prices.",
-        "Villa, Commercial, and Carpet cards display 'Free Inspection → Quote → Service' instead of a numeric price.",
-        "No other cleaning card visuals are changed."
+        "On form submit, WhatsApp opens in a new tab to wa.me/918884447229 with the pre-filled message",
+        "The message contains all 8 fields in the specified format",
+        "The message text is correctly URL-encoded so special characters and line breaks render properly in WhatsApp",
+        "No thank-you page or redirect occurs after submission"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "In frontend/src/pages/Services.tsx, ensure that when a user navigates to or selects the Pest Control, Cleaning, or Painting service, only that service's own subcategory cards are rendered. No cards or sections from other services must appear on the same view. The service detail page must be fully isolated per service.",
+      "text": "Add a 'Book Now' button to every subcategory card across all service categories: Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, and Plumbing. This applies to the SubcategoryCard component and any specialized card components (CleaningServiceCard, PaintingServiceCard, PestControlCard). Each button must pass the service/subcategory name to the BookingFormPopup as the auto-filled Selected Service value. The button styling must be consistent with the existing site design (do not alter existing card layout, colors, images, pricing, or animations).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-9"
         ],
         "quotes": [
-          "When user clicks: Pest Control / Cleaning / Painting — Show ONLY that service's subcategories. Do NOT show other services."
+          "Add BOOK NOW button on ALL SUBCATEGORY CARDS (Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, Plumbing)",
+          "Do NOT rebuild site. Do NOT redesign anything. Only add this booking popup + WhatsApp integration."
         ]
       },
       "acceptanceCriteria": [
-        "Clicking/navigating to Pest Control shows only pest control subcategory cards.",
-        "Clicking/navigating to Cleaning shows only cleaning subcategory cards.",
-        "Clicking/navigating to Painting shows only painting subcategory cards.",
-        "No cards from other service categories appear on any of these pages."
+        "Every subcategory card in all 8 service categories displays a 'Book Now' button",
+        "CleaningServiceCard, PaintingServiceCard, PestControlCard, and SubcategoryCard all have the Book Now button",
+        "Clicking any Book Now button opens the BookingFormPopup with the corresponding service name pre-filled",
+        "Existing card layout, colors, images, pricing, animations, and existing WhatsApp/Get Quote buttons are unchanged",
+        "The Book Now button does not replace existing buttons — it is added alongside them"
       ]
     },
     {
       "id": "REQ-4",
-      "text": "In frontend/src/pages/Booking.tsx, for bookings where the service type is Pest Control, Cleaning, or Painting, add a 'Property Type' select field with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial. This field should only be visible when one of these three service types is selected. Do not change the booking form layout for other service types.",
+      "text": "Wire the BookingFormPopup state (open/closed and selected service name) into the Services page and any page that renders subcategory cards (Home, Services). Use React state to manage popup visibility and the currently selected service name. The floating WhatsApp button (FloatingWhatsAppButton and FloatingCallButton) must remain completely unchanged.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-9"
         ],
         "quotes": [
-          "Only for Pest Control / Cleaning / Painting: Add options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial"
+          "Keep floating WhatsApp button unchanged.",
+          "Keep: Existing pages unchanged, Existing service order unchanged, Existing pricing unchanged, Existing animations unchanged"
         ]
       },
       "acceptanceCriteria": [
-        "When Pest Control, Cleaning, or Painting is selected as the service type, a Property Type field appears with the six options.",
-        "The Property Type field is hidden for other service types.",
-        "The selected property type is included in the booking submission payload."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Update every button and CTA in the frontend — including 'Free Inspection', 'Book Now', 'Call', and the floating WhatsApp button — to open the URL https://wa.me/918884447229. Verify this applies to: FloatingWhatsAppButton.tsx, HeroSection.tsx, PestControlCard.tsx, CleaningServiceCard.tsx, PaintingServiceCard.tsx, ServiceCard.tsx, SubcategoryCard.tsx, and any other component with a booking or call CTA. Do not change button appearance or layout.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "All buttons: Free Inspection / Book Now / Call / Floating button — Must open WhatsApp: https://wa.me/918884447229"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Clicking 'Free Inspection' on any card opens https://wa.me/918884447229.",
-        "Clicking 'Book Now' on any card opens https://wa.me/918884447229.",
-        "Clicking 'Call' CTA opens https://wa.me/918884447229.",
-        "The floating WhatsApp button opens https://wa.me/918884447229.",
-        "No button style or position is changed."
+        "BookingFormPopup state is managed without breaking existing page routing or layout",
+        "FloatingWhatsAppButton and FloatingCallButton components are not modified",
+        "Popup opens correctly from subcategory cards on both the Home page and the Services page",
+        "Closing the popup returns the user to the same page/scroll position without navigation"
       ]
     }
   ],
   "constraints": [
-    "Do NOT change the TrustFix UI layout, color scheme, typography, header, or card designs.",
-    "Do NOT rebuild or redesign any page or component.",
-    "Only modify data values, price figures, button href targets, and conditional rendering logic.",
-    "The WhatsApp number used in all CTAs must be exactly +918884447229 (https://wa.me/918884447229)."
+    "Do NOT change any existing design, layout, colors, logo, banner, images, service order, pricing, or animations",
+    "Do NOT modify FloatingWhatsAppButton or FloatingCallButton components",
+    "Do NOT replace or remove existing WhatsApp/Get Quote buttons on subcategory cards — only add the Book Now button alongside them",
+    "Do NOT create a new page for the booking form — it must be a popup/modal only",
+    "WhatsApp number must be 918884447229 (with country code)",
+    "All immutable frontend paths (hooks/useInternetIdentity, hooks/useActor, main.tsx, components/ui) must not be modified"
   ],
   "nonGoals": [
-    "Redesigning or restyling any component.",
-    "Adding new pages or routes.",
-    "Changing prices for any service other than Painting and Cleaning.",
-    "Adding property type options to service types other than Pest Control, Cleaning, and Painting.",
-    "Backend schema changes (no new data models required for these updates)."
+    "Redesigning or restyling any existing component or page",
+    "Storing booking form data in the backend (no backend changes required)",
+    "Showing a thank-you page or confirmation screen after form submission",
+    "Changing the existing booking page (frontend/src/pages/Booking.tsx)",
+    "Adding authentication or Internet Identity to the booking flow",
+    "Real-time notifications or email confirmations"
   ],
   "imageRequirements": {
     "required": [],

@@ -1,13 +1,15 @@
 # Specification
 
 ## Summary
-**Goal:** Update TrustFix with painting and cleaning price changes, service page isolation, a conditional property type field in the booking form, and wire all CTA buttons to WhatsApp.
+**Goal:** Add a reusable popup booking form with WhatsApp integration to all subcategory cards across every service category, without changing any existing design or layout.
 
 **Planned changes:**
-- Reduce all painting package prices by exactly ₹1 each in the services data file.
-- Update cleaning service prices: Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, and six home cleaning BHK/occupancy tiers with specified prices; replace Villa, Commercial, and Carpet prices with "Free Inspection → Quote → Service" label.
-- Fix service detail pages so that selecting Pest Control, Cleaning, or Painting shows only that service's own subcategory cards with no cards from other services bleeding through.
-- Add a "Property Type" select field (1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial) to the booking form, visible only when Pest Control, Cleaning, or Painting is the selected service type.
-- Update all CTA buttons ("Free Inspection", "Book Now", "Call") and the floating WhatsApp button across all relevant components to open `https://wa.me/918884447229`.
+- Create a `BookingFormPopup` modal component with fields: Customer Name (required), Mobile Number (required), Address, Selected Service (auto-filled, read-only), Property Type dropdown (1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date, Preferred Time, and Notes
+- Popup closes via a close button or clicking the semi-transparent backdrop
+- On form submission, construct a pre-filled WhatsApp URL and open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab with all 8 field values URL-encoded; no redirect or thank-you page
+- Add a "Book Now" button to every subcategory card in all 8 service categories (Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, Plumbing), including `SubcategoryCard`, `CleaningServiceCard`, `PaintingServiceCard`, and `PestControlCard`
+- Each "Book Now" button passes the corresponding service/subcategory name to the popup as the auto-filled Selected Service value
+- Wire popup open/closed state and selected service name into the Services and Home pages using React state
+- Existing card layout, colors, images, pricing, animations, existing WhatsApp/Get Quote buttons, `FloatingWhatsAppButton`, and `FloatingCallButton` remain completely unchanged
 
-**User-visible outcome:** Users see updated painting and cleaning prices, each service detail page shows only its own subcategories, the booking form shows a property type selector for relevant services, and every booking/call button opens the correct WhatsApp chat.
+**User-visible outcome:** Users can click a "Book Now" button on any subcategory card to open a booking form popup, fill in their details, and submit to instantly open a pre-filled WhatsApp chat with TrustFix — all without leaving the current page.

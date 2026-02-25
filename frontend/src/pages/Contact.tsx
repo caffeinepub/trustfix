@@ -1,5 +1,5 @@
 import { Phone, MessageCircle, MapPin, Mail, Clock } from 'lucide-react';
-import { PHONE_NUMBER, getWhatsAppLink } from '../data/services';
+import { PHONE_NUMBER, WHATSAPP_NUMBER, getWhatsAppLink } from '../data/services';
 
 export default function Contact() {
   return (
@@ -13,14 +13,16 @@ export default function Contact() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Contact Cards */}
           <a
-            href={`tel:${PHONE_NUMBER}`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-white rounded-2xl shadow-card border border-gray-100 p-6 flex items-center gap-4 hover:border-brand-blue/30 hover:shadow-card-hover transition-all group"
           >
             <div className="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center group-hover:bg-brand-blue transition-colors">
               <Phone size={22} className="text-brand-blue group-hover:text-white transition-colors" />
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Call Us</p>
+              <p className="text-xs text-gray-500 mb-0.5">Call / WhatsApp</p>
               <p className="font-bold text-gray-900 text-lg">{PHONE_NUMBER}</p>
               <p className="text-xs text-gray-400">Available 8 AM – 8 PM</p>
             </div>
@@ -100,7 +102,9 @@ export default function Contact() {
               💬 WhatsApp Now
             </a>
             <a
-              href={`tel:${PHONE_NUMBER}`}
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white hover:text-brand-blue transition-colors text-sm"
             >
               📞 Call Now

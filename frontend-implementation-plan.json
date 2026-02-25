@@ -1,129 +1,101 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "TrustFix: Price updates, service isolation, booking form options, and WhatsApp button wiring",
+  "title": "Add Book Now Popup Booking Form with WhatsApp Integration on All Subcategory Cards",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Reduce all painting package prices by exactly ₹1 in the services data file",
+      "summary": "Create a reusable BookingFormPopup component that renders as a modal overlay with customer information fields, auto-filled service selection, property type dropdown, date/time pickers, and backdrop dismissal",
       "acceptanceCriteria": [
-        "Every painting package price shown in the UI is exactly ₹1 lower than before.",
-        "No painting card layout, color, or image is changed.",
-        "No other service prices are affected."
+        "BookingFormPopup renders as a centered modal overlay with a semi-transparent backdrop",
+        "All listed fields are present and functional",
+        "Selected Service field is auto-filled and read-only based on which subcategory triggered the popup",
+        "Property Type dropdown shows exactly: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial",
+        "Customer Name and Mobile Number are marked as required and prevent submission if empty",
+        "Popup can be closed via a close button or clicking the backdrop"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/data/services.ts",
-          "operation": "modify",
-          "description": "In the services array, locate all painting service entries and reduce each price field by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Update only the numeric price values in the painting service objects; do not modify any other properties, structure, or service entries."
+          "path": "frontend/src/components/BookingFormPopup.tsx",
+          "operation": "create",
+          "description": "Create a modal overlay component that displays a booking form with fields for Customer Name (required text input), Mobile Number (required tel input), Address (required textarea), Selected Service (read-only text field pre-filled from props), Property Type (dropdown with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date input), Preferred Time (time input), and Notes (textarea). Include a close button in the header and make the backdrop clickable to dismiss. Use Tailwind CSS for styling with a semi-transparent backdrop (bg-black/50) and a centered white card. Add form validation to prevent submission when required fields are empty. Accept props for isOpen (boolean), onClose (function), selectedService (string), and onSubmit (function that receives form data)."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Update cleaning service prices and display flow labels for Villa/Commercial/Carpet services",
+      "summary": "Implement WhatsApp message generation and auto-redirect on BookingFormPopup submission without navigation or thank-you pages",
       "acceptanceCriteria": [
-        "Bathroom shows ₹449, Sofa shows ₹699, Mattress shows ₹799, Kitchen shows ₹1499.",
-        "Home cleaning cards show all six BHK/occupancy tiers with the correct prices.",
-        "Villa, Commercial, and Carpet cards display 'Free Inspection → Quote → Service' instead of a numeric price.",
-        "No other cleaning card visuals are changed."
+        "On form submit, WhatsApp opens in a new tab to wa.me/918884447229 with the pre-filled message",
+        "The message contains all 8 fields in the specified format",
+        "The message text is correctly URL-encoded so special characters and line breaks render properly in WhatsApp",
+        "No thank-you page or redirect occurs after submission"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/data/services.ts",
+          "path": "frontend/src/components/BookingFormPopup.tsx",
           "operation": "modify",
-          "description": "In the services array, locate all cleaning service entries and update prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning subcategories, set: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, add a field or flag indicating these should display a flow label instead of a numeric price."
-        },
-        {
-          "path": "frontend/src/components/CleaningServiceCard.tsx",
-          "operation": "modify",
-          "description": "Update the price display logic to check if the service entry has a flow label flag. If present, render the text 'Free Inspection → Quote → Service' instead of the numeric price badge. Otherwise, display the numeric price as before. Do not change the card layout, colors, or other visual elements."
+          "description": "Add form submission handler that constructs a WhatsApp message in the exact format: 'Hello TrustFix,\\nI want to book a service.\\n\\nName: {Customer Name}\\nPhone: {Mobile Number}\\nAddress: {Address}\\nService: {Service Name}\\nProperty Type: {Property Type}\\nDate: {Date}\\nTime: {Time}\\nNotes: {Notes}\\n\\n'. Use encodeURIComponent to URL-encode the entire message text. Open window.open(`https://wa.me/918884447229?text=${encodedMessage}`, '_blank') on form submission. After opening WhatsApp, close the popup by calling the onClose prop. Do not show any thank-you message or navigate away from the current page."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Isolate service detail pages so only the selected service's subcategories are displayed",
+      "summary": "Add 'Book Now' button to every subcategory card component (CleaningServiceCard, PaintingServiceCard, PestControlCard, SubcategoryCard) that opens the BookingFormPopup with the service name pre-filled",
       "acceptanceCriteria": [
-        "Clicking/navigating to Pest Control shows only pest control subcategory cards.",
-        "Clicking/navigating to Cleaning shows only cleaning subcategory cards.",
-        "Clicking/navigating to Painting shows only painting subcategory cards.",
-        "No cards from other service categories appear on any of these pages."
+        "Every subcategory card in all 8 service categories displays a 'Book Now' button",
+        "CleaningServiceCard, PaintingServiceCard, PestControlCard, and SubcategoryCard all have the Book Now button",
+        "Clicking any Book Now button opens the BookingFormPopup with the corresponding service name pre-filled",
+        "Existing card layout, colors, images, pricing, animations, and existing WhatsApp/Get Quote buttons are unchanged",
+        "The Book Now button does not replace existing buttons — it is added alongside them"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/Services.tsx",
+          "path": "frontend/src/components/CleaningServiceCard.tsx",
           "operation": "modify",
-          "description": "Review the current rendering logic that displays service subcategories. Ensure that when a user navigates to Pest Control, Cleaning, or Painting, only that specific service's subcategory cards are rendered. Remove any code that conditionally displays cards from other service categories on the same view. Verify that the filtering or conditional rendering logic strictly isolates each service's detail page to show only its own subcategories."
+          "description": "Add a 'Book Now' button alongside the existing WhatsApp booking buttons in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it consistently with existing buttons using the site's color scheme (e.g., bg-primary text-white or matching the existing button styles). Do not modify the card layout, image, price badge, features list, or existing WhatsApp buttons. Position the Book Now button in the button group without disrupting the existing layout."
+        },
+        {
+          "path": "frontend/src/components/PaintingServiceCard.tsx",
+          "operation": "modify",
+          "description": "Add a 'Book Now' button alongside the existing WhatsApp CTA buttons in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it to match the existing button design and site theme. Keep all existing elements (image, price badge, star rating, features, WhatsApp buttons) unchanged. Insert the Book Now button into the button container without altering spacing or layout."
+        },
+        {
+          "path": "frontend/src/components/PestControlCard.tsx",
+          "operation": "modify",
+          "description": "Add a 'Book Now' button alongside the existing WhatsApp booking link in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it to match the site's design system and existing buttons. Do not modify the image, price badge, features list, or existing WhatsApp link. Position the Book Now button next to the existing action buttons."
+        },
+        {
+          "path": "frontend/src/components/SubcategoryCard.tsx",
+          "operation": "modify",
+          "description": "Add a 'Book Now' button alongside the existing 'Get Quote' WhatsApp button in the card footer. The button should call an onBookNow callback prop passing the subcategory.name. Style it consistently with the existing Get Quote button using matching colors and spacing. Keep the card image, features list, and existing WhatsApp button unchanged. Position the Book Now button in the action area without disrupting the current layout."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Add a conditional 'Property Type' select field to the booking form for Pest Control, Cleaning, and Painting services",
+      "summary": "Wire BookingFormPopup state management into Home and Services pages to control popup visibility and selected service without modifying floating action buttons",
       "acceptanceCriteria": [
-        "When Pest Control, Cleaning, or Painting is selected as the service type, a Property Type field appears with the six options.",
-        "The Property Type field is hidden for other service types.",
-        "The selected property type is included in the booking submission payload."
+        "BookingFormPopup state is managed without breaking existing page routing or layout",
+        "FloatingWhatsAppButton and FloatingCallButton components are not modified",
+        "Popup opens correctly from subcategory cards on both the Home page and the Services page",
+        "Closing the popup returns the user to the same page/scroll position without navigation"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/Booking.tsx",
+          "path": "frontend/src/pages/Home.tsx",
           "operation": "modify",
-          "description": "Add a new 'Property Type' select field to the booking form. This field should display with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial. Show this field only when the selected service type is Pest Control, Cleaning, or Painting. Hide the field for all other service types. Update the form submission logic to include the selected property type in the booking payload sent to the backend. Map the selected option to the corresponding PropertyType enum value from the backend interface (oneBhk, twoBhk, threeBhk, squareFeet, villa, commercial)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Wire all booking and call CTAs to open the WhatsApp URL https://wa.me/918884447229",
-      "acceptanceCriteria": [
-        "Clicking 'Free Inspection' on any card opens https://wa.me/918884447229.",
-        "Clicking 'Book Now' on any card opens https://wa.me/918884447229.",
-        "Clicking 'Call' CTA opens https://wa.me/918884447229.",
-        "The floating WhatsApp button opens https://wa.me/918884447229.",
-        "No button style or position is changed."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/FloatingWhatsAppButton.tsx",
-          "operation": "modify",
-          "description": "Update the WhatsApp link href to exactly https://wa.me/918884447229. Do not change the button styling, position, or animation."
+          "description": "Add React state for popup visibility (isBookingPopupOpen: boolean) and selected service name (selectedServiceName: string). Pass onBookNow callback to ServiceCategoryGrid that sets the selected service name and opens the popup. Import and render BookingFormPopup component at the end of the page content (before closing tags) with isOpen={isBookingPopupOpen}, selectedService={selectedServiceName}, onClose={() => setIsBookingPopupOpen(false)}, and onSubmit handler that opens WhatsApp (handled in the popup component itself). Ensure FloatingWhatsAppButton remains completely unchanged and the popup does not interfere with existing page flow or navigation."
         },
         {
-          "path": "frontend/src/components/HeroSection.tsx",
+          "path": "frontend/src/pages/Services.tsx",
           "operation": "modify",
-          "description": "Update all booking and call CTA button href attributes to https://wa.me/918884447229. Do not change button appearance or layout."
+          "description": "Add React state for popup visibility (isBookingPopupOpen: boolean) and selected service name (selectedServiceName: string). Create an onBookNow callback function that accepts a service name, updates selectedServiceName state, and sets isBookingPopupOpen to true. Pass this callback down to CleaningServiceCard, PaintingServiceCard, PestControlCard, and SubcategoryCard components where they are rendered in the selected category sections. Import and render BookingFormPopup component at the end of the page return (before closing fragment/div) with isOpen, selectedService, and onClose props. Do not modify FloatingWhatsAppButton or FloatingCallButton. Ensure the popup overlay does not disrupt existing URL search param navigation or browser history management."
         },
         {
-          "path": "frontend/src/components/PestControlCard.tsx",
+          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
           "operation": "modify",
-          "description": "Update the 'Free Inspection' and 'Book Now' button links to https://wa.me/918884447229. Do not change card styling or layout."
-        },
-        {
-          "path": "frontend/src/components/CleaningServiceCard.tsx",
-          "operation": "modify",
-          "description": "Update the booking/inspection CTA button link to https://wa.me/918884447229. Do not change card appearance."
-        },
-        {
-          "path": "frontend/src/components/PaintingServiceCard.tsx",
-          "operation": "modify",
-          "description": "Update the 'Book Now' and 'Get Details' links to https://wa.me/918884447229. Do not change card styling."
-        },
-        {
-          "path": "frontend/src/components/ServiceCard.tsx",
-          "operation": "modify",
-          "description": "Update the 'Book Now' button link to https://wa.me/918884447229. Do not change card appearance or layout."
-        },
-        {
-          "path": "frontend/src/components/SubcategoryCard.tsx",
-          "operation": "modify",
-          "description": "Update the 'Get Quote' button link to https://wa.me/918884447229. Do not change card styling."
-        },
-        {
-          "path": "frontend/src/data/services.ts",
-          "operation": "modify",
-          "description": "If the services data file contains any WhatsApp link helper functions or hardcoded WhatsApp URLs, update them to use https://wa.me/918884447229 with the phone number +918884447229."
+          "description": "Add an optional onBookNow callback prop (function accepting service name string) to the component interface. This prop is currently unused in this component because ServiceCategoryGrid renders category cards that navigate to the Services page, not individual subcategory cards with Book Now buttons. Keep this component unchanged unless subcategory cards are rendered here. If ServiceCard components are used here and need Book Now functionality, pass the onBookNow prop through to them."
         }
       ]
     }

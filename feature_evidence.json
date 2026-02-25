@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-frontend-src-data-services-ts-reduce-every-painting-package-price-by-exactly-1-for-example-18-sqft-17-sqft-19-18-17-16-13-12-9-8-5-4-apply-to-all-painting-service-entries-do-not-change-any-other-field-layout-or-card-design",
-      "featureTitle": "In frontend/src/data/services.ts, reduce every painting package price by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Apply to all painting service entries. Do not change any other field, layout, or card design.",
+      "featureId": "feature-create-a-reusable-bookingformpopup-component-that-renders-as-a-modal-overlay-not-a-new-page-the-popup-must-include-these-fields-customer-name-required-text-mobile-number-required-tel-address-required-text-textarea-selected-service-auto-filled-from-the-clicked-subcategory-read-only-text-property-type-dropdown-1bhk-2bhk-3bhk-square-feet-villa-commercial-preferred-date-date-picker-preferred-time-time-picker-and-notes-textarea-include-a-close-dismiss-button-the-popup-must-be-accessible-and-closeable-by-clicking-the-backdrop",
+      "featureTitle": "Create a reusable BookingFormPopup component that renders as a modal overlay (not a new page). The popup must include these fields: Customer Name (required, text), Mobile Number (required, tel), Address (required, text/textarea), Selected Service (auto-filled from the clicked subcategory, read-only text), Property Type (dropdown: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date picker), Preferred Time (time picker), and Notes (textarea). Include a close/dismiss button. The popup must be accessible and closeable by clicking the backdrop.",
       "files": [
-        "frontend/src/data/services.ts"
+        "frontend/src/components/BookingFormPopup.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -21,11 +21,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-in-frontend-src-data-services-ts-and-frontend-src-components-cleaningservicecard-tsx-update-cleaning-service-prices-to-bathroom-449-sofa-699-mattress-799-kitchen-1499-for-home-cleaning-set-prices-to-1bhk-vacant-2499-1bhk-occupied-3499-2bhk-vacant-3999-2bhk-occupied-4999-3bhk-vacant-5999-3bhk-occupied-6999-for-villa-commercial-and-carpet-cleaning-entries-replace-the-price-display-with-the-flow-label-free-inspection-quote-service-do-not-change-card-layout-or-design",
-      "featureTitle": "In frontend/src/data/services.ts and frontend/src/components/CleaningServiceCard.tsx, update cleaning service prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning, set prices to: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, replace the price display with the flow label 'Free Inspection → Quote → Service'. Do not change card layout or design.",
+      "featureId": "feature-on-bookingformpopup-submission-do-not-navigate-away-or-show-a-thank-you-page-instead-construct-a-url-encoded-whatsapp-message-and-automatically-open-https-wa-me-918884447229-text-encoded-message-in-a-new-tab-the-message-must-follow-this-format-exactly-hello-trustfix-i-want-to-book-a-service-name-customer-name-phone-mobile-number-address-address-service-service-name-property-type-property-type-date-date-time-time-notes-notes-all-field-values-must-be-url-encoded-using-encodeuricomponent",
+      "featureTitle": "On BookingFormPopup submission, do NOT navigate away or show a thank-you page. Instead, construct a URL-encoded WhatsApp message and automatically open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab. The message must follow this format exactly:\n\nHello TrustFix,\nI want to book a service.\n\nName: {Customer Name}\nPhone: {Mobile Number}\nAddress: {Address}\nService: {Service Name}\nProperty Type: {Property Type}\nDate: {Date}\nTime: {Time}\nNotes: {Notes}\n\nAll field values must be URL-encoded using encodeURIComponent.",
       "files": [
-        "frontend/src/components/CleaningServiceCard.tsx",
-        "frontend/src/data/services.ts"
+        "frontend/src/components/BookingFormPopup.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -41,12 +40,13 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-every-button-and-cta-in-the-frontend-including-free-inspection-book-now-call-and-the-floating-whatsapp-button-to-open-the-url-https-wa-me-918884447229-verify-this-applies-to-floatingwhatsappbutton-tsx-herosection-tsx-pestcontrolcard-tsx-cleaningservicecard-tsx-paintingservicecard-tsx-servicecard-tsx-subcategorycard-tsx-and-any-other-component-with-a-booking-or-call-cta-do-not-change-button-appearance-or-layout",
-      "featureTitle": "Update every button and CTA in the frontend — including 'Free Inspection', 'Book Now', 'Call', and the floating WhatsApp button — to open the URL https://wa.me/918884447229. Verify this applies to: FloatingWhatsAppButton.tsx, HeroSection.tsx, PestControlCard.tsx, CleaningServiceCard.tsx, PaintingServiceCard.tsx, ServiceCard.tsx, SubcategoryCard.tsx, and any other component with a booking or call CTA. Do not change button appearance or layout.",
+      "featureId": "feature-add-a-book-now-button-to-every-subcategory-card-across-all-service-categories-cleaning-painting-pest-control-electrical-carpentry-ac-appliances-and-plumbing-this-applies-to-the-subcategorycard-component-and-any-specialized-card-components-cleaningservicecard-paintingservicecard-pestcontrolcard-each-button-must-pass-the-service-subcategory-name-to-the-bookingformpopup-as-the-auto-filled-selected-service-value-the-button-styling-must-be-consistent-with-the-existing-site-design-do-not-alter-existing-card-layout-colors-images-pricing-or-animations",
+      "featureTitle": "Add a 'Book Now' button to every subcategory card across all service categories: Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, and Plumbing. This applies to the SubcategoryCard component and any specialized card components (CleaningServiceCard, PaintingServiceCard, PestControlCard). Each button must pass the service/subcategory name to the BookingFormPopup as the auto-filled Selected Service value. The button styling must be consistent with the existing site design (do not alter existing card layout, colors, images, pricing, or animations).",
       "files": [
         "frontend/src/components/CleaningServiceCard.tsx",
-        "frontend/src/components/HeroSection.tsx",
-        "frontend/src/data/services.ts"
+        "frontend/src/components/PaintingServiceCard.tsx",
+        "frontend/src/components/PestControlCard.tsx",
+        "frontend/src/components/SubcategoryCard.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -57,7 +57,26 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-wire-the-bookingformpopup-state-open-closed-and-selected-service-name-into-the-services-page-and-any-page-that-renders-subcategory-cards-home-services-use-react-state-to-manage-popup-visibility-and-the-currently-selected-service-name-the-floating-whatsapp-button-floatingwhatsappbutton-and-floatingcallbutton-must-remain-completely-unchanged",
+      "featureTitle": "Wire the BookingFormPopup state (open/closed and selected service name) into the Services page and any page that renders subcategory cards (Home, Services). Use React state to manage popup visibility and the currently selected service name. The floating WhatsApp button (FloatingWhatsAppButton and FloatingCallButton) must remain completely unchanged.",
+      "files": [
+        "frontend/src/pages/Services.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
       ],
       "confidence": "high"
     }

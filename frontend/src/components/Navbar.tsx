@@ -1,96 +1,157 @@
 import { useState } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { Phone, Menu, X } from 'lucide-react';
-import { PHONE_NUMBER, WHATSAPP_NUMBER } from '../data/services';
+import { Menu, X, Search, Phone } from 'lucide-react';
+import { useSearchServices } from '../hooks/useSearchServices';
+
+const WHATSAPP_URL = 'https://wa.me/918884447229';
+
+const navLinks = [
+  { label: 'Home', to: '/' as const },
+  { label: 'Services', to: '/services' as const },
+  { label: 'Book Now', to: '/booking' as const },
+  { label: 'Reviews', to: '/reviews' as const },
+  { label: 'Contact', to: '/contact' as const },
+];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+  const searchResults = useSearchServices(searchQuery);
 
-  const navLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'Reviews', path: '/reviews' },
-    { label: 'Contact', path: '/contact' },
-  ];
+  const handleSearchSelect = (categoryId: string) => {
+    setSearchQuery('');
+    setShowSearch(false);
+    // Navigate to services page with category param
+    const url = new URL(window.location.href);
+    url.pathname = '/services';
+    url.searchParams.set('category', categoryId);
+    window.location.href = url.toString();
+  };
+
+  const handleCallClick = () => {
+    window.open(WHATSAPP_URL, '_blank');
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-blue shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button
-            onClick={() => navigate({ to: '/' })}
-            className="flex items-center gap-2 focus:outline-none"
-          >
+          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
             <img
               src="/assets/generated/trustfix-logo.dim_400x120.png"
               alt="TrustFix"
               className="h-10 w-auto object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-              }}
             />
-            <span className="text-white font-bold text-xl tracking-tight">TrustFix</span>
-          </button>
+          </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
-                key={link.path}
-                to={link.path}
-                className="text-white/90 hover:text-white font-medium transition-colors text-sm"
+                key={link.to}
+                to={link.to}
+                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-blue rounded-lg hover:bg-brand-blue/5 transition-colors"
+                activeProps={{ className: 'px-3 py-2 text-sm font-medium text-brand-blue bg-brand-blue/5 rounded-lg' }}
               >
                 {link.label}
               </Link>
             ))}
-          </nav>
+          </div>
 
-          {/* Phone */}
-          <a
-            href={`tel:${PHONE_NUMBER}`}
-            className="hidden md:flex items-center gap-2 bg-white text-brand-blue font-bold px-4 py-2 rounded-full text-sm hover:bg-blue-50 transition-colors"
-          >
-            <Phone size={16} />
-            {PHONE_NUMBER}
-          </a>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-brand-blue-dark border-t border-white/20">
-          <div className="px-4 py-3 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="block text-white/90 hover:text-white font-medium py-2 text-sm"
-                onClick={() => setMenuOpen(false)}
+          {/* Right side */}
+          <div className="flex items-center gap-2">
+            {/* Search */}
+            <div className="relative hidden sm:block">
+              <button
+                onClick={() => setShowSearch(!showSearch)}
+                className="p-2 text-gray-500 hover:text-brand-blue rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Search services"
               >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href={`tel:${PHONE_NUMBER}`}
-              className="flex items-center gap-2 text-white font-bold py-2 text-sm"
+                <Search size={18} />
+              </button>
+              {showSearch && (
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-100 z-50">
+                  <div className="p-3">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search services..."
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
+                      autoFocus
+                    />
+                  </div>
+                  {searchResults.length > 0 && (
+                    <div className="max-h-60 overflow-y-auto border-t border-gray-100">
+                      {searchResults.map((result) => (
+                        <button
+                          key={result.id}
+                          onClick={() => handleSearchSelect(result.categoryId)}
+                          className="w-full text-left px-4 py-2.5 hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="text-sm font-medium text-gray-800">{result.name}</div>
+                          <div className="text-xs text-gray-500">{result.category}</div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {searchQuery && searchResults.length === 0 && (
+                    <div className="px-4 py-3 text-sm text-gray-500 border-t border-gray-100">
+                      No services found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Call/WhatsApp button */}
+            <button
+              onClick={handleCallClick}
+              className="hidden sm:flex items-center gap-2 bg-brand-blue text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-brand-blue/90 transition-colors"
             >
-              <Phone size={16} />
-              {PHONE_NUMBER}
-            </a>
+              <Phone size={15} />
+              <span>8884447229</span>
+            </button>
+
+            {/* Mobile menu toggle */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-gray-600 hover:text-brand-blue rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-gray-100 py-3 space-y-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-blue hover:bg-brand-blue/5 rounded-lg transition-colors"
+                activeProps={{ className: 'block px-4 py-2.5 text-sm font-medium text-brand-blue bg-brand-blue/5 rounded-lg' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-2 px-4">
+              <button
+                onClick={handleCallClick}
+                className="w-full flex items-center justify-center gap-2 bg-brand-blue text-white text-sm font-semibold px-4 py-2.5 rounded-full hover:bg-brand-blue/90 transition-colors"
+              >
+                <Phone size={15} />
+                Call: 8884447229
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 }
