@@ -1,23 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import { ServiceType } from '@/backend';
+import type { Review, Booking } from '../backend';
 
-export function useGetApprovedReviews() {
+export function useGetFeaturedReviews() {
   const { actor, isFetching } = useActor();
-
-  return useQuery({
-    queryKey: ['reviews', 'approved'],
+  return useQuery<Review[]>({
+    queryKey: ['featured-reviews'],
     queryFn: async () => {
       if (!actor) return [];
-      // Get all approved reviews across all service types
-      const allReviews = await Promise.all([
-        actor.getApprovedReviewsByService(ServiceType.pestControl),
-        actor.getApprovedReviewsByService(ServiceType.residentialDeepCleaning),
-        actor.getApprovedReviewsByService(ServiceType.commercialCleaning),
-        actor.getApprovedReviewsByService(ServiceType.carpetUpholstery),
-        actor.getApprovedReviewsByService(ServiceType.other),
-      ]);
-      return allReviews.flat();
+      return actor.getFeaturedReviews();
+    },
+    enabled: !!actor && !isFetching,
+  });
+}
+
+export function useGetAllReviews() {
+  const { actor, isFetching } = useActor();
+  return useQuery<Review[]>({
+    queryKey: ['all-reviews'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getAllReviews();
     },
     enabled: !!actor && !isFetching,
   });
@@ -25,9 +28,8 @@ export function useGetApprovedReviews() {
 
 export function useGetAllBookings() {
   const { actor, isFetching } = useActor();
-
-  return useQuery({
-    queryKey: ['bookings'],
+  return useQuery<Booking[]>({
+    queryKey: ['all-bookings'],
     queryFn: async () => {
       if (!actor) return [];
       return actor.getAllBookings();

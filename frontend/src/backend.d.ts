@@ -7,21 +7,16 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export class ExternalBlob {
-    getBytes(): Promise<Uint8Array<ArrayBuffer>>;
-    getDirectURL(): string;
-    static fromURL(url: string): ExternalBlob;
-    static fromBytes(blob: Uint8Array<ArrayBuffer>): ExternalBlob;
-    withUploadProgress(onProgress: (percentage: number) => void): ExternalBlob;
-}
 export type Time = bigint;
 export interface Booking {
     id: string;
     service: ServiceType;
+    propertyType: PropertyType;
+    date: string;
     name: string;
-    email: string;
-    message: string;
+    time: string;
     address: string;
+    notes: string;
     timestamp: Time;
     phone: string;
 }
@@ -31,53 +26,59 @@ export interface Review {
     date: Time;
     name: string;
     reviewText: string;
-    approvalStatus: boolean;
     rating: bigint;
-    photo?: ExternalBlob;
+}
+export enum PropertyType {
+    commercial = "commercial",
+    twoBhk = "twoBhk",
+    villa = "villa",
+    squareFeet = "squareFeet",
+    threeBhk = "threeBhk",
+    oneBhk = "oneBhk"
 }
 export enum ServiceType {
     carpetUpholstery = "carpetUpholstery",
-    commercialCleaning = "commercialCleaning",
     other = "other",
-    pestControl = "pestControl",
-    residentialDeepCleaning = "residentialDeepCleaning"
+    painting = "painting",
+    deepCleaning = "deepCleaning",
+    pestControl = "pestControl"
 }
 export interface backendInterface {
-    /**
-     * / Add a booking to the system.
-     */
-    addBooking(name: string, phone: string, email: string, service: ServiceType, address: string, message: string): Promise<void>;
+    addBooking(name: string, phone: string, address: string, service: ServiceType, propertyType: PropertyType, date: string, time: string, notes: string): Promise<void>;
     /**
      * / Add a review to the system.
      */
-    addReview(name: string, service: ServiceType, rating: bigint, reviewText: string, photo: ExternalBlob | null): Promise<void>;
+    addReview(name: string, service: ServiceType, rating: bigint, reviewText: string): Promise<void>;
     /**
-     * / Approve a review for use in system.
-     */
-    approveReview(reviewId: string): Promise<void>;
-    /**
-     * / Directly delete a specific review.
+     * / Delete a review.
      */
     deleteReview(reviewId: string): Promise<void>;
     /**
-     * / Query all approved reviews regardless of service.
-     */
-    getAllApprovedReviews(): Promise<Array<Review>>;
-    /**
-     * / Expose all bookings in the system.
+     * / Get all bookings.
      */
     getAllBookings(): Promise<Array<Booking>>;
-    getApprovedReviewsByService(service: ServiceType): Promise<Array<Review>>;
     /**
-     * / Get a MODIFIED list of up to 5 featured reviews, for use in carousels.
+     * / Get all reviews.
+     */
+    getAllReviews(): Promise<Array<Review>>;
+    /**
+     * / Get featured reviews (up to 5).
      */
     getFeaturedReviews(): Promise<Array<Review>>;
     /**
-     * / Expose all reviews for a specific rating.
+     * / Get reviews by rating.
      */
     getReviewsByRating(rating: bigint): Promise<Array<Review>>;
     /**
-     * / Update a specific review with new information.
+     * / Get approved reviews by service.
      */
-    updateReview(reviewId: string, name: string, service: ServiceType, rating: bigint, reviewText: string, photo: ExternalBlob | null): Promise<void>;
+    getReviewsByService(service: ServiceType): Promise<Array<Review>>;
+    /**
+     * / Get WhatsApp link for booking.
+     */
+    getWhatsAppBookingLink(service: ServiceType): Promise<string>;
+    /**
+     * / Update a review.
+     */
+    updateReview(reviewId: string, name: string, service: ServiceType, rating: bigint, reviewText: string): Promise<void>;
 }

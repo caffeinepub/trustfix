@@ -1,40 +1,27 @@
 import { Star } from 'lucide-react';
 
-interface StarRatingProps {
+interface Props {
   rating: number;
-  onRatingChange?: (rating: number) => void;
-  readonly?: boolean;
+  max?: number;
+  interactive?: boolean;
+  onRate?: (rating: number) => void;
+  size?: number;
 }
 
-export default function StarRating({ rating, onRatingChange, readonly = false }: StarRatingProps) {
-  const stars = [1, 2, 3, 4, 5];
-
+export default function StarRating({ rating, max = 5, interactive = false, onRate, size = 16 }: Props) {
   return (
-    <div className="flex items-center space-x-1">
-      {stars.map((star) => (
-        <button
-          key={star}
-          type="button"
-          disabled={readonly}
-          onClick={() => !readonly && onRatingChange?.(star)}
-          className={`transition-all duration-200 ${
-            readonly ? 'cursor-default' : 'cursor-pointer hover:scale-110'
-          }`}
-        >
-          <Star
-            className={`h-6 w-6 ${
-              star <= rating
-                ? 'fill-yellow-400 text-yellow-400'
-                : 'fill-gray-200 text-gray-200'
-            }`}
-          />
-        </button>
+    <div className="flex items-center gap-0.5">
+      {Array.from({ length: max }).map((_, i) => (
+        <Star
+          key={i}
+          size={size}
+          className={`
+            ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}
+            ${interactive ? 'cursor-pointer hover:fill-yellow-300 hover:text-yellow-300 transition-colors' : ''}
+          `}
+          onClick={() => interactive && onRate && onRate(i + 1)}
+        />
       ))}
-      {rating > 0 && (
-        <span className="ml-2 text-sm text-gray-600">
-          {rating} {rating === 1 ? 'star' : 'stars'}
-        </span>
-      )}
     </div>
   );
 }

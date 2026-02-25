@@ -1,120 +1,66 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { useGetApprovedReviews } from '@/hooks/useQueries';
-import ReviewCard from '@/components/ReviewCard';
-import WriteReviewForm from '@/components/WriteReviewForm';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Star } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
-import { servicesData } from '@/data/services';
+import { useQuery } from '@tanstack/react-query';
+import { useActor } from '../hooks/useActor';
+import ReviewCard from '../components/ReviewCard';
+import WriteReviewForm from '../components/WriteReviewForm';
+import type { Review } from '../backend';
 
 export default function Reviews() {
-  const [filterCategory, setFilterCategory] = useState<string>('All');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { data: reviews, isLoading } = useGetApprovedReviews();
+  const { actor, isFetching } = useActor();
 
-  const categories = ['All', ...Object.keys(servicesData)];
-
-  const filteredReviews =
-    filterCategory === 'All'
-      ? reviews || []
-      : reviews?.filter((review) => review.service === filterCategory) || [];
-
-  const averageRating =
-    reviews && reviews.length > 0
-      ? reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length
-      : 0;
-
-  useEffect(() => {
-    if (isDropdownOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isDropdownOpen]);
+  const { data: reviews = [], isLoading } = useQuery<Review[]>({
+    queryKey: ['all-reviews'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getAllReviews();
+    },
+    enabled: !!actor && !isFetching,
+  });
 
   return (
-    <div className="min-h-screen py-16 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Customer Reviews</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            See what our customers have to say about our services
-          </p>
-
-          {reviews && reviews.length > 0 && (
-            <Card className="glass-panel border-gray-200 shadow-glass-lg mt-8 max-w-md mx-auto">
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-center gap-2">
-                  <Star className="h-8 w-8 fill-trustfix-orange text-trustfix-orange" />
-                  <span className="text-4xl font-bold text-gray-900">{averageRating.toFixed(1)}</span>
-                </div>
-                <p className="text-gray-600 mt-2">Average Rating from {reviews.length} reviews</p>
-              </CardContent>
-            </Card>
-          )}
+    <div className="min-h-screen bg-gray-50 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Customer Reviews</h1>
+          <p className="text-gray-500 text-sm">See what our customers say about TrustFix</p>
         </div>
 
-        <div className="mb-8">
-          <Label htmlFor="category-filter" className="text-lg font-semibold mb-2 block">
-            Filter by Service
-          </Label>
-          <Select 
-            value={filterCategory} 
-            onValueChange={setFilterCategory}
-            onOpenChange={setIsDropdownOpen}
-          >
-            <SelectTrigger className="max-w-xs">
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent 
-              className="max-h-[260px] overflow-y-auto z-[9999]"
-              style={{
-                WebkitOverflowScrolling: 'touch',
-                overscrollBehavior: 'contain',
-              }}
-            >
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {isLoading ? (
-            Array.from({ length: 6 }).map((_, index) => (
-              <Card key={index} className="glass-panel border-gray-200 shadow-glass-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <Skeleton className="h-12 w-12 rounded-full" />
-                    <div className="flex-1">
-                      <Skeleton className="h-4 w-32 mb-2" />
-                      <Skeleton className="h-3 w-24" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Reviews List */}
+          <div className="lg:col-span-2">
+            {isLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="bg-white rounded-2xl shadow-card border border-gray-100 p-5 animate-pulse">
+                    <div className="flex gap-3 mb-3">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full" />
+                      <div className="flex-1">
+                        <div className="h-4 bg-gray-200 rounded w-24 mb-1" />
+                        <div className="h-3 bg-gray-100 rounded w-16" />
+                      </div>
                     </div>
+                    <div className="h-3 bg-gray-100 rounded w-full mb-2" />
+                    <div className="h-3 bg-gray-100 rounded w-3/4" />
                   </div>
-                  <Skeleton className="h-20 w-full" />
-                </CardContent>
-              </Card>
-            ))
-          ) : filteredReviews.length > 0 ? (
-            filteredReviews.map((review) => <ReviewCard key={review.id} review={review} />)
-          ) : (
-            <div className="col-span-full text-center py-12">
-              <p className="text-gray-500 text-lg">No reviews found for this category.</p>
-            </div>
-          )}
-        </div>
+                ))}
+              </div>
+            ) : reviews.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-10 text-center">
+                <div className="text-4xl mb-3">⭐</div>
+                <p className="text-gray-500">No reviews yet. Be the first to review!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {reviews.map((review) => (
+                  <ReviewCard key={review.id} review={review} />
+                ))}
+              </div>
+            )}
+          </div>
 
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Write a Review</h2>
-          <WriteReviewForm />
+          {/* Write Review */}
+          <div className="lg:col-span-1">
+            <WriteReviewForm />
+          </div>
         </div>
       </div>
     </div>

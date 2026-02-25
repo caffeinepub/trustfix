@@ -13,29 +13,34 @@ import type { Principal } from '@icp-sdk/core/principal';
 export interface Booking {
   'id' : string,
   'service' : ServiceType,
+  'propertyType' : PropertyType,
+  'date' : string,
   'name' : string,
-  'email' : string,
-  'message' : string,
+  'time' : string,
   'address' : string,
+  'notes' : string,
   'timestamp' : Time,
   'phone' : string,
 }
-export type ExternalBlob = Uint8Array;
+export type PropertyType = { 'commercial' : null } |
+  { 'twoBhk' : null } |
+  { 'villa' : null } |
+  { 'squareFeet' : null } |
+  { 'threeBhk' : null } |
+  { 'oneBhk' : null };
 export interface Review {
   'id' : string,
   'service' : ServiceType,
   'date' : Time,
   'name' : string,
   'reviewText' : string,
-  'approvalStatus' : boolean,
   'rating' : bigint,
-  'photo' : [] | [ExternalBlob],
 }
 export type ServiceType = { 'carpetUpholstery' : null } |
-  { 'commercialCleaning' : null } |
   { 'other' : null } |
-  { 'pestControl' : null } |
-  { 'residentialDeepCleaning' : null };
+  { 'painting' : null } |
+  { 'deepCleaning' : null } |
+  { 'pestControl' : null };
 export type Time = bigint;
 export interface _CaffeineStorageCreateCertificateResult {
   'method' : string,
@@ -64,50 +69,47 @@ export interface _SERVICE {
     _CaffeineStorageRefillResult
   >,
   '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
-  /**
-   * / Add a booking to the system.
-   */
   'addBooking' : ActorMethod<
-    [string, string, string, ServiceType, string, string],
+    [string, string, string, ServiceType, PropertyType, string, string, string],
     undefined
   >,
   /**
    * / Add a review to the system.
    */
-  'addReview' : ActorMethod<
-    [string, ServiceType, bigint, string, [] | [ExternalBlob]],
-    undefined
-  >,
+  'addReview' : ActorMethod<[string, ServiceType, bigint, string], undefined>,
   /**
-   * / Approve a review for use in system.
-   */
-  'approveReview' : ActorMethod<[string], undefined>,
-  /**
-   * / Directly delete a specific review.
+   * / Delete a review.
    */
   'deleteReview' : ActorMethod<[string], undefined>,
   /**
-   * / Query all approved reviews regardless of service.
-   */
-  'getAllApprovedReviews' : ActorMethod<[], Array<Review>>,
-  /**
-   * / Expose all bookings in the system.
+   * / Get all bookings.
    */
   'getAllBookings' : ActorMethod<[], Array<Booking>>,
-  'getApprovedReviewsByService' : ActorMethod<[ServiceType], Array<Review>>,
   /**
-   * / Get a MODIFIED list of up to 5 featured reviews, for use in carousels.
+   * / Get all reviews.
+   */
+  'getAllReviews' : ActorMethod<[], Array<Review>>,
+  /**
+   * / Get featured reviews (up to 5).
    */
   'getFeaturedReviews' : ActorMethod<[], Array<Review>>,
   /**
-   * / Expose all reviews for a specific rating.
+   * / Get reviews by rating.
    */
   'getReviewsByRating' : ActorMethod<[bigint], Array<Review>>,
   /**
-   * / Update a specific review with new information.
+   * / Get approved reviews by service.
+   */
+  'getReviewsByService' : ActorMethod<[ServiceType], Array<Review>>,
+  /**
+   * / Get WhatsApp link for booking.
+   */
+  'getWhatsAppBookingLink' : ActorMethod<[ServiceType], string>,
+  /**
+   * / Update a review.
    */
   'updateReview' : ActorMethod<
-    [string, string, ServiceType, bigint, string, [] | [ExternalBlob]],
+    [string, string, ServiceType, bigint, string],
     undefined
   >,
 }

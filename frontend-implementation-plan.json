@@ -1,43 +1,129 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Floating Left-Side Call Button to TrustFix Website",
+  "title": "TrustFix: Price updates, service isolation, booking form options, and WhatsApp button wiring",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Create a FloatingCallButton component with circular green design, phone icon, fixed middle-left positioning, hover effects, click-to-call functionality, mobile long-press support, tooltip, and responsive sizing",
+      "summary": "Reduce all painting package prices by exactly ₹1 in the services data file",
       "acceptanceCriteria": [
-        "Button is circular with #25D366 background and a white phone icon",
-        "Button is fixed at middle-left of the viewport and does not scroll with the page",
-        "Clicking the button initiates a call to tel:8884447229",
-        "Long-pressing the button on mobile (≥500ms) also triggers the call",
-        "Button has aria-label='Call TrustFix'",
-        "A tooltip reading 'Call TrustFix' appears on hover and focus",
-        "Button has a visible drop shadow and scales up smoothly on hover",
-        "Button size is 52px on mobile and 60px on desktop"
+        "Every painting package price shown in the UI is exactly ₹1 lower than before.",
+        "No painting card layout, color, or image is changed.",
+        "No other service prices are affected."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/FloatingCallButton.tsx",
-          "operation": "create",
-          "description": "Create a new React component that renders a circular, fixed-position call button on the middle-left of the screen. The button must use `position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)` for positioning, have a #25D366 background color, contain a white phone SVG icon, and include a drop shadow. Implement a smooth scale-up hover effect using CSS transitions. On click, trigger `window.location.href = 'tel:8884447229'`. For mobile long-press support, use pointerdown and pointerup events with a 500ms timer. Include `aria-label='Call TrustFix'` for accessibility. Add a tooltip that displays 'Call TrustFix' on hover and focus states. Make the button size responsive: 52px (w-13 h-13) on mobile and 60px (md:w-15 md:h-15) on desktop using Tailwind classes. Ensure the button has sufficient z-index to stay above other content."
+          "path": "frontend/src/data/services.ts",
+          "operation": "modify",
+          "description": "In the services array, locate all painting service entries and reduce each price field by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Update only the numeric price values in the painting service objects; do not modify any other properties, structure, or service entries."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Integrate FloatingCallButton into Layout.tsx alongside the existing FloatingWhatsAppButton with proper positioning to prevent overlap and maintain safe margins on mobile",
+      "summary": "Update cleaning service prices and display flow labels for Villa/Commercial/Carpet services",
       "acceptanceCriteria": [
-        "FloatingCallButton is rendered in Layout.tsx",
-        "Call button (left) and WhatsApp button (right) do not overlap on any screen size",
-        "Both buttons maintain at least 80px clearance from the bottom on mobile",
-        "No existing design elements are altered"
+        "Bathroom shows ₹449, Sofa shows ₹699, Mattress shows ₹799, Kitchen shows ₹1499.",
+        "Home cleaning cards show all six BHK/occupancy tiers with the correct prices.",
+        "Villa, Commercial, and Carpet cards display 'Free Inspection → Quote → Service' instead of a numeric price.",
+        "No other cleaning card visuals are changed."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/data/services.ts",
           "operation": "modify",
-          "description": "Import and add the FloatingCallButton component alongside the existing FloatingWhatsAppButton. The FloatingCallButton will position itself on the middle-left, while the FloatingWhatsAppButton remains in the bottom-right. Verify that both buttons maintain at least 80px clearance from the bottom on mobile viewports to avoid conflicts with bottom navigation bars. Since the call button uses middle-left positioning and the WhatsApp button uses bottom-right positioning, they should naturally avoid overlap. Ensure no changes are made to the existing FloatingWhatsAppButton component or any other Layout elements such as Navbar, Footer, or the watermark background."
+          "description": "In the services array, locate all cleaning service entries and update prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning subcategories, set: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, add a field or flag indicating these should display a flow label instead of a numeric price."
+        },
+        {
+          "path": "frontend/src/components/CleaningServiceCard.tsx",
+          "operation": "modify",
+          "description": "Update the price display logic to check if the service entry has a flow label flag. If present, render the text 'Free Inspection → Quote → Service' instead of the numeric price badge. Otherwise, display the numeric price as before. Do not change the card layout, colors, or other visual elements."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Isolate service detail pages so only the selected service's subcategories are displayed",
+      "acceptanceCriteria": [
+        "Clicking/navigating to Pest Control shows only pest control subcategory cards.",
+        "Clicking/navigating to Cleaning shows only cleaning subcategory cards.",
+        "Clicking/navigating to Painting shows only painting subcategory cards.",
+        "No cards from other service categories appear on any of these pages."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Services.tsx",
+          "operation": "modify",
+          "description": "Review the current rendering logic that displays service subcategories. Ensure that when a user navigates to Pest Control, Cleaning, or Painting, only that specific service's subcategory cards are rendered. Remove any code that conditionally displays cards from other service categories on the same view. Verify that the filtering or conditional rendering logic strictly isolates each service's detail page to show only its own subcategories."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a conditional 'Property Type' select field to the booking form for Pest Control, Cleaning, and Painting services",
+      "acceptanceCriteria": [
+        "When Pest Control, Cleaning, or Painting is selected as the service type, a Property Type field appears with the six options.",
+        "The Property Type field is hidden for other service types.",
+        "The selected property type is included in the booking submission payload."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Booking.tsx",
+          "operation": "modify",
+          "description": "Add a new 'Property Type' select field to the booking form. This field should display with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial. Show this field only when the selected service type is Pest Control, Cleaning, or Painting. Hide the field for all other service types. Update the form submission logic to include the selected property type in the booking payload sent to the backend. Map the selected option to the corresponding PropertyType enum value from the backend interface (oneBhk, twoBhk, threeBhk, squareFeet, villa, commercial)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Wire all booking and call CTAs to open the WhatsApp URL https://wa.me/918884447229",
+      "acceptanceCriteria": [
+        "Clicking 'Free Inspection' on any card opens https://wa.me/918884447229.",
+        "Clicking 'Book Now' on any card opens https://wa.me/918884447229.",
+        "Clicking 'Call' CTA opens https://wa.me/918884447229.",
+        "The floating WhatsApp button opens https://wa.me/918884447229.",
+        "No button style or position is changed."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FloatingWhatsAppButton.tsx",
+          "operation": "modify",
+          "description": "Update the WhatsApp link href to exactly https://wa.me/918884447229. Do not change the button styling, position, or animation."
+        },
+        {
+          "path": "frontend/src/components/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Update all booking and call CTA button href attributes to https://wa.me/918884447229. Do not change button appearance or layout."
+        },
+        {
+          "path": "frontend/src/components/PestControlCard.tsx",
+          "operation": "modify",
+          "description": "Update the 'Free Inspection' and 'Book Now' button links to https://wa.me/918884447229. Do not change card styling or layout."
+        },
+        {
+          "path": "frontend/src/components/CleaningServiceCard.tsx",
+          "operation": "modify",
+          "description": "Update the booking/inspection CTA button link to https://wa.me/918884447229. Do not change card appearance."
+        },
+        {
+          "path": "frontend/src/components/PaintingServiceCard.tsx",
+          "operation": "modify",
+          "description": "Update the 'Book Now' and 'Get Details' links to https://wa.me/918884447229. Do not change card styling."
+        },
+        {
+          "path": "frontend/src/components/ServiceCard.tsx",
+          "operation": "modify",
+          "description": "Update the 'Book Now' button link to https://wa.me/918884447229. Do not change card appearance or layout."
+        },
+        {
+          "path": "frontend/src/components/SubcategoryCard.tsx",
+          "operation": "modify",
+          "description": "Update the 'Get Quote' button link to https://wa.me/918884447229. Do not change card styling."
+        },
+        {
+          "path": "frontend/src/data/services.ts",
+          "operation": "modify",
+          "description": "If the services data file contains any WhatsApp link helper functions or hardcoded WhatsApp URLs, update them to use https://wa.me/918884447229 with the phone number +918884447229."
         }
       ]
     }

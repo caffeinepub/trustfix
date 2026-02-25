@@ -21,32 +21,39 @@ export const _CaffeineStorageRefillResult = IDL.Record({
 });
 export const ServiceType = IDL.Variant({
   'carpetUpholstery' : IDL.Null,
-  'commercialCleaning' : IDL.Null,
   'other' : IDL.Null,
+  'painting' : IDL.Null,
+  'deepCleaning' : IDL.Null,
   'pestControl' : IDL.Null,
-  'residentialDeepCleaning' : IDL.Null,
 });
-export const ExternalBlob = IDL.Vec(IDL.Nat8);
+export const PropertyType = IDL.Variant({
+  'commercial' : IDL.Null,
+  'twoBhk' : IDL.Null,
+  'villa' : IDL.Null,
+  'squareFeet' : IDL.Null,
+  'threeBhk' : IDL.Null,
+  'oneBhk' : IDL.Null,
+});
 export const Time = IDL.Int;
+export const Booking = IDL.Record({
+  'id' : IDL.Text,
+  'service' : ServiceType,
+  'propertyType' : PropertyType,
+  'date' : IDL.Text,
+  'name' : IDL.Text,
+  'time' : IDL.Text,
+  'address' : IDL.Text,
+  'notes' : IDL.Text,
+  'timestamp' : Time,
+  'phone' : IDL.Text,
+});
 export const Review = IDL.Record({
   'id' : IDL.Text,
   'service' : ServiceType,
   'date' : Time,
   'name' : IDL.Text,
   'reviewText' : IDL.Text,
-  'approvalStatus' : IDL.Bool,
   'rating' : IDL.Nat,
-  'photo' : IDL.Opt(ExternalBlob),
-});
-export const Booking = IDL.Record({
-  'id' : IDL.Text,
-  'service' : ServiceType,
-  'name' : IDL.Text,
-  'email' : IDL.Text,
-  'message' : IDL.Text,
-  'address' : IDL.Text,
-  'timestamp' : Time,
-  'phone' : IDL.Text,
 });
 
 export const idlService = IDL.Service({
@@ -77,35 +84,29 @@ export const idlService = IDL.Service({
     ),
   '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
   'addBooking' : IDL.Func(
-      [IDL.Text, IDL.Text, IDL.Text, ServiceType, IDL.Text, IDL.Text],
-      [],
-      [],
-    ),
-  'addReview' : IDL.Func(
-      [IDL.Text, ServiceType, IDL.Nat, IDL.Text, IDL.Opt(ExternalBlob)],
-      [],
-      [],
-    ),
-  'approveReview' : IDL.Func([IDL.Text], [], []),
-  'deleteReview' : IDL.Func([IDL.Text], [], []),
-  'getAllApprovedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
-  'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
-  'getApprovedReviewsByService' : IDL.Func(
-      [ServiceType],
-      [IDL.Vec(Review)],
-      ['query'],
-    ),
-  'getFeaturedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
-  'getReviewsByRating' : IDL.Func([IDL.Nat], [IDL.Vec(Review)], ['query']),
-  'updateReview' : IDL.Func(
       [
         IDL.Text,
         IDL.Text,
-        ServiceType,
-        IDL.Nat,
         IDL.Text,
-        IDL.Opt(ExternalBlob),
+        ServiceType,
+        PropertyType,
+        IDL.Text,
+        IDL.Text,
+        IDL.Text,
       ],
+      [],
+      [],
+    ),
+  'addReview' : IDL.Func([IDL.Text, ServiceType, IDL.Nat, IDL.Text], [], []),
+  'deleteReview' : IDL.Func([IDL.Text], [], []),
+  'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
+  'getAllReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
+  'getFeaturedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
+  'getReviewsByRating' : IDL.Func([IDL.Nat], [IDL.Vec(Review)], ['query']),
+  'getReviewsByService' : IDL.Func([ServiceType], [IDL.Vec(Review)], ['query']),
+  'getWhatsAppBookingLink' : IDL.Func([ServiceType], [IDL.Text], ['query']),
+  'updateReview' : IDL.Func(
+      [IDL.Text, IDL.Text, ServiceType, IDL.Nat, IDL.Text],
       [],
       [],
     ),
@@ -127,32 +128,39 @@ export const idlFactory = ({ IDL }) => {
   });
   const ServiceType = IDL.Variant({
     'carpetUpholstery' : IDL.Null,
-    'commercialCleaning' : IDL.Null,
     'other' : IDL.Null,
+    'painting' : IDL.Null,
+    'deepCleaning' : IDL.Null,
     'pestControl' : IDL.Null,
-    'residentialDeepCleaning' : IDL.Null,
   });
-  const ExternalBlob = IDL.Vec(IDL.Nat8);
+  const PropertyType = IDL.Variant({
+    'commercial' : IDL.Null,
+    'twoBhk' : IDL.Null,
+    'villa' : IDL.Null,
+    'squareFeet' : IDL.Null,
+    'threeBhk' : IDL.Null,
+    'oneBhk' : IDL.Null,
+  });
   const Time = IDL.Int;
+  const Booking = IDL.Record({
+    'id' : IDL.Text,
+    'service' : ServiceType,
+    'propertyType' : PropertyType,
+    'date' : IDL.Text,
+    'name' : IDL.Text,
+    'time' : IDL.Text,
+    'address' : IDL.Text,
+    'notes' : IDL.Text,
+    'timestamp' : Time,
+    'phone' : IDL.Text,
+  });
   const Review = IDL.Record({
     'id' : IDL.Text,
     'service' : ServiceType,
     'date' : Time,
     'name' : IDL.Text,
     'reviewText' : IDL.Text,
-    'approvalStatus' : IDL.Bool,
     'rating' : IDL.Nat,
-    'photo' : IDL.Opt(ExternalBlob),
-  });
-  const Booking = IDL.Record({
-    'id' : IDL.Text,
-    'service' : ServiceType,
-    'name' : IDL.Text,
-    'email' : IDL.Text,
-    'message' : IDL.Text,
-    'address' : IDL.Text,
-    'timestamp' : Time,
-    'phone' : IDL.Text,
   });
   
   return IDL.Service({
@@ -183,35 +191,33 @@ export const idlFactory = ({ IDL }) => {
       ),
     '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
     'addBooking' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, ServiceType, IDL.Text, IDL.Text],
+        [
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+          ServiceType,
+          PropertyType,
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+        ],
         [],
         [],
       ),
-    'addReview' : IDL.Func(
-        [IDL.Text, ServiceType, IDL.Nat, IDL.Text, IDL.Opt(ExternalBlob)],
-        [],
-        [],
-      ),
-    'approveReview' : IDL.Func([IDL.Text], [], []),
+    'addReview' : IDL.Func([IDL.Text, ServiceType, IDL.Nat, IDL.Text], [], []),
     'deleteReview' : IDL.Func([IDL.Text], [], []),
-    'getAllApprovedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
     'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
-    'getApprovedReviewsByService' : IDL.Func(
+    'getAllReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
+    'getFeaturedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
+    'getReviewsByRating' : IDL.Func([IDL.Nat], [IDL.Vec(Review)], ['query']),
+    'getReviewsByService' : IDL.Func(
         [ServiceType],
         [IDL.Vec(Review)],
         ['query'],
       ),
-    'getFeaturedReviews' : IDL.Func([], [IDL.Vec(Review)], ['query']),
-    'getReviewsByRating' : IDL.Func([IDL.Nat], [IDL.Vec(Review)], ['query']),
+    'getWhatsAppBookingLink' : IDL.Func([ServiceType], [IDL.Text], ['query']),
     'updateReview' : IDL.Func(
-        [
-          IDL.Text,
-          IDL.Text,
-          ServiceType,
-          IDL.Nat,
-          IDL.Text,
-          IDL.Opt(ExternalBlob),
-        ],
+        [IDL.Text, IDL.Text, ServiceType, IDL.Nat, IDL.Text],
         [],
         [],
       ),

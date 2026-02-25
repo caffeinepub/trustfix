@@ -1,29 +1,43 @@
+import MixinStorage "blob-storage/Mixin";
 import Map "mo:core/Map";
 import Array "mo:core/Array";
+import Text "mo:core/Text";
+import Iter "mo:core/Iter";
 import Time "mo:core/Time";
 import Runtime "mo:core/Runtime";
-import MixinStorage "blob-storage/Mixin";
-import Storage "blob-storage/Storage";
+
+
 
 actor {
   include MixinStorage();
 
   type ServiceType = {
-    #residentialDeepCleaning;
-    #commercialCleaning;
-    #carpetUpholstery;
     #pestControl;
+    #deepCleaning;
+    #carpetUpholstery;
+    #painting;
     #other;
+  };
+
+  type PropertyType = {
+    #oneBhk;
+    #twoBhk;
+    #threeBhk;
+    #squareFeet;
+    #villa;
+    #commercial;
   };
 
   type Booking = {
     id : Text;
     name : Text;
     phone : Text;
-    email : Text;
-    service : ServiceType;
     address : Text;
-    message : Text;
+    service : ServiceType;
+    propertyType : PropertyType;
+    date : Text;
+    time : Text;
+    notes : Text;
     timestamp : Time.Time;
   };
 
@@ -33,32 +47,33 @@ actor {
     service : ServiceType;
     rating : Nat;
     reviewText : Text;
-    photo : ?Storage.ExternalBlob;
     date : Time.Time;
-    approvalStatus : Bool;
   };
 
   let bookings = Map.empty<Text, Booking>();
   let reviews = Map.empty<Text, Review>();
 
-  /// Add a booking to the system.
   public shared ({ caller }) func addBooking(
     name : Text,
     phone : Text,
-    email : Text,
-    service : ServiceType,
     address : Text,
-    message : Text,
+    service : ServiceType,
+    propertyType : PropertyType,
+    date : Text,
+    time : Text,
+    notes : Text,
   ) : async () {
     let id = Time.now().toText();
     let booking : Booking = {
       id;
       name;
       phone;
-      email;
-      service;
       address;
-      message;
+      service;
+      propertyType;
+      date;
+      time;
+      notes;
       timestamp = Time.now();
     };
 
@@ -71,7 +86,6 @@ actor {
     service : ServiceType,
     rating : Nat,
     reviewText : Text,
-    photo : ?Storage.ExternalBlob,
   ) : async () {
     if (rating < 1 or rating > 5) {
       Runtime.trap("Rating must be between 1 and 5");
@@ -84,38 +98,25 @@ actor {
       service;
       rating;
       reviewText;
-      photo;
       date = Time.now();
-      approvalStatus = false;
     };
 
     reviews.add(id, review);
   };
 
-  /// Approve a review for use in system.
-  public shared ({ caller }) func approveReview(reviewId : Text) : async () {
-    switch (reviews.get(reviewId)) {
-      case (null) { Runtime.trap("Review does not exist") };
-      case (?review) {
-        let updatedReview = { review with approvalStatus = true };
-        reviews.add(reviewId, updatedReview);
-      };
-    };
-  };
-
-  // Expose reviews for a service.
-  public query ({ caller }) func getApprovedReviewsByService(service : ServiceType) : async [Review] {
+  /// Get approved reviews by service.
+  public query ({ caller }) func getReviewsByService(service : ServiceType) : async [Review] {
     reviews.filter(
-      func(_, review) { review.approvalStatus and review.service == service }
+      func(_, review) { review.service == service }
     ).values().toArray();
   };
 
-  /// Expose all bookings in the system.
+  /// Get all bookings.
   public query ({ caller }) func getAllBookings() : async [Booking] {
     bookings.values().toArray();
   };
 
-  /// Expose all reviews for a specific rating.
+  /// Get reviews by rating.
   public query ({ caller }) func getReviewsByRating(rating : Nat) : async [Review] {
     if (rating < 1 or rating > 5) {
       Runtime.trap("Rating must be between 1 and 5");
@@ -125,32 +126,27 @@ actor {
     ).values().toArray();
   };
 
-  /// Get a MODIFIED list of up to 5 featured reviews, for use in carousels.
+  /// Get featured reviews (up to 5).
   public query ({ caller }) func getFeaturedReviews() : async [Review] {
-    let approvedReviews = reviews.filter(
-      func(_, review) { review.approvalStatus }
-    ).values();
-    let featuredReviews = approvedReviews.toArray();
-    if (featuredReviews.size() <= 5) {
-      featuredReviews;
+    let allReviews = reviews.values().toArray();
+    if (allReviews.size() <= 5) {
+      allReviews;
     } else {
       Array.tabulate(
         5,
         func(i) {
-          featuredReviews[i];
+          allReviews[i];
         },
       );
     };
   };
 
-  /// Query all approved reviews regardless of service.
-  public query ({ caller }) func getAllApprovedReviews() : async [Review] {
-    reviews.filter(
-      func(_, review) { review.approvalStatus }
-    ).values().toArray();
+  /// Get all reviews.
+  public query ({ caller }) func getAllReviews() : async [Review] {
+    reviews.values().toArray();
   };
 
-  /// Directly delete a specific review.
+  /// Delete a review.
   public shared ({ caller }) func deleteReview(reviewId : Text) : async () {
     switch (reviews.get(reviewId)) {
       case (null) { Runtime.trap("Review does not exist") };
@@ -160,14 +156,13 @@ actor {
     };
   };
 
-  /// Update a specific review with new information.
+  /// Update a review.
   public shared ({ caller }) func updateReview(
     reviewId : Text,
     name : Text,
     service : ServiceType,
     rating : Nat,
     reviewText : Text,
-    photo : ?Storage.ExternalBlob,
   ) : async () {
     if (rating < 1 or rating > 5) {
       Runtime.trap("Rating must be between 1 and 5");
@@ -182,11 +177,22 @@ actor {
           service;
           rating;
           reviewText;
-          photo;
           date = existingReview.date;
-          approvalStatus = existingReview.approvalStatus;
         };
         reviews.add(reviewId, updatedReview);
+      };
+    };
+  };
+
+  /// Get WhatsApp link for booking.
+  public query ({ caller }) func getWhatsAppBookingLink(service : ServiceType) : async Text {
+    let phoneNumber = "8884447229";
+    switch (service) {
+      case (#pestControl or #deepCleaning or #carpetUpholstery or #painting) {
+        "https://wa.me/" # phoneNumber # "?text=I'm%20interested%20in%20booking%20a%20service.";
+      };
+      case (#other) {
+        "https://wa.me/" # phoneNumber # "?text=I'm%20interested%20in%20getting%20a%20quote%20for%20your%20services.";
       };
     };
   };

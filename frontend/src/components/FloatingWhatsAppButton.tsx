@@ -1,19 +1,18 @@
-import { SiWhatsapp } from 'react-icons/si';
+import { getWhatsAppLink } from '../data/services';
 
 export default function FloatingWhatsAppButton() {
   return (
     <a
-      href="https://wa.me/918884447229"
+      href={getWhatsAppLink('Hello TrustFix! I need home services.')}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1ebe57] text-white p-4 rounded-full shadow-2xl hover:shadow-[#25D366]/50 transition-all duration-300 transform hover:scale-110 animate-pulse-slow group"
+      className="fixed bottom-6 right-5 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-lg whatsapp-float"
       aria-label="Chat on WhatsApp"
     >
-      <SiWhatsapp className="h-7 w-7" />
-      <span className="absolute -top-1 -right-1 flex h-3 w-3">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-      </span>
+      <span className="whatsapp-pulse" />
+      <svg viewBox="0 0 32 32" className="w-8 h-8 relative z-10" fill="white">
+        <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.469 2.027 7.773L0 32l8.469-2.004A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.771-1.849l-.485-.288-5.027 1.189 1.213-4.896-.317-.503A13.267 13.267 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.878c-.398-.199-2.355-1.162-2.72-1.295-.365-.133-.631-.199-.897.199-.266.398-1.031 1.295-1.264 1.561-.233.266-.465.299-.863.1-.398-.199-1.681-.619-3.202-1.977-1.183-1.056-1.982-2.36-2.214-2.758-.233-.398-.025-.613.175-.811.18-.178.398-.465.597-.698.199-.233.266-.398.398-.664.133-.266.066-.498-.033-.697-.1-.199-.897-2.162-1.229-2.96-.324-.777-.653-.672-.897-.684l-.764-.013c-.266 0-.697.1-1.063.498-.365.398-1.395 1.362-1.395 3.325s1.428 3.857 1.627 4.123c.199.266 2.811 4.291 6.812 6.019.952.411 1.695.657 2.274.841.955.304 1.824.261 2.511.158.766-.114 2.355-.963 2.688-1.893.333-.93.333-1.727.233-1.893-.1-.166-.365-.266-.763-.465z" />
+      </svg>
     </a>
   );
 }

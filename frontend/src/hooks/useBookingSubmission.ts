@@ -1,68 +1,42 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import { ServiceType } from '@/backend';
+import { ServiceType, PropertyType } from '../backend';
+import { getWhatsAppLink } from '../data/services';
 
-interface BookingFormData {
+interface BookingData {
   name: string;
   phone: string;
-  email: string;
-  service: string;
   address: string;
-  message: string;
+  service: ServiceType;
+  propertyType: PropertyType;
+  date: string;
+  time: string;
+  notes: string;
 }
 
 export function useBookingSubmission() {
   const { actor } = useActor();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const queryClient = useQueryClient();
 
-  const submitBooking = async (formData: BookingFormData) => {
-    if (!actor) {
-      alert('Backend not available. Please try again.');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Map service to ServiceType enum (simplified - using 'other' for most)
-      const serviceType = ServiceType.other;
-
-      // Submit to backend
+  return useMutation({
+    mutationFn: async (data: BookingData) => {
+      if (!actor) throw new Error('Not connected');
       await actor.addBooking(
-        formData.name,
-        formData.phone,
-        formData.email,
-        serviceType,
-        formData.address,
-        formData.message
+        data.name,
+        data.phone,
+        data.address,
+        data.service,
+        data.propertyType,
+        data.date,
+        data.time,
+        data.notes
       );
-
-      // Open WhatsApp with prefilled message
-      const whatsappMessage = encodeURIComponent(
-        `Hi TrustFix! I would like to book the following service:\n\n` +
-          `Name: ${formData.name}\n` +
-          `Phone: ${formData.phone}\n` +
-          `Email: ${formData.email}\n` +
-          `Service: ${formData.service}\n` +
-          `Address: ${formData.address}\n` +
-          `Message: ${formData.message}`
-      );
-
-      window.open(`https://wa.me/918884447229?text=${whatsappMessage}`, '_blank');
-
-      setIsSuccess(true);
-    } catch (error) {
-      console.error('Booking submission error:', error);
-      alert('Failed to submit booking. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const reset = () => {
-    setIsSuccess(false);
-  };
-
-  return { submitBooking, isSubmitting, isSuccess, reset };
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['all-bookings'] });
+      const msg = `Hello TrustFix! Booking confirmed.\nName: ${data.name}\nPhone: ${data.phone}\nService: ${data.service}\nAddress: ${data.address}\nDate: ${data.date}\nTime: ${data.time}`;
+      window.open(getWhatsAppLink(msg), '_blank');
+    },
+  });
 }

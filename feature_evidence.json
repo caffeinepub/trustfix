@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-new-floatingcallbutton-component-at-frontend-src-components-floatingcallbutton-tsx-the-button-must-be-circular-fixed-to-the-middle-left-of-the-screen-position-fixed-left-1rem-top-50-transform-translatey-50-with-a-green-background-25d366-a-white-phone-svg-icon-a-subtle-drop-shadow-and-a-smooth-scale-up-hover-effect-it-must-stay-fixed-while-scrolling-on-both-desktop-and-mobile-on-click-it-triggers-window-location-href-tel-8884447229-on-mobile-a-long-press-pointerdown-held-500ms-should-also-trigger-the-call-the-button-must-have-aria-label-call-trustfix-and-a-visible-tooltip-with-text-call-trustfix-that-appears-on-hover-focus-button-size-should-be-responsive-e-g-52px-on-mobile-60px-on-desktop",
-      "featureTitle": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+      "featureId": "feature-in-frontend-src-data-services-ts-reduce-every-painting-package-price-by-exactly-1-for-example-18-sqft-17-sqft-19-18-17-16-13-12-9-8-5-4-apply-to-all-painting-service-entries-do-not-change-any-other-field-layout-or-card-design",
+      "featureTitle": "In frontend/src/data/services.ts, reduce every painting package price by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Apply to all painting service entries. Do not change any other field, layout, or card design.",
       "files": [
-        "frontend/src/components/FloatingCallButton.tsx"
+        "frontend/src/data/services.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -21,10 +21,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-the-floatingcallbutton-component-to-frontend-src-components-layout-tsx-alongside-the-existing-floatingwhatsappbutton-the-call-button-must-not-overlap-the-whatsapp-button-on-the-right-side-on-mobile-both-buttons-must-maintain-safe-margins-from-the-bottom-navigation-bar-minimum-80px-from-bottom-and-from-each-other-the-call-button-is-on-the-left-the-whatsapp-button-remains-on-the-right-they-must-never-visually-conflict",
-      "featureTitle": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+      "featureId": "feature-in-frontend-src-data-services-ts-and-frontend-src-components-cleaningservicecard-tsx-update-cleaning-service-prices-to-bathroom-449-sofa-699-mattress-799-kitchen-1499-for-home-cleaning-set-prices-to-1bhk-vacant-2499-1bhk-occupied-3499-2bhk-vacant-3999-2bhk-occupied-4999-3bhk-vacant-5999-3bhk-occupied-6999-for-villa-commercial-and-carpet-cleaning-entries-replace-the-price-display-with-the-flow-label-free-inspection-quote-service-do-not-change-card-layout-or-design",
+      "featureTitle": "In frontend/src/data/services.ts and frontend/src/components/CleaningServiceCard.tsx, update cleaning service prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning, set prices to: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, replace the price display with the flow label 'Free Inspection → Quote → Service'. Do not change card layout or design.",
       "files": [
-        "frontend/src/components/Layout.tsx"
+        "frontend/src/components/CleaningServiceCard.tsx",
+        "frontend/src/data/services.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -36,6 +37,27 @@
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-every-button-and-cta-in-the-frontend-including-free-inspection-book-now-call-and-the-floating-whatsapp-button-to-open-the-url-https-wa-me-918884447229-verify-this-applies-to-floatingwhatsappbutton-tsx-herosection-tsx-pestcontrolcard-tsx-cleaningservicecard-tsx-paintingservicecard-tsx-servicecard-tsx-subcategorycard-tsx-and-any-other-component-with-a-booking-or-call-cta-do-not-change-button-appearance-or-layout",
+      "featureTitle": "Update every button and CTA in the frontend — including 'Free Inspection', 'Book Now', 'Call', and the floating WhatsApp button — to open the URL https://wa.me/918884447229. Verify this applies to: FloatingWhatsAppButton.tsx, HeroSection.tsx, PestControlCard.tsx, CleaningServiceCard.tsx, PaintingServiceCard.tsx, ServiceCard.tsx, SubcategoryCard.tsx, and any other component with a booking or call CTA. Do not change button appearance or layout.",
+      "files": [
+        "frontend/src/components/CleaningServiceCard.tsx",
+        "frontend/src/components/HeroSection.tsx",
+        "frontend/src/data/services.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
       ],
       "confidence": "high"
     }

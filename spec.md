@@ -1,14 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Add a floating call button fixed to the middle-left of the screen on the TrustFix website.
+**Goal:** Update TrustFix with painting and cleaning price changes, service page isolation, a conditional property type field in the booking form, and wire all CTA buttons to WhatsApp.
 
 **Planned changes:**
-- Create a new `FloatingCallButton` component that is circular, green (#25D366 background), with a white phone icon, drop shadow, and smooth scale hover effect
-- Button is fixed at the vertical center of the left side of the viewport (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`) and stays fixed while scrolling
-- Clicking triggers `tel:8884447229`; long-press (≥500ms) on mobile also triggers the call
-- Button has `aria-label="Call TrustFix"` and a tooltip reading "Call TrustFix" on hover/focus
-- Button size is 52px on mobile and 60px on desktop
-- Add `FloatingCallButton` to `Layout.tsx` alongside the existing `FloatingWhatsAppButton`, ensuring no overlap between the two buttons on any screen size and at least 80px clearance from the bottom on mobile
+- Reduce all painting package prices by exactly ₹1 each in the services data file.
+- Update cleaning service prices: Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, and six home cleaning BHK/occupancy tiers with specified prices; replace Villa, Commercial, and Carpet prices with "Free Inspection → Quote → Service" label.
+- Fix service detail pages so that selecting Pest Control, Cleaning, or Painting shows only that service's own subcategory cards with no cards from other services bleeding through.
+- Add a "Property Type" select field (1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial) to the booking form, visible only when Pest Control, Cleaning, or Painting is the selected service type.
+- Update all CTA buttons ("Free Inspection", "Book Now", "Call") and the floating WhatsApp button across all relevant components to open `https://wa.me/918884447229`.
 
-**User-visible outcome:** A floating green call button appears on the left side of every page, allowing users to quickly initiate a phone call to TrustFix by clicking or long-pressing the button.
+**User-visible outcome:** Users see updated painting and cleaning prices, each service detail page shows only its own subcategories, the booking form shows a property type selector for relevant services, and every booking/call button opens the correct WhatsApp chat.

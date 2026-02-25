@@ -1,40 +1,46 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import StarRating from './StarRating';
-import type { Review } from '@/backend';
+import type { Review } from '../backend';
 
-interface ReviewCardProps {
+interface Props {
   review: Review;
 }
 
-export default function ReviewCard({ review }: ReviewCardProps) {
+const serviceLabels: Record<string, string> = {
+  pestControl: 'Pest Control',
+  deepCleaning: 'Cleaning',
+  carpetUpholstery: 'Carpet & Upholstery',
+  painting: 'Painting',
+  other: 'Other Services',
+};
+
+export default function ReviewCard({ review }: Props) {
+  const initials = review.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+
+  const date = new Date(Number(review.date) / 1_000_000).toLocaleDateString('en-IN', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full">
-      <CardContent className="p-6 flex flex-col h-full">
-        <div className="flex items-center space-x-3 mb-4">
-          <Avatar>
-            {review.photo ? (
-              <AvatarImage src={review.photo.getDirectURL()} alt={review.name} />
-            ) : (
-              <AvatarFallback className="bg-trustfix-green text-white">
-                {review.name.charAt(0).toUpperCase()}
-              </AvatarFallback>
-            )}
-          </Avatar>
-          <div>
-            <h4 className="font-semibold text-gray-900">{review.name}</h4>
-            <p className="text-sm text-gray-500">{review.service}</p>
-          </div>
+    <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-5">
+      <div className="flex items-start gap-3 mb-3">
+        <div className="w-10 h-10 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+          {initials}
         </div>
-
-        <StarRating rating={Number(review.rating)} readonly />
-
-        <p className="text-gray-700 mt-4 flex-1">{review.reviewText}</p>
-
-        <p className="text-xs text-gray-400 mt-4">
-          {new Date(Number(review.date) / 1000000).toLocaleDateString()}
-        </p>
-      </CardContent>
-    </Card>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-gray-900 text-sm">{review.name}</p>
+          <p className="text-xs text-gray-500">{serviceLabels[review.service] || 'Service'}</p>
+        </div>
+        <span className="text-xs text-gray-400">{date}</span>
+      </div>
+      <StarRating rating={Number(review.rating)} size={14} />
+      <p className="text-gray-600 text-sm mt-2 leading-relaxed">{review.reviewText}</p>
+    </div>
   );
 }

@@ -1,26 +1,34 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "TrustFix website project. Adding a floating left-side call button with green circular style, phone icon, fixed positioning, and tel:8884447229 functionality.",
+  "summary": "TrustFix home services app. Maintaining existing design while updating: painting prices (reduced by ₹1/sqft), cleaning prices (Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, home cleaning tiers, villa/commercial/carpet show free inspection flow), service click isolation (Pest Control/Cleaning/Painting show only their subcategories), booking form with property type options, and all buttons linking to WhatsApp https://wa.me/918884447229.",
   "architectural_notes": [
-    "Floating call button: fixed middle-left, #25D366 green, white phone icon, shadow + hover scale, tel:8884447229, aria-label='Call TrustFix', must not overlap right-side WhatsApp button on mobile"
+    "Do NOT redesign or change layout, colors, header, or cards — only modify data and behavior"
   ],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-create-a-new-floatingcallbutton-component-at-frontend-src-components-floatingcallbutton-tsx-the-button-must-be-circular-fixed-to-the-middle-left-of-the-screen-position-fixed-left-1rem-top-50-transform-translatey-50-with-a-green-background-25d366-a-white-phone-svg-icon-a-subtle-drop-shadow-and-a-smooth-scale-up-hover-effect-it-must-stay-fixed-while-scrolling-on-both-desktop-and-mobile-on-click-it-triggers-window-location-href-tel-8884447229-on-mobile-a-long-press-pointerdown-held-500ms-should-also-trigger-the-call-the-button-must-have-aria-label-call-trustfix-and-a-visible-tooltip-with-text-call-trustfix-that-appears-on-hover-focus-button-size-should-be-responsive-e-g-52px-on-mobile-60px-on-desktop",
-      "title": "Create a new FloatingCallButton component at `frontend/src/components/FloatingCallButton.tsx`. The button must be: circular, fixed to the middle-left of the screen (`position: fixed; left: 1rem; top: 50%; transform: translateY(-50%)`), with a green background (#25D366), a white phone SVG icon, a subtle drop shadow, and a smooth scale-up hover effect. It must stay fixed while scrolling on both desktop and mobile. On click, it triggers `window.location.href = 'tel:8884447229'`. On mobile, a long-press (pointerdown held ≥500ms) should also trigger the call. The button must have `aria-label='Call TrustFix'` and a visible tooltip with text 'Call TrustFix' that appears on hover/focus. Button size should be responsive (e.g., 52px on mobile, 60px on desktop).",
+      "id": "feature-in-frontend-src-data-services-ts-reduce-every-painting-package-price-by-exactly-1-for-example-18-sqft-17-sqft-19-18-17-16-13-12-9-8-5-4-apply-to-all-painting-service-entries-do-not-change-any-other-field-layout-or-card-design",
+      "title": "In frontend/src/data/services.ts, reduce every painting package price by exactly ₹1. For example: ₹18/sqft → ₹17/sqft, ₹19 → ₹18, ₹17 → ₹16, ₹13 → ₹12, ₹9 → ₹8, ₹5 → ₹4. Apply to all painting service entries. Do not change any other field, layout, or card design.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-the-floatingcallbutton-component-to-frontend-src-components-layout-tsx-alongside-the-existing-floatingwhatsappbutton-the-call-button-must-not-overlap-the-whatsapp-button-on-the-right-side-on-mobile-both-buttons-must-maintain-safe-margins-from-the-bottom-navigation-bar-minimum-80px-from-bottom-and-from-each-other-the-call-button-is-on-the-left-the-whatsapp-button-remains-on-the-right-they-must-never-visually-conflict",
-      "title": "Add the FloatingCallButton component to `frontend/src/components/Layout.tsx` alongside the existing FloatingWhatsAppButton. The call button must not overlap the WhatsApp button on the right side. On mobile, both buttons must maintain safe margins from the bottom navigation bar (minimum 80px from bottom) and from each other. The call button is on the left; the WhatsApp button remains on the right — they must never visually conflict.",
+      "id": "feature-in-frontend-src-data-services-ts-and-frontend-src-components-cleaningservicecard-tsx-update-cleaning-service-prices-to-bathroom-449-sofa-699-mattress-799-kitchen-1499-for-home-cleaning-set-prices-to-1bhk-vacant-2499-1bhk-occupied-3499-2bhk-vacant-3999-2bhk-occupied-4999-3bhk-vacant-5999-3bhk-occupied-6999-for-villa-commercial-and-carpet-cleaning-entries-replace-the-price-display-with-the-flow-label-free-inspection-quote-service-do-not-change-card-layout-or-design",
+      "title": "In frontend/src/data/services.ts and frontend/src/components/CleaningServiceCard.tsx, update cleaning service prices to: Bathroom – ₹449, Sofa – ₹699, Mattress – ₹799, Kitchen – ₹1499. For home cleaning, set prices to: 1BHK Vacant – ₹2499, 1BHK Occupied – ₹3499, 2BHK Vacant – ₹3999, 2BHK Occupied – ₹4999, 3BHK Vacant – ₹5999, 3BHK Occupied – ₹6999. For Villa, Commercial, and Carpet cleaning entries, replace the price display with the flow label 'Free Inspection → Quote → Service'. Do not change card layout or design.",
       "reqIds": [
         "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-every-button-and-cta-in-the-frontend-including-free-inspection-book-now-call-and-the-floating-whatsapp-button-to-open-the-url-https-wa-me-918884447229-verify-this-applies-to-floatingwhatsappbutton-tsx-herosection-tsx-pestcontrolcard-tsx-cleaningservicecard-tsx-paintingservicecard-tsx-servicecard-tsx-subcategorycard-tsx-and-any-other-component-with-a-booking-or-call-cta-do-not-change-button-appearance-or-layout",
+      "title": "Update every button and CTA in the frontend — including 'Free Inspection', 'Book Now', 'Call', and the floating WhatsApp button — to open the URL https://wa.me/918884447229. Verify this applies to: FloatingWhatsAppButton.tsx, HeroSection.tsx, PestControlCard.tsx, CleaningServiceCard.tsx, PaintingServiceCard.tsx, ServiceCard.tsx, SubcategoryCard.tsx, and any other component with a booking or call CTA. Do not change button appearance or layout.",
+      "reqIds": [
+        "REQ-5"
       ],
       "version": 1
     }
@@ -28,8 +36,48 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Floating left-side call button (green circular, white phone icon, tel:8884447229, fixed scroll, mobile-safe, accessibility labels)",
+      "summary": "Reduce all painting package prices by ₹1/sqft",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Update cleaning prices: Bathroom ₹449, Sofa ₹699, Mattress ₹799, Kitchen ₹1499, home cleaning tiers, villa/commercial/carpet show free inspection flow",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Service click isolation: clicking Pest Control/Cleaning/Painting shows only that service's subcategories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Booking form property type options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial (for Pest Control/Cleaning/Painting only)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "All buttons (Free Inspection, Book Now, Call, Floating) must open WhatsApp: https://wa.me/918884447229",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "In frontend/src/pages/Services.tsx, ensure that when a user navigates to or selects the Pest Control, Cleaning, or Painting service, only that service's own subcategory cards are rendered. No cards or sections from other services must appear on the same view. The service detail page must be fully isolated per service.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "In frontend/src/pages/Booking.tsx, for bookings where the service type is Pest Control, Cleaning, or Painting, add a 'Property Type' select field with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial. This field should only be visible when one of these three service types is selected. Do not change the booking form layout for other service types.",
+      "reqIds": [
+        "REQ-4"
+      ],
       "status": "pending"
     }
   ],

@@ -1,613 +1,461 @@
-export const servicesData: Record<string, Array<{ name: string; description: string; price: string; image: string; id: string }>> = {
-  'Pest Control': [
-    {
-      id: 'general-pest-control',
-      name: 'General Pest Control',
-      description: 'Complete protection from common household insects and pests for homes and offices.',
-      price: '999',
-      image: '/assets/generated/general-pest-control.dim_600x400.png',
-    },
-    {
-      id: 'cockroach-control',
-      name: 'Cockroach Control',
-      description: 'Deep kitchen and drainage treatment to eliminate cockroach infestations effectively.',
-      price: '899',
-      image: '/assets/generated/cockroach-control.dim_600x400.png',
-    },
-    {
-      id: 'termite-treatment',
-      name: 'Termite Treatment',
-      description: 'Advanced anti-termite treatment to protect wooden structures and furniture from damage.',
-      price: '1499',
-      image: '/assets/generated/termite-control.dim_600x400.png',
-    },
-    {
-      id: 'bed-bug-treatment',
-      name: 'Bed Bug Treatment',
-      description: 'Safe and thorough bed bug removal using modern heat and chemical solutions.',
-      price: '1299',
-      image: '/assets/generated/bed-bug-treatment.dim_600x400.png',
-    },
-    {
-      id: 'rodent-control',
-      name: 'Rodent Control',
-      description: 'Professional rat and mouse control using traps, baits, and exclusion techniques.',
-      price: '1199',
-      image: '/assets/generated/rodent-control.dim_600x400.png',
-    },
-    {
-      id: 'mosquito-control',
-      name: 'Mosquito Control',
-      description: 'Targeted fogging and larvicide treatment to reduce mosquito breeding areas.',
-      price: '799',
-      image: '/assets/generated/mosquito-control.dim_600x400.png',
-    },
-    {
-      id: 'ant-control',
-      name: 'Ant Control',
-      description: 'Effective ant colony elimination using gel baits and barrier spray treatments.',
-      price: '699',
-      image: '/assets/generated/ant-control.dim_600x400.jpg',
-    },
-    {
-      id: 'lizard-control',
-      name: 'Lizard Control',
-      description: 'Safe lizard repellent treatment to keep your home free from lizards.',
-      price: '599',
-      image: '/assets/generated/pest-control-general.dim_400x300.png',
-    },
-    {
-      id: 'spider-control',
-      name: 'Spider Control',
-      description: 'Web removal and residual spray treatment to eliminate spiders from your property.',
-      price: '699',
-      image: '/assets/generated/pest-control-tech.dim_800x600.png',
-    },
-    {
-      id: 'office-pest-control',
-      name: 'Office Pest Control',
-      description: 'Comprehensive pest management solutions tailored for commercial office spaces.',
-      price: '1999',
-      image: '/assets/generated/pest-control-service.dim_800x600.png',
-    },
-    {
-      id: 'restaurant-pest-control',
-      name: 'Restaurant Pest Control',
-      description: 'Food-safe pest control treatments designed specifically for restaurants and kitchens.',
-      price: '2499',
-      image: '/assets/generated/pest-control.dim_800x600.png',
-    },
-  ],
-  'Carpentry': [
-    {
-      id: 'furniture-repair',
-      name: 'Furniture Repair',
-      description: 'Fix damaged, broken, or loose furniture to restore its original strength and look.',
-      price: '499',
-      image: '/assets/generated/furniture-repair.dim_800x600.png',
-    },
-    {
-      id: 'door-window-fixing',
-      name: 'Door & Window Fixing',
-      description: 'Alignment, hinge adjustment, and lock repair for doors and windows.',
-      price: '599',
-      image: '/assets/generated/door-window-fixing.dim_800x600.png',
-    },
-    {
-      id: 'lock-installation',
-      name: 'Lock Installation',
-      description: 'Professional installation of door locks, deadbolts, and security latches.',
-      price: '399',
-      image: '/assets/generated/door-window-fix.dim_400x300.png',
-    },
-    {
-      id: 'shelf-installation',
-      name: 'Shelf Installation',
-      description: 'Secure wall-mounted shelf installation for storage and display purposes.',
-      price: '499',
-      image: '/assets/generated/carpentry-service.dim_800x600.png',
-    },
-    {
-      id: 'bed-assembly',
-      name: 'Bed Assembly',
-      description: 'Expert assembly of all types of beds including cots, bunk beds, and storage beds.',
-      price: '699',
-      image: '/assets/generated/furniture-assembly.dim_600x400.png',
-    },
-    {
-      id: 'wardrobe-assembly',
-      name: 'Wardrobe Assembly',
-      description: 'Professional wardrobe and almirah assembly with proper fitting and alignment.',
-      price: '899',
-      image: '/assets/generated/furniture-assembly.dim_400x300.png',
-    },
-    {
-      id: 'kitchen-cabinet-repair',
-      name: 'Kitchen Cabinet Repair',
-      description: 'Repair and restoration of kitchen cabinets, drawers, and modular fittings.',
-      price: '799',
-      image: '/assets/generated/carpenter-working.dim_800x600.png',
-    },
-    {
-      id: 'hinges-replacement',
-      name: 'Hinges Replacement',
-      description: 'Quick replacement of worn-out or broken hinges on doors, cabinets, and windows.',
-      price: '299',
-      image: '/assets/generated/carpentry.dim_800x600.png',
-    },
-    {
-      id: 'wooden-polishing',
-      name: 'Wooden Polishing',
-      description: 'Restore the natural shine and protection of wooden furniture and surfaces.',
-      price: '699',
-      image: '/assets/generated/wood-polishing.dim_400x300.png',
-    },
-    {
-      id: 'custom-furniture-work',
-      name: 'Custom Furniture Work',
-      description: 'Bespoke carpentry work including custom shelves, cabinets, and furniture pieces.',
-      price: '1999',
-      image: '/assets/generated/carpentry-service.dim_800x600.png',
-    },
-  ],
-  'Cleaning': [
-    {
-      id: 'full-house-cleaning',
-      name: 'Full House Cleaning',
-      description: 'Complete top-to-bottom deep cleaning of your entire home by trained professionals.',
-      price: '1999',
-      image: '/assets/generated/home-cleaning.dim_800x600.png',
-    },
-    {
-      id: 'bathroom-cleaning',
-      name: 'Bathroom Cleaning',
-      description: 'Deep sanitization and scrubbing of tiles, fixtures, and drainage for a spotless bathroom.',
-      price: '599',
-      image: '/assets/generated/bathroom-cleaning.dim_400x300.png',
-    },
-    {
-      id: 'kitchen-deep-cleaning',
-      name: 'Kitchen Deep Cleaning',
-      description: 'Thorough degreasing and sanitizing of kitchen surfaces, appliances, and cabinets.',
-      price: '799',
-      image: '/assets/generated/kitchen-cleaning.dim_400x300.png',
-    },
-    {
-      id: 'sofa-cleaning',
-      name: 'Sofa Cleaning',
-      description: 'Professional sofa and upholstery cleaning to remove stains, dust, and allergens.',
-      price: '899',
-      image: '/assets/generated/sofa-cleaning.dim_400x300.png',
-    },
-    {
-      id: 'carpet-cleaning',
-      name: 'Carpet Cleaning',
-      description: 'Steam and dry cleaning of carpets and rugs to remove deep-seated dirt and stains.',
-      price: '999',
-      image: '/assets/generated/cleaning-service.dim_800x600.png',
-    },
-    {
-      id: 'water-tank-cleaning',
-      name: 'Water Tank Cleaning',
-      description: 'Safe and hygienic cleaning and disinfection of overhead and underground water tanks.',
-      price: '1299',
-      image: '/assets/generated/cleaning.dim_800x600.png',
-    },
-    {
-      id: 'balcony-cleaning',
-      name: 'Balcony Cleaning',
-      description: 'Pressure washing and scrubbing of balconies, terraces, and outdoor spaces.',
-      price: '499',
-      image: '/assets/generated/home-cleaning.dim_400x300.png',
-    },
-    {
-      id: 'office-cleaning',
-      name: 'Office Cleaning',
-      description: 'Professional cleaning services for offices, workspaces, and commercial premises.',
-      price: '2499',
-      image: '/assets/generated/cleaning-service.dim_800x600.png',
-    },
-    {
-      id: 'move-in-cleaning',
-      name: 'Move-in Cleaning',
-      description: 'Thorough cleaning of your new home before moving in for a fresh, hygienic start.',
-      price: '2999',
-      image: '/assets/generated/home-cleaning.dim_800x600.png',
-    },
-    {
-      id: 'move-out-cleaning',
-      name: 'Move-out Cleaning',
-      description: 'Complete cleaning of your old home when moving out to ensure full deposit return.',
-      price: '2999',
-      image: '/assets/generated/cleaning.dim_800x600.png',
-    },
-    {
-      id: 'post-construction-cleaning',
-      name: 'Post Construction Cleaning',
-      description: 'Specialized cleaning to remove construction dust, debris, and residue after renovation.',
-      price: '3999',
-      image: '/assets/generated/cleaning-service.dim_800x600.png',
-    },
-  ],
-  'Electrical': [
-    {
-      id: 'switch-repair',
-      name: 'Switch Repair',
-      description: 'Safe repair or replacement of faulty electrical switches and panels.',
-      price: '299',
-      image: '/assets/generated/switch-repair.dim_400x300.png',
-    },
-    {
-      id: 'socket-repair',
-      name: 'Socket Repair',
-      description: 'Fix or replace damaged electrical sockets and power outlets safely.',
-      price: '299',
-      image: '/assets/generated/electrical-service.dim_800x600.png',
-    },
-    {
-      id: 'fan-installation',
-      name: 'Fan Installation',
-      description: 'Professional ceiling and wall fan installation with proper wiring and balancing.',
-      price: '399',
-      image: '/assets/generated/electrician-wiring.dim_800x600.png',
-    },
-    {
-      id: 'fan-repair',
-      name: 'Fan Repair',
-      description: 'Diagnose and fix fan speed issues, noise problems, and motor failures.',
-      price: '349',
-      image: '/assets/generated/electrical.dim_800x600.png',
-    },
-    {
-      id: 'light-installation',
-      name: 'Light Installation',
-      description: 'Install LED lights, tube lights, and decorative lighting fixtures safely.',
-      price: '349',
-      image: '/assets/generated/electrician-wiring.dim_800x600.png',
-    },
-    {
-      id: 'tube-light-fix',
-      name: 'Tube Light Fix',
-      description: 'Replace or repair flickering and non-working tube lights and fittings.',
-      price: '249',
-      image: '/assets/generated/electrical-service.dim_800x600.png',
-    },
-    {
-      id: 'wiring-repair',
-      name: 'Wiring Repair',
-      description: 'Detect and repair faulty wiring, short circuits, and electrical faults.',
-      price: '699',
-      image: '/assets/generated/electrician-wiring.dim_800x600.png',
-    },
-    {
-      id: 'mcb-replacement',
-      name: 'MCB Replacement',
-      description: 'Replace tripped or faulty MCBs and circuit breakers for safe power distribution.',
-      price: '499',
-      image: '/assets/generated/electrical-service.dim_800x600.png',
-    },
-    {
-      id: 'door-bell-installation',
-      name: 'Door Bell Installation',
-      description: 'Install wired or wireless doorbells and video doorbells at your entrance.',
-      price: '299',
-      image: '/assets/generated/electrical.dim_800x600.png',
-    },
-    {
-      id: 'inverter-installation',
-      name: 'Inverter Installation',
-      description: 'Professional inverter and UPS installation with proper battery and wiring setup.',
-      price: '999',
-      image: '/assets/generated/electrician-wiring.dim_800x600.png',
-    },
-    {
-      id: 'power-trip-fix',
-      name: 'Power Trip Fix',
-      description: 'Diagnose and resolve frequent power tripping issues in your home or office.',
-      price: '599',
-      image: '/assets/generated/electrical-service.dim_800x600.png',
-    },
-  ],
-  'AC Services': [
-    {
-      id: 'ac-general-service',
-      name: 'AC General Service',
-      description: 'Complete AC cleaning, filter wash, and maintenance for optimal cooling performance.',
-      price: '799',
-      image: '/assets/generated/ac-technician.dim_800x600.png',
-    },
-    {
-      id: 'ac-deep-cleaning',
-      name: 'AC Deep Cleaning',
-      description: 'Thorough deep cleaning of indoor and outdoor AC units including coil cleaning.',
-      price: '1299',
-      image: '/assets/generated/ac-service.dim_800x600.png',
-    },
-    {
-      id: 'ac-repair',
-      name: 'AC Repair',
-      description: 'Diagnose and fix all AC problems including cooling failure and electrical faults.',
-      price: '999',
-      image: '/assets/generated/ac-services.dim_800x600.png',
-    },
-    {
-      id: 'ac-installation',
-      name: 'AC Installation',
-      description: 'Professional AC mounting, piping, and electrical setup for all brands.',
-      price: '1499',
-      image: '/assets/generated/ac-installation.dim_800x600.png',
-    },
-    {
-      id: 'ac-uninstallation',
-      name: 'AC Uninstallation',
-      description: 'Safe removal and dismantling of AC units for shifting or replacement.',
-      price: '799',
-      image: '/assets/generated/ac-technician.dim_800x600.png',
-    },
-    {
-      id: 'ac-gas-refill',
-      name: 'AC Gas Refill',
-      description: 'Restore cooling efficiency with professional refrigerant gas refilling.',
-      price: '1299',
-      image: '/assets/generated/ac-gas-refill.dim_800x600.png',
-    },
-    {
-      id: 'cooling-issue-fix',
-      name: 'Cooling Issue Fix',
-      description: 'Diagnose and resolve insufficient cooling problems in split and window ACs.',
-      price: '899',
-      image: '/assets/generated/ac-service.dim_800x600.png',
-    },
-    {
-      id: 'water-leakage-fix',
-      name: 'Water Leakage Fix',
-      description: 'Fix AC water dripping and leakage issues from indoor units.',
-      price: '699',
-      image: '/assets/generated/ac-services.dim_800x600.png',
-    },
-    {
-      id: 'noise-problem-fix',
-      name: 'Noise Problem Fix',
-      description: 'Identify and eliminate unusual noises and vibrations from AC units.',
-      price: '599',
-      image: '/assets/generated/ac-technician.dim_800x600.png',
-    },
-    {
-      id: 'ac-remote-issue-fix',
-      name: 'AC Remote Issue Fix',
-      description: 'Repair or replace faulty AC remote controls and IR receiver boards.',
-      price: '399',
-      image: '/assets/generated/ac-service.dim_800x600.png',
-    },
-  ],
-  'Appliances Repair': [
-    {
-      id: 'washing-machine-repair',
-      name: 'Washing Machine Repair',
-      description: 'Fix drainage, spinning, heating, and electronic issues in all washing machine brands.',
-      price: '599',
-      image: '/assets/generated/washing-machine-repair.dim_800x600.png',
-    },
-    {
-      id: 'refrigerator-repair',
-      name: 'Refrigerator Repair',
-      description: 'Repair cooling, compressor, thermostat, and door seal problems in refrigerators.',
-      price: '799',
-      image: '/assets/generated/refrigerator-repair.dim_800x600.png',
-    },
-    {
-      id: 'microwave-repair',
-      name: 'Microwave Repair',
-      description: 'Fix heating failures, turntable issues, and control panel problems in microwaves.',
-      price: '499',
-      image: '/assets/generated/microwave-repair.dim_800x600.png',
-    },
-    {
-      id: 'water-purifier-service',
-      name: 'Water Purifier Service',
-      description: 'Filter replacement, membrane cleaning, and full maintenance of water purifiers.',
-      price: '599',
-      image: '/assets/generated/water-purifier-service.dim_800x600.png',
-    },
-    {
-      id: 'tv-repair',
-      name: 'TV Repair',
-      description: 'Diagnose and repair display, sound, and power issues in LED, LCD, and Smart TVs.',
-      price: '699',
-      image: '/assets/generated/appliance-repair-service.dim_800x600.png',
-    },
-    {
-      id: 'geyser-repair',
-      name: 'Geyser Repair',
-      description: 'Fix heating element, thermostat, and leakage issues in electric and gas geysers.',
-      price: '599',
-      image: '/assets/generated/appliances-repair-service.dim_800x600.png',
-    },
-    {
-      id: 'chimney-repair',
-      name: 'Chimney Repair',
-      description: 'Service and repair of kitchen chimneys including motor, filter, and suction issues.',
-      price: '799',
-      image: '/assets/generated/appliance-repair.dim_800x600.png',
-    },
-    {
-      id: 'induction-stove-repair',
-      name: 'Induction Stove Repair',
-      description: 'Fix heating, display, and sensor issues in induction cooktops and stoves.',
-      price: '499',
-      image: '/assets/generated/appliances-repair.dim_800x600.png',
-    },
-    {
-      id: 'mixer-grinder-repair',
-      name: 'Mixer Grinder Repair',
-      description: 'Repair motor, blade, and jar issues in mixer grinders and food processors.',
-      price: '399',
-      image: '/assets/generated/appliance-repair-service.dim_800x600.png',
-    },
-    {
-      id: 'dishwasher-repair',
-      name: 'Dishwasher Repair',
-      description: 'Fix drainage, cleaning, and electronic control issues in dishwashers.',
-      price: '899',
-      image: '/assets/generated/appliances-repair-service.dim_800x600.png',
-    },
-  ],
-  'Plumbing': [
-    {
-      id: 'tap-repair',
-      name: 'Tap Repair',
-      description: 'Fix leaking, dripping, or broken taps and faucets quickly and efficiently.',
-      price: '299',
-      image: '/assets/generated/tap-repair.dim_800x600.png',
-    },
-    {
-      id: 'pipe-leakage-fix',
-      name: 'Pipe Leakage Fix',
-      description: 'Detect and repair hidden and visible pipe leaks to prevent water damage.',
-      price: '599',
-      image: '/assets/generated/pipe-leakage.dim_800x600.png',
-    },
-    {
-      id: 'bathroom-plumbing',
-      name: 'Bathroom Plumbing',
-      description: 'Install and repair all bathroom plumbing fittings including showers and basins.',
-      price: '799',
-      image: '/assets/generated/bathroom-plumbing.dim_800x600.png',
-    },
-    {
-      id: 'sink-installation',
-      name: 'Sink Installation',
-      description: 'Professional installation of kitchen and bathroom sinks with proper plumbing.',
-      price: '699',
-      image: '/assets/generated/plumber-pipes.dim_800x600.png',
-    },
-    {
-      id: 'shower-installation',
-      name: 'Shower Installation',
-      description: 'Install overhead showers, hand showers, and shower panels with proper fittings.',
-      price: '799',
-      image: '/assets/generated/plumbing-service.dim_800x600.png',
-    },
-    {
-      id: 'motor-installation',
-      name: 'Motor Installation',
-      description: 'Professional water pump motor installation with proper electrical and pipe connections.',
-      price: '1299',
-      image: '/assets/generated/motor-installation.dim_800x600.png',
-    },
-    {
-      id: 'motor-repair',
-      name: 'Motor Repair',
-      description: 'Diagnose and repair water pump motor failures, low pressure, and noise issues.',
-      price: '899',
-      image: '/assets/generated/plumbing.dim_800x600.png',
-    },
-    {
-      id: 'drain-block-fix',
-      name: 'Drain Block Fix',
-      description: 'Clear blocked drains, pipes, and sewage lines using professional equipment.',
-      price: '499',
-      image: '/assets/generated/plumber-pipes.dim_800x600.png',
-    },
-    {
-      id: 'toilet-flush-repair',
-      name: 'Toilet Flush Repair',
-      description: 'Fix faulty flush mechanisms, running toilets, and cistern leakage issues.',
-      price: '399',
-      image: '/assets/generated/bathroom-plumbing.dim_800x600.png',
-    },
-    {
-      id: 'water-tank-pipe-fix',
-      name: 'Water Tank Pipe Fix',
-      description: 'Repair and replace water tank inlet, outlet, and overflow pipe connections.',
-      price: '599',
-      image: '/assets/generated/plumbing-service.dim_800x600.png',
-    },
-    {
-      id: 'borewell-motor-service',
-      name: 'Borewell Motor Service',
-      description: 'Complete servicing and repair of submersible borewell motors and pumps.',
-      price: '1999',
-      image: '/assets/generated/motor-installation.dim_800x600.png',
-    },
-  ],
-  'Painting': [
-    {
-      id: 'interior-painting',
-      name: 'Interior Painting',
-      description: 'Smooth and flawless interior wall painting with premium quality paints.',
-      price: '2999',
-      image: '/assets/generated/interior-painting.dim_800x600.png',
-    },
-    {
-      id: 'exterior-painting',
-      name: 'Exterior Painting',
-      description: 'Weather-resistant exterior painting to protect and beautify your building.',
-      price: '3999',
-      image: '/assets/generated/exterior-painting.dim_800x600.png',
-    },
-    {
-      id: 'wall-putty',
-      name: 'Wall Putty',
-      description: 'Surface leveling and smoothing with wall putty for a perfect paint finish.',
-      price: '1499',
-      image: '/assets/generated/wall-putty.dim_800x600.png',
-    },
-    {
-      id: 'texture-painting',
-      name: 'Texture Painting',
-      description: 'Designer wall textures and patterns to add a unique look to your interiors.',
-      price: '3499',
-      image: '/assets/generated/house-painting.dim_800x600.png',
-    },
-    {
-      id: 'waterproof-coating',
-      name: 'Waterproof Coating',
-      description: 'Apply waterproof coating on walls, roofs, and terraces to prevent seepage.',
-      price: '2499',
-      image: '/assets/generated/painting-service.dim_800x600.png',
-    },
-    {
-      id: 'repainting-service',
-      name: 'Repainting Service',
-      description: 'Refresh and repaint old, faded, or peeling walls with new color and finish.',
-      price: '2499',
-      image: '/assets/generated/painting.dim_800x600.png',
-    },
-    {
-      id: 'wood-painting',
-      name: 'Wood Painting',
-      description: 'Professional painting and varnishing of wooden doors, windows, and furniture.',
-      price: '1299',
-      image: '/assets/generated/painting-service.dim_800x600.png',
-    },
-    {
-      id: 'metal-painting',
-      name: 'Metal Painting',
-      description: 'Anti-rust primer and enamel painting for metal gates, grills, and railings.',
-      price: '1499',
-      image: '/assets/generated/painting.dim_800x600.png',
-    },
-    {
-      id: 'ceiling-painting',
-      name: 'Ceiling Painting',
-      description: 'Expert ceiling painting with proper preparation and drip-free application.',
-      price: '1999',
-      image: '/assets/generated/interior-painting.dim_800x600.png',
-    },
-    {
-      id: 'crack-filling',
-      name: 'Crack Filling',
-      description: 'Fill and repair wall cracks, holes, and surface imperfections before painting.',
-      price: '999',
-      image: '/assets/generated/wall-putty.dim_800x600.png',
-    },
-    {
-      id: 'primer-coating',
-      name: 'Primer Coating',
-      description: 'Apply quality primer coating for better paint adhesion and longer-lasting finish.',
-      price: '1299',
-      image: '/assets/generated/house-painting.dim_800x600.png',
-    },
-  ],
-};
+export interface CleaningItem {
+  name: string;
+  price: string;
+  priceNum?: number;
+  variant: 'fixed' | 'package' | 'inspection';
+  image: string;
+  description: string;
+  isSecondary?: boolean;
+}
+
+export interface PaintingPackage {
+  name: string;
+  pricePerSqft: number;
+  rating: number;
+  description: string;
+  features: string[];
+  image: string;
+}
+
+export interface SubcategoryItem {
+  name: string;
+  image: string;
+  description: string;
+}
+
+export interface PestControlItem {
+  name: string;
+  image: string;
+  description: string;
+  price?: string;
+}
+
+export interface Service {
+  id: string;
+  name: string;
+  icon: string;
+  image: string;
+  description: string;
+  type: 'cleaning' | 'painting' | 'pest-control' | 'quote-only';
+  subcategories?: SubcategoryItem[];
+  cleaningItems?: CleaningItem[];
+  paintingPackages?: PaintingPackage[];
+  pestControlItems?: PestControlItem[];
+}
+
+export const WHATSAPP_NUMBER = '918884447229';
+export const PHONE_NUMBER = '8884447229';
+
+export function getWhatsAppLink(message: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+export const services: Service[] = [
+  {
+    id: 'pest-control',
+    name: 'Pest Control',
+    icon: '/assets/generated/pest-control-icon.dim_200x200.png',
+    image: '/assets/generated/pest-control.dim_800x600.png',
+    description: 'Professional pest control services for homes and offices',
+    type: 'pest-control',
+    pestControlItems: [
+      {
+        name: 'General Pest Control',
+        image: '/assets/generated/general-pest-control.dim_600x400.png',
+        description: 'Complete treatment for ants, cockroaches, and common pests',
+        price: 'Starting ₹999',
+      },
+      {
+        name: 'Cockroach Control',
+        image: '/assets/generated/cockroach-control.dim_600x400.png',
+        description: 'Targeted gel-based cockroach elimination treatment',
+        price: 'Starting ₹799',
+      },
+      {
+        name: 'Mosquito Control',
+        image: '/assets/generated/mosquito-control.dim_600x400.png',
+        description: 'Fogging and spray treatment to eliminate mosquitoes',
+        price: 'Starting ₹899',
+      },
+      {
+        name: 'Termite Control',
+        image: '/assets/generated/termite-control.dim_600x400.png',
+        description: 'Pre and post-construction anti-termite treatment',
+        price: 'Starting ₹2499',
+      },
+      {
+        name: 'Bed Bug Treatment',
+        image: '/assets/generated/bed-bug-treatment.dim_600x400.png',
+        description: 'Heat and chemical treatment for complete bed bug elimination',
+        price: 'Starting ₹1499',
+      },
+      {
+        name: 'Rodent Control',
+        image: '/assets/generated/rodent-control.dim_600x400.png',
+        description: 'Trapping and baiting solutions for rodent-free spaces',
+        price: 'Starting ₹1299',
+      },
+    ],
+  },
+  {
+    id: 'cleaning',
+    name: 'Cleaning',
+    icon: '/assets/generated/cleaning-icon.dim_200x200.png',
+    image: '/assets/generated/cleaning.dim_800x600.png',
+    description: 'Professional cleaning services for every space',
+    type: 'cleaning',
+    cleaningItems: [
+      {
+        name: 'Bathroom Cleaning',
+        price: '₹449',
+        priceNum: 449,
+        variant: 'fixed',
+        image: '/assets/generated/bathroom-cleaning.dim_400x300.png',
+        description: 'Deep cleaning of bathroom tiles, fixtures, and fittings',
+      },
+      {
+        name: 'Kitchen Cleaning',
+        price: '₹1499',
+        priceNum: 1499,
+        variant: 'fixed',
+        image: '/assets/generated/kitchen-cleaning.dim_400x300.png',
+        description: 'Thorough cleaning of kitchen surfaces, chimney, and appliances',
+      },
+      {
+        name: 'Home Cleaning – 1BHK Vacant',
+        price: '₹2499',
+        priceNum: 2499,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Complete cleaning for vacant 1BHK apartments',
+      },
+      {
+        name: 'Home Cleaning – 1BHK Occupied',
+        price: '₹3499',
+        priceNum: 3499,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Deep cleaning for occupied 1BHK apartments',
+      },
+      {
+        name: 'Home Cleaning – 2BHK Vacant',
+        price: '₹3999',
+        priceNum: 3999,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Complete cleaning for vacant 2BHK apartments',
+      },
+      {
+        name: 'Home Cleaning – 2BHK Occupied',
+        price: '₹4999',
+        priceNum: 4999,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Deep cleaning for occupied 2BHK apartments',
+      },
+      {
+        name: 'Home Cleaning – 3BHK Vacant',
+        price: '₹5999',
+        priceNum: 5999,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Complete cleaning for vacant 3BHK apartments',
+      },
+      {
+        name: 'Home Cleaning – 3BHK Occupied',
+        price: '₹6999',
+        priceNum: 6999,
+        variant: 'package',
+        image: '/assets/generated/home-cleaning.dim_400x300.png',
+        description: 'Deep cleaning for occupied 3BHK apartments',
+      },
+      {
+        name: 'Villa Cleaning',
+        price: 'Free Inspection → Quote → Service',
+        variant: 'inspection',
+        image: '/assets/generated/villa-cleaning.dim_800x600.png',
+        description: 'Free inspection visit → Custom quote after assessment → Service',
+      },
+      {
+        name: 'Commercial Cleaning',
+        price: 'Free Inspection → Quote → Service',
+        variant: 'inspection',
+        image: '/assets/generated/commercial-cleaning.dim_800x600.png',
+        description: 'Inspection required → Quote provided after site visit → Service',
+      },
+      {
+        name: 'Carpet Cleaning',
+        price: 'Free Inspection → Quote → Service',
+        variant: 'inspection',
+        image: '/assets/generated/carpet-cleaning.dim_800x600.png',
+        description: 'Professional carpet cleaning with quote after inspection → Service',
+      },
+      {
+        name: 'Sofa Cleaning',
+        price: '₹699',
+        priceNum: 699,
+        variant: 'fixed',
+        image: '/assets/generated/sofa-cleaning.dim_400x300.png',
+        description: 'Deep cleaning and sanitization of sofas and upholstery',
+        isSecondary: true,
+      },
+      {
+        name: 'Mattress Cleaning',
+        price: '₹799',
+        priceNum: 799,
+        variant: 'fixed',
+        image: '/assets/generated/bathroom-cleaning.dim_400x300.png',
+        description: 'UV treatment and deep cleaning for mattresses',
+        isSecondary: true,
+      },
+    ],
+  },
+  {
+    id: 'painting',
+    name: 'Painting',
+    icon: '/assets/generated/painting-icon.dim_200x200.png',
+    image: '/assets/generated/painting.dim_800x600.png',
+    description: 'Professional painting services for interiors and exteriors',
+    type: 'painting',
+    paintingPackages: [
+      {
+        name: 'Tractor UNO (Economy)',
+        pricePerSqft: 3,
+        rating: 4.2,
+        description: 'Budget-friendly interior wall paint with good coverage and durability',
+        features: ['Washable finish', '2 coats included', 'Basic color options', 'Labor included'],
+        image: '/assets/generated/painting-tractor-uno.dim_800x600.png',
+      },
+      {
+        name: 'Tractor Emulsion',
+        pricePerSqft: 7,
+        rating: 4.4,
+        description: 'Smooth finish emulsion paint ideal for interior walls and ceilings',
+        features: ['Smooth finish', '2 coats + primer', 'Wide color range', 'Labor included'],
+        image: '/assets/generated/painting-emulsion.dim_800x600.png',
+      },
+      {
+        name: 'Premium Emulsion',
+        pricePerSqft: 11,
+        rating: 4.6,
+        description: 'Premium quality emulsion with superior coverage and long-lasting finish',
+        features: ['Superior coverage', 'Stain resistant', 'Premium colors', 'Labor + putty included'],
+        image: '/assets/generated/painting-premium.dim_800x600.png',
+      },
+      {
+        name: 'Royale Luxury',
+        pricePerSqft: 15,
+        rating: 4.8,
+        description: 'Luxury paint with silk-like finish and excellent washability',
+        features: ['Silk finish', 'Highly washable', 'Anti-fungal', 'Full service included'],
+        image: '/assets/generated/painting-royale-luxury.dim_800x600.png',
+      },
+      {
+        name: 'Royale Matt',
+        pricePerSqft: 16,
+        rating: 4.7,
+        description: 'Elegant matte finish with rich depth and premium texture',
+        features: ['Matte finish', 'Rich texture', 'Moisture resistant', 'Full service included'],
+        image: '/assets/generated/painting-royale-matt.dim_800x600.png',
+      },
+      {
+        name: 'Royale Shyne',
+        pricePerSqft: 17,
+        rating: 4.9,
+        description: 'High-gloss shyne finish for a luxurious and vibrant look',
+        features: ['High gloss', 'Vibrant colors', 'Easy to clean', 'Premium full service'],
+        image: '/assets/generated/painting-service.dim_800x600.png',
+      },
+    ],
+  },
+  {
+    id: 'electrical',
+    name: 'Electrical',
+    icon: '/assets/generated/electrical-icon.dim_200x200.png',
+    image: '/assets/generated/electrical.dim_800x600.png',
+    description: 'Certified electricians for all your electrical needs',
+    type: 'quote-only',
+    subcategories: [
+      {
+        name: 'Wiring & Rewiring',
+        image: '/assets/generated/electrical-wiring-repair.dim_400x300.png',
+        description: 'Complete home wiring and rewiring services',
+      },
+      {
+        name: 'Switch & Socket Repair',
+        image: '/assets/generated/electrical-switch-repair.dim_400x300.png',
+        description: 'Repair and replacement of switches and sockets',
+      },
+      {
+        name: 'Fan Installation',
+        image: '/assets/generated/electrical-fan-installation.dim_400x300.png',
+        description: 'Ceiling fan and exhaust fan installation',
+      },
+      {
+        name: 'Light Fitting',
+        image: '/assets/generated/switch-repair.dim_400x300.png',
+        description: 'Installation and repair of all types of lights',
+      },
+      {
+        name: 'MCB & Fuse Box',
+        image: '/assets/generated/electrical-card.dim_400x300.png',
+        description: 'MCB replacement and fuse box maintenance',
+      },
+      {
+        name: 'Inverter & UPS',
+        image: '/assets/generated/electrical-category.dim_400x300.png',
+        description: 'Inverter and UPS installation and servicing',
+      },
+    ],
+  },
+  {
+    id: 'carpentry',
+    name: 'Carpentry',
+    icon: '/assets/generated/carpentry-icon.dim_200x200.png',
+    image: '/assets/generated/carpentry.dim_800x600.png',
+    description: 'Expert carpenters for furniture and woodwork',
+    type: 'quote-only',
+    subcategories: [
+      {
+        name: 'Door & Window Repair',
+        image: '/assets/generated/door-window-fix.dim_400x300.png',
+        description: 'Repair and alignment of doors and windows',
+      },
+      {
+        name: 'Furniture Assembly',
+        image: '/assets/generated/carpentry-furniture-assembly.dim_400x300.png',
+        description: 'Assembly of flat-pack and modular furniture',
+      },
+      {
+        name: 'Furniture Repair',
+        image: '/assets/generated/furniture-repair.dim_400x300.png',
+        description: 'Repair and restoration of wooden furniture',
+      },
+      {
+        name: 'Wood Polishing',
+        image: '/assets/generated/wood-polishing.dim_400x300.png',
+        description: 'Professional wood polishing and finishing',
+      },
+      {
+        name: 'Wardrobe Fitting',
+        image: '/assets/generated/carpentry-door-repair.dim_400x300.png',
+        description: 'Custom wardrobe installation and fitting',
+      },
+      {
+        name: 'False Ceiling',
+        image: '/assets/generated/carpentry-card.dim_400x300.png',
+        description: 'POP and gypsum false ceiling installation',
+      },
+    ],
+  },
+  {
+    id: 'ac-services',
+    name: 'AC Services',
+    icon: '/assets/generated/ac-services-icon.dim_200x200.png',
+    image: '/assets/generated/ac-services.dim_800x600.png',
+    description: 'Complete AC installation, service, and repair',
+    type: 'quote-only',
+    subcategories: [
+      {
+        name: 'AC Installation',
+        image: '/assets/generated/ac-installation.dim_400x300.png',
+        description: 'Professional split and window AC installation',
+      },
+      {
+        name: 'AC Service & Cleaning',
+        image: '/assets/generated/ac-service-card.dim_400x300.png',
+        description: 'Deep cleaning and servicing of AC units',
+      },
+      {
+        name: 'Gas Refilling',
+        image: '/assets/generated/ac-gas-refill.dim_400x300.png',
+        description: 'AC refrigerant gas refilling and leak repair',
+      },
+      {
+        name: 'AC Repair',
+        image: '/assets/generated/ac-deep-service.dim_400x300.png',
+        description: 'Diagnosis and repair of all AC problems',
+      },
+      {
+        name: 'AC Uninstallation',
+        image: '/assets/generated/ac-services-category.dim_400x300.png',
+        description: 'Safe removal and uninstallation of AC units',
+      },
+    ],
+  },
+  {
+    id: 'appliances-repair',
+    name: 'Appliances Repair',
+    icon: '/assets/generated/appliances-repair-icon.dim_200x200.png',
+    image: '/assets/generated/appliances-repair.dim_800x600.png',
+    description: 'Expert repair for all home appliances',
+    type: 'quote-only',
+    subcategories: [
+      {
+        name: 'Washing Machine Repair',
+        image: '/assets/generated/appliance-washing-machine.dim_400x300.png',
+        description: 'Repair of all brands of washing machines',
+      },
+      {
+        name: 'Refrigerator Repair',
+        image: '/assets/generated/appliance-refrigerator.dim_400x300.png',
+        description: 'Fridge cooling and compressor repair',
+      },
+      {
+        name: 'Microwave Repair',
+        image: '/assets/generated/appliance-repair-card.dim_400x300.png',
+        description: 'Microwave oven repair and servicing',
+      },
+      {
+        name: 'Water Purifier Service',
+        image: '/assets/generated/appliances-repair-category.dim_400x300.png',
+        description: 'RO and UV water purifier service and filter change',
+      },
+      {
+        name: 'TV Repair',
+        image: '/assets/generated/appliance-repair-card.dim_400x300.png',
+        description: 'LED, LCD and Smart TV repair services',
+      },
+    ],
+  },
+  {
+    id: 'plumbing',
+    name: 'Plumbing',
+    icon: '/assets/generated/plumbing-icon.dim_200x200.png',
+    image: '/assets/generated/plumbing.dim_800x600.png',
+    description: 'Professional plumbing services for homes and offices',
+    type: 'quote-only',
+    subcategories: [
+      {
+        name: 'Pipe Leak Repair',
+        image: '/assets/generated/plumbing-pipe-leak.dim_400x300.png',
+        description: 'Detection and repair of pipe leaks',
+      },
+      {
+        name: 'Tap Replacement',
+        image: '/assets/generated/plumbing-tap-replacement.dim_400x300.png',
+        description: 'Tap and faucet replacement and repair',
+      },
+      {
+        name: 'Toilet Repair',
+        image: '/assets/generated/plumbing-toilet-repair.dim_400x300.png',
+        description: 'Toilet flush, seat, and cistern repair',
+      },
+      {
+        name: 'Drain Cleaning',
+        image: '/assets/generated/plumbing-card.dim_400x300.png',
+        description: 'Blocked drain and pipe cleaning services',
+      },
+      {
+        name: 'Water Tank Cleaning',
+        image: '/assets/generated/plumbing-category.dim_400x300.png',
+        description: 'Overhead and underground tank cleaning',
+      },
+      {
+        name: 'Motor Installation',
+        image: '/assets/generated/plumbing-service.dim_400x300.png',
+        description: 'Water pump and motor installation and repair',
+      },
+    ],
+  },
+];

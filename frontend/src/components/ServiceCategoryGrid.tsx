@@ -1,167 +1,76 @@
-import { Link } from '@tanstack/react-router';
-import { Card, CardContent } from '@/components/ui/card';
-import { ShieldAlert, Hammer, Sparkles, Zap, Snowflake, Wrench, Droplet, Paintbrush } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
-
-const categories = [
-  {
-    name: 'Pest Control',
-    image: '/assets/generated/pest-control-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/pest-control-service.dim_800x600.png',
-    icon: ShieldAlert,
-    path: '/services',
-    category: 'Pest Control',
-  },
-  {
-    name: 'Carpentry',
-    image: '/assets/generated/carpentry-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/carpentry-service.dim_800x600.png',
-    icon: Hammer,
-    path: '/services',
-    category: 'Carpentry',
-  },
-  {
-    name: 'Cleaning',
-    image: '/assets/generated/cleaning-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/cleaning-service.dim_800x600.png',
-    icon: Sparkles,
-    path: '/services',
-    category: 'Cleaning',
-  },
-  {
-    name: 'Electrical',
-    image: '/assets/generated/electrical-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/electrical-service.dim_800x600.png',
-    icon: Zap,
-    path: '/services',
-    category: 'Electrical',
-  },
-  {
-    name: 'AC Services',
-    image: '/assets/generated/ac-services-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/ac-service.dim_800x600.png',
-    icon: Snowflake,
-    path: '/services',
-    category: 'AC Services',
-  },
-  {
-    name: 'Appliances Repair',
-    image: '/assets/generated/appliances-repair-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/appliance-repair-service.dim_800x600.png',
-    icon: Wrench,
-    path: '/services',
-    category: 'Appliances Repair',
-  },
-  {
-    name: 'Plumbing',
-    image: '/assets/generated/plumbing-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/plumbing-service.dim_800x600.png',
-    icon: Droplet,
-    path: '/services',
-    category: 'Plumbing',
-  },
-  {
-    name: 'Painting',
-    image: '/assets/generated/painting-category.dim_800x500.jpg',
-    fallbackImage: '/assets/generated/painting-service.dim_800x600.png',
-    icon: Paintbrush,
-    path: '/services',
-    category: 'Painting',
-  },
-];
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { services } from '../data/services';
 
 export default function ServiceCategoryGrid() {
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
-  const [fallbackErrors, setFallbackErrors] = useState<Record<string, boolean>>({});
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const handleImageError = (categoryName: string) => {
-    if (!imageErrors[categoryName]) {
-      setImageErrors((prev) => ({ ...prev, [categoryName]: true }));
-    } else {
-      setFallbackErrors((prev) => ({ ...prev, [categoryName]: true }));
-    }
-  };
+  const navigate = useNavigate();
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
+    const observers: IntersectionObserver[] = [];
+
+    cardRefs.current.forEach((ref, index) => {
+      if (!ref) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
           if (entry.isIntersecting) {
             setTimeout(() => {
-              entry.target.classList.add('in-view');
-            }, index * 100);
+              setVisibleCards((prev) => new Set([...prev, index]));
+            }, index * 80);
+            observer.disconnect();
           }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      }
-    );
-
-    cardsRef.current.forEach((card) => {
-      if (card) {
-        observer.observe(card);
-      }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(ref);
+      observers.push(observer);
     });
 
-    return () => {
-      cardsRef.current.forEach((card) => {
-        if (card) {
-          observer.unobserve(card);
-        }
-      });
-    };
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {categories.map((category, index) => {
-        const Icon = category.icon;
-        const hasError = imageErrors[category.name];
-        const hasFallbackError = fallbackErrors[category.name];
-        const currentSrc = hasError ? category.fallbackImage : category.image;
+    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="text-center mb-10">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">All Home Services</h2>
+        <p className="text-gray-500 text-sm sm:text-base">Click a service to explore options and pricing</p>
+      </div>
 
-        return (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+        {services.map((service, index) => (
           <div
-            key={category.name}
-            ref={(el) => {
-              cardsRef.current[index] = el;
-            }}
-            className="scroll-animate"
+            key={service.id}
+            ref={(el) => { cardRefs.current[index] = el; }}
+            onClick={() => navigate({ to: '/services/$serviceId', params: { serviceId: service.id } })}
+            className={`
+              bg-white rounded-2xl shadow-card hover:shadow-card-hover border border-gray-100
+              cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-brand-blue/30
+              p-4 flex flex-col items-center text-center group
+              ${visibleCards.has(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}
+              transition-all duration-500
+            `}
           >
-            <Link
-              to={category.path}
-              search={{ category: category.category }}
-            >
-              <Card className="group cursor-pointer overflow-hidden bg-white/80 backdrop-blur-sm border-gray-200 hover:border-trustfix-green transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                <CardContent className="p-0">
-                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50">
-                    {!hasFallbackError ? (
-                      <img
-                        src={currentSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                        onError={() => handleImageError(category.name)}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Icon className="h-20 w-20 text-trustfix-green/60 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <h3 className="absolute bottom-4 left-4 text-xl font-bold text-white">
-                      {category.name}
-                    </h3>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mb-3 rounded-xl overflow-hidden bg-blue-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <img
+                src={service.icon}
+                alt={service.name}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = service.image;
+                }}
+              />
+            </div>
+            <h3 className="font-semibold text-gray-800 text-sm sm:text-base leading-tight group-hover:text-brand-blue transition-colors">
+              {service.name}
+            </h3>
+            <span className="mt-2 text-xs text-brand-blue font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              View Options →
+            </span>
           </div>
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 }
