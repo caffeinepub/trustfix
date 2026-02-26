@@ -1,15 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Update the address displayed in the Footer's "Contact Us" section to the new address.
+**Goal:** Replace every instance of the TrustFix logo across the entire site with a single new logo image URL.
 
 **Planned changes:**
-- Replace the existing address in the Footer component with:
-  - Sharath M
-  - 12th Cross, Mookambika Nagar
-  - Banashankari 3rd Stage
-  - Hosakerehalli
-  - Bangalore – 560085
-- Keep the email address `htrustfix@gmail.com` unchanged
+- Replace the Navbar header logo `src` with `https://i.postimg.cc/52PW5DQj/logo.png`
+- Replace the HeroSection logo `src` with `https://i.postimg.cc/52PW5DQj/logo.png`
+- Remove all other old logo image references (white-box logo, shield icon, any duplicate logo images) and replace with the new URL
+- Preserve existing size, proportions, and alignment in every section where a logo appears
 
-**User-visible outcome:** The footer's Contact Us section shows the updated full address with Sharath M's details while the email remains the same.
+**User-visible outcome:** Every logo displayed on the site shows the new image from `https://i.postimg.cc/52PW5DQj/logo.png`, with no old or duplicate logos remaining anywhere on the page.

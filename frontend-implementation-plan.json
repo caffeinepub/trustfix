@@ -1,22 +1,34 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update Contact Us footer address",
+  "title": "Site-wide logo replacement with new image URL",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Update the address block in the Footer component to display the new full address with name and postal code",
+      "summary": "Replace all TrustFix logo instances across the site with https://i.postimg.cc/52PW5DQj/logo.png while preserving existing layout, spacing, and proportions",
       "acceptanceCriteria": [
-        "The footer Contact Us section shows 'Sharath M' as the first line of the address",
-        "The full address reads: 12th Cross, Mookambika Nagar, Banashankari 3rd Stage, Hosakerehalli, Bangalore – 560085",
-        "The email htrustfix@gmail.com remains unchanged in the footer",
-        "Old address text (e.g., plain '12th Cross, Mookambika Nagar, Bangalore') is removed and replaced with the new full address"
+        "The Navbar header displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
+        "The HeroSection displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
+        "No white-box logo, old shield icon, or any previous logo image URL appears anywhere on the page.",
+        "All old logo src references are removed from the codebase.",
+        "Logo proportions and alignment in each section match the existing layout — no stretching or distortion.",
+        "No changes to layout, spacing, colors, fonts, or header height are introduced."
       ],
       "file_operations": [
         {
+          "path": "frontend/src/components/Navbar.tsx",
+          "operation": "modify",
+          "description": "Replace the existing logo image source in the Navbar component with https://i.postimg.cc/52PW5DQj/logo.png. Remove any old logo references (including any shield icons or white-box logos). Preserve the existing img element's className, width, height, and all other attributes to maintain current sizing and alignment. Do not modify the header height, spacing, or layout."
+        },
+        {
+          "path": "frontend/src/components/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Replace the existing logo image source in the HeroSection component with https://i.postimg.cc/52PW5DQj/logo.png. Remove any old logo references. Preserve the existing img element's className, width, height, and all styling attributes to maintain current proportions and alignment within the hero banner. Do not modify the section layout, overlay, or spacing."
+        },
+        {
           "path": "frontend/src/components/Footer.tsx",
           "operation": "modify",
-          "description": "Update the address section in the Contact Us block to display the new multi-line address. Replace the existing address text with: 'Sharath M' on the first line, followed by '12th Cross, Mookambika Nagar', 'Banashankari 3rd Stage', 'Hosakerehalli', and 'Bangalore – 560085' on subsequent lines. Preserve the existing email htrustfix@gmail.com and all other footer content unchanged."
+          "description": "If the Footer component contains any logo image, replace its source with https://i.postimg.cc/52PW5DQj/logo.png and remove old logo references. Preserve existing sizing and styling. If no logo exists in the Footer, skip this operation."
         }
       ]
     }

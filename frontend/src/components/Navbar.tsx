@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { Menu, X, Search, Phone } from 'lucide-react';
 import { useSearchServices } from '../hooks/useSearchServices';
 
@@ -22,7 +22,6 @@ export default function Navbar() {
   const handleSearchSelect = (categoryId: string) => {
     setSearchQuery('');
     setShowSearch(false);
-    // Navigate to services page with category param
     const url = new URL(window.location.href);
     url.pathname = '/services';
     url.searchParams.set('category', categoryId);
@@ -38,9 +37,9 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
+          <Link to="/" className="flex items-center flex-shrink-0">
             <img
-              src="/assets/generated/trustfix-logo.dim_400x120.png"
+              src="https://i.postimg.cc/52PW5DQj/logo.png"
               alt="TrustFix"
               className="h-10 w-auto object-contain"
             />

@@ -14,15 +14,10 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <img
-                src="/assets/generated/trustfix-logo.dim_400x120.png"
+                src="https://i.postimg.cc/52PW5DQj/logo.png"
                 alt="TrustFix"
                 className="h-10 w-auto object-contain"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
               />
-              <span className="text-white font-bold text-2xl">TrustFix</span>
             </div>
             <p className="text-white/80 text-sm mb-4">
               Professional home services you can trust. Serving Bangalore with quality and care.

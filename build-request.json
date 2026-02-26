@@ -1,36 +1,45 @@
 {
   "kind": "build_request",
-  "title": "Update Contact Us footer address",
+  "title": "Site-wide logo replacement with new image URL",
+  "projectName": "TrustFix",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the address block in the Footer component (frontend/src/components/Footer.tsx) to display the following address:\n\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085\n\nThe email htrustfix@gmail.com must remain unchanged.",
+      "text": "Replace every instance of the TrustFix logo across the entire site — including the Navbar header logo, the HeroSection logo, any white-box logo, any old shield icon logo, and any duplicate logo images — with the single image at https://i.postimg.cc/52PW5DQj/logo.png. Remove all old logo image references and URLs completely. Do not alter layout, spacing, colors, fonts, header height, or any other visual property. Preserve the existing size proportions and alignment in each section where a logo appears. Do not stretch or distort the new image.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "address change into\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085"
+          "Replace ALL Logos Everywhere",
+          "Replace with ONLY this logo image everywhere: https://i.postimg.cc/52PW5DQj/logo.png",
+          "REMOVE all old logo image references completely.",
+          "Use the same size proportion currently used in each section."
         ]
       },
       "acceptanceCriteria": [
-        "The footer Contact Us section shows 'Sharath M' as the first line of the address",
-        "The full address reads: 12th Cross, Mookambika Nagar, Banashankari 3rd Stage, Hosakerehalli, Bangalore – 560085",
-        "The email htrustfix@gmail.com remains unchanged in the footer",
-        "Old address text (e.g., plain '12th Cross, Mookambika Nagar, Bangalore') is removed and replaced with the new full address"
+        "The Navbar header displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
+        "The HeroSection displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
+        "No white-box logo, old shield icon, or any previous logo image URL appears anywhere on the page.",
+        "All old logo src references are removed from the codebase.",
+        "Logo proportions and alignment in each section match the existing layout — no stretching or distortion.",
+        "No changes to layout, spacing, colors, fonts, or header height are introduced."
       ]
     }
   ],
   "constraints": [
-    "Do not change any other content in the Footer component",
-    "Do not modify the email address htrustfix@gmail.com"
+    "Do not change layout, spacing, colors, fonts, or header height.",
+    "Do not stretch or distort the new logo image.",
+    "Do not redesign any section.",
+    "Only replace logo references — no other modifications."
   ],
   "nonGoals": [
-    "Changes to the Contact page (frontend/src/pages/Contact.tsx)",
-    "Any backend changes",
-    "Navbar or other UI section updates"
+    "Redesigning any page section or component.",
+    "Changing typography, color palette, or Tailwind config.",
+    "Adding new features or pages.",
+    "Modifying backend logic."
   ],
   "imageRequirements": {
     "required": [],

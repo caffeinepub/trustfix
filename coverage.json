@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-26T10:44:23.912Z",
+  "generatedAt": "2026-02-26T11:42:16.330Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,12 +12,15 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update the address block in the Footer component (frontend/src/components/Footer.tsx) to display the following address:\n\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085\n\nThe email htrustfix@gmail.com must remain unchanged.",
+        "summary": "Replace every instance of the TrustFix logo across the entire site — including the Navbar header logo, the HeroSection logo, any white-box logo, any old shield icon logo, and any duplicate logo images — with the single image at https://i.postimg.cc/52PW5DQj/logo.png. Remove all old logo image references and URLs completely. Do not alter layout, spacing, colors, fonts, header height, or any other visual property. Preserve the existing size proportions and alignment in each section where a logo appears. Do not stretch or distort the new image.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/components/Navbar.tsx",
+          "frontend/src/components/HeroSection.tsx",
           "frontend/src/components/Footer.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/components/Navbar.tsx",
           "frontend/src/components/Footer.tsx"
         ]
       }
@@ -29,6 +32,7 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Navbar.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-address-block-in-the-footer-component-frontend-src-components-footer-tsx-to-display-the-following-address-sharath-m-12th-cross-mookambika-nagar-banashankari-3rd-stage-hosakerehalli-bangalore-560085-the-email-htrustfix-gmail-com-must-remain-unchanged",
-      "featureTitle": "Update the address block in the Footer component (frontend/src/components/Footer.tsx) to display the following address:\n\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085\n\nThe email htrustfix@gmail.com must remain unchanged.",
+      "featureId": "feature-replace-every-instance-of-the-trustfix-logo-across-the-entire-site-including-the-navbar-header-logo-the-herosection-logo-any-white-box-logo-any-old-shield-icon-logo-and-any-duplicate-logo-images-with-the-single-image-at-https-i-postimg-cc-52pw5dqj-logo-png-remove-all-old-logo-image-references-and-urls-completely-do-not-alter-layout-spacing-colors-fonts-header-height-or-any-other-visual-property-preserve-the-existing-size-proportions-and-alignment-in-each-section-where-a-logo-appears-do-not-stretch-or-distort-the-new-image",
+      "featureTitle": "Replace every instance of the TrustFix logo across the entire site — including the Navbar header logo, the HeroSection logo, any white-box logo, any old shield icon logo, and any duplicate logo images — with the single image at https://i.postimg.cc/52PW5DQj/logo.png. Remove all old logo image references and URLs completely. Do not alter layout, spacing, colors, fonts, header height, or any other visual property. Preserve the existing size proportions and alignment in each section where a logo appears. Do not stretch or distort the new image.",
       "files": [
-        "frontend/src/components/Footer.tsx"
+        "frontend/src/components/Footer.tsx",
+        "frontend/src/components/Navbar.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
