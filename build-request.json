@@ -1,45 +1,74 @@
 {
   "kind": "build_request",
-  "title": "Site-wide logo replacement with new image URL",
+  "title": "Remove slider controls and convert ServiceCarousel to static stacked cards",
   "projectName": "TrustFix",
-  "priority": "normal",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Replace every instance of the TrustFix logo across the entire site — including the Navbar header logo, the HeroSection logo, any white-box logo, any old shield icon logo, and any duplicate logo images — with the single image at https://i.postimg.cc/52PW5DQj/logo.png. Remove all old logo image references and URLs completely. Do not alter layout, spacing, colors, fonts, header height, or any other visual property. Preserve the existing size proportions and alignment in each section where a logo appears. Do not stretch or distort the new image.",
+      "text": "In the ServiceCarousel component, remove the circular up/down arrow navigation button, the pagination dots indicator, and the '1 / 8' counter text entirely from the rendered output.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-6"
         ],
         "quotes": [
-          "Replace ALL Logos Everywhere",
-          "Replace with ONLY this logo image everywhere: https://i.postimg.cc/52PW5DQj/logo.png",
-          "REMOVE all old logo image references completely.",
-          "Use the same size proportion currently used in each section."
+          "Remove These Elements Completely: 1️⃣ The circular up/down arrow button (centered above image) 2️⃣ The dots indicator (pagination dots) 3️⃣ The '1 / 8' counter text"
         ]
       },
       "acceptanceCriteria": [
-        "The Navbar header displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
-        "The HeroSection displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
-        "No white-box logo, old shield icon, or any previous logo image URL appears anywhere on the page.",
-        "All old logo src references are removed from the codebase.",
-        "Logo proportions and alignment in each section match the existing layout — no stretching or distortion.",
-        "No changes to layout, spacing, colors, fonts, or header height are introduced."
+        "No circular arrow button is visible on the page",
+        "No pagination dots are rendered",
+        "No '1 / 8' or any slide counter text is visible"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Remove all carousel/slider logic from ServiceCarousel: eliminate touch/swipe event handlers, scroll-snap, hidden overflow, and any state tracking for the active slide index. Convert the component to a simple vertically stacked list of service category cards with normal block flow.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Disable slider functionality completely. Convert services into normal vertical stacked cards. Allow full smooth page scrolling. No swipe. No snap. No hidden overflow."
+        ]
+      },
+      "acceptanceCriteria": [
+        "All service category cards are rendered in a single vertically stacked layout with no carousel wrapper",
+        "Page scrolls smoothly through the cards without snapping or jumping",
+        "No touch/swipe gesture handling interferes with normal page scroll",
+        "No overflow:hidden or scroll-snap CSS is applied to the cards container"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Preserve the visual appearance of each service category card exactly: keep the card images, titles, descriptions, 'View Services' links, card design, colors, fonts, and spacing between cards unchanged.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Keep: • Service cards • Images • Titles • Descriptions • View Services link • Same spacing between cards",
+          "DO NOT change layout, DO NOT change card design, DO NOT change spacing, DO NOT change colors, DO NOT change fonts"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each card displays its image, title, description, and 'View Services' link identical to the previous design",
+        "Card spacing, colors, and fonts are visually unchanged from the version before slider removal"
       ]
     }
   ],
   "constraints": [
-    "Do not change layout, spacing, colors, fonts, or header height.",
-    "Do not stretch or distort the new logo image.",
-    "Do not redesign any section.",
-    "Only replace logo references — no other modifications."
+    "Do not change any card design, layout, colors, fonts, or spacing",
+    "Do not modify any backend files",
+    "Do not alter any other components outside of ServiceCarousel"
   ],
   "nonGoals": [
-    "Redesigning any page section or component.",
-    "Changing typography, color palette, or Tailwind config.",
-    "Adding new features or pages.",
-    "Modifying backend logic."
+    "Redesigning the service section in any way",
+    "Adding any new navigation or interaction patterns",
+    "Changing any other page or component"
   ],
   "imageRequirements": {
     "required": [],

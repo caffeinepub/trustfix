@@ -1,18 +1,34 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "TrustFix website project with site-wide logo replacement using a specific image URL across all sections (header, hero, white box, shield icons).",
+  "summary": "Web project with service cards section. Removing slider/carousel UI controls (circular arrow button, pagination dots, 1/8 counter) and converting to normal vertically stacked scrollable cards with no swipe, snap, or hidden overflow.",
   "architectural_notes": [
-    "Logo image source: https://i.postimg.cc/52PW5DQj/logo.png — must be used exclusively across all sections (header, hero, white box, shield icons). No old logo references should remain."
+    "Services section uses normal vertical stacked cards — no slider, no carousel, no swipe, no snap, no hidden overflow"
   ],
   "known_issues": [],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-replace-every-instance-of-the-trustfix-logo-across-the-entire-site-including-the-navbar-header-logo-the-herosection-logo-any-white-box-logo-any-old-shield-icon-logo-and-any-duplicate-logo-images-with-the-single-image-at-https-i-postimg-cc-52pw5dqj-logo-png-remove-all-old-logo-image-references-and-urls-completely-do-not-alter-layout-spacing-colors-fonts-header-height-or-any-other-visual-property-preserve-the-existing-size-proportions-and-alignment-in-each-section-where-a-logo-appears-do-not-stretch-or-distort-the-new-image",
-      "title": "Replace every instance of the TrustFix logo across the entire site — including the Navbar header logo, the HeroSection logo, any white-box logo, any old shield icon logo, and any duplicate logo images — with the single image at https://i.postimg.cc/52PW5DQj/logo.png. Remove all old logo image references and URLs completely. Do not alter layout, spacing, colors, fonts, header height, or any other visual property. Preserve the existing size proportions and alignment in each section where a logo appears. Do not stretch or distort the new image.",
+      "id": "feature-in-the-servicecarousel-component-remove-the-circular-up-down-arrow-navigation-button-the-pagination-dots-indicator-and-the-1-8-counter-text-entirely-from-the-rendered-output",
+      "title": "In the ServiceCarousel component, remove the circular up/down arrow navigation button, the pagination dots indicator, and the '1 / 8' counter text entirely from the rendered output.",
       "reqIds": [
         "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-carousel-slider-logic-from-servicecarousel-eliminate-touch-swipe-event-handlers-scroll-snap-hidden-overflow-and-any-state-tracking-for-the-active-slide-index-convert-the-component-to-a-simple-vertically-stacked-list-of-service-category-cards-with-normal-block-flow",
+      "title": "Remove all carousel/slider logic from ServiceCarousel: eliminate touch/swipe event handlers, scroll-snap, hidden overflow, and any state tracking for the active slide index. Convert the component to a simple vertically stacked list of service category cards with normal block flow.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-visual-appearance-of-each-service-category-card-exactly-keep-the-card-images-titles-descriptions-view-services-links-card-design-colors-fonts-and-spacing-between-cards-unchanged",
+      "title": "Preserve the visual appearance of each service category card exactly: keep the card images, titles, descriptions, 'View Services' links, card design, colors, fonts, and spacing between cards unchanged.",
+      "reqIds": [
+        "REQ-3"
       ],
       "version": 1
     }

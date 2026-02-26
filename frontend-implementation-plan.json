@@ -1,34 +1,53 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Site-wide logo replacement with new image URL",
+  "title": "Remove slider controls and convert ServiceCarousel to static stacked cards",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Replace all TrustFix logo instances across the site with https://i.postimg.cc/52PW5DQj/logo.png while preserving existing layout, spacing, and proportions",
+      "summary": "Remove all navigation controls from ServiceCarousel including the circular arrow button, pagination dots, and slide counter text",
       "acceptanceCriteria": [
-        "The Navbar header displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
-        "The HeroSection displays only https://i.postimg.cc/52PW5DQj/logo.png as the logo.",
-        "No white-box logo, old shield icon, or any previous logo image URL appears anywhere on the page.",
-        "All old logo src references are removed from the codebase.",
-        "Logo proportions and alignment in each section match the existing layout — no stretching or distortion.",
-        "No changes to layout, spacing, colors, fonts, or header height are introduced."
+        "No circular arrow button is visible on the page",
+        "No pagination dots are rendered",
+        "No '1 / 8' or any slide counter text is visible"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Navbar.tsx",
+          "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "Replace the existing logo image source in the Navbar component with https://i.postimg.cc/52PW5DQj/logo.png. Remove any old logo references (including any shield icons or white-box logos). Preserve the existing img element's className, width, height, and all other attributes to maintain current sizing and alignment. Do not modify the header height, spacing, or layout."
-        },
+          "description": "Remove the circular up/down arrow navigation button, pagination dots indicator, and the '1 / 8' counter text from the component's JSX. Delete all associated state variables, event handlers, and CSS classes related to these navigation elements."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Convert ServiceCarousel from a swipeable carousel to a simple vertically stacked list without any slider functionality",
+      "acceptanceCriteria": [
+        "All service category cards are rendered in a single vertically stacked layout with no carousel wrapper",
+        "Page scrolls smoothly through the cards without snapping or jumping",
+        "No touch/swipe gesture handling interferes with normal page scroll",
+        "No overflow:hidden or scroll-snap CSS is applied to the cards container"
+      ],
+      "file_operations": [
         {
-          "path": "frontend/src/components/HeroSection.tsx",
+          "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "Replace the existing logo image source in the HeroSection component with https://i.postimg.cc/52PW5DQj/logo.png. Remove any old logo references. Preserve the existing img element's className, width, height, and all styling attributes to maintain current proportions and alignment within the hero banner. Do not modify the section layout, overlay, or spacing."
-        },
+          "description": "Remove all carousel/slider logic: eliminate touch/swipe event handlers (onTouchStart, onTouchMove, onTouchEnd, onMouseDown, onMouseMove, onMouseUp), remove scroll-snap CSS properties, remove overflow:hidden styles, and delete any state tracking for active slide index. Replace the carousel container with a simple flex column layout that displays all service category cards in a vertically stacked format with normal block flow. Preserve all card content and onClick navigation handlers."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Preserve the exact visual appearance of each service category card including images, titles, descriptions, links, design, colors, fonts, and spacing",
+      "acceptanceCriteria": [
+        "Each card displays its image, title, description, and 'View Services' link identical to the previous design",
+        "Card spacing, colors, and fonts are visually unchanged from the version before slider removal"
+      ],
+      "file_operations": [
         {
-          "path": "frontend/src/components/Footer.tsx",
+          "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "If the Footer component contains any logo image, replace its source with https://i.postimg.cc/52PW5DQj/logo.png and remove old logo references. Preserve existing sizing and styling. If no logo exists in the Footer, skip this operation."
+          "description": "Ensure all existing card styling (background colors, shadows, border radius, hover effects, transitions), card content (service category images using fallback cycling logic, titles, descriptions, 'View Services' link text), typography (font families, sizes, weights), and spacing (gaps, padding, margins) remain completely unchanged. Only modify the container layout structure while keeping individual card JSX and styling identical."
         }
       ]
     }

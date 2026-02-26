@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace every instance of the TrustFix logo across the entire site with a single new logo image URL.
+**Goal:** Remove all slider/carousel controls and logic from the ServiceCarousel component, converting it to a simple static vertically stacked list of service category cards.
 
 **Planned changes:**
-- Replace the Navbar header logo `src` with `https://i.postimg.cc/52PW5DQj/logo.png`
-- Replace the HeroSection logo `src` with `https://i.postimg.cc/52PW5DQj/logo.png`
-- Remove all other old logo image references (white-box logo, shield icon, any duplicate logo images) and replace with the new URL
-- Preserve existing size, proportions, and alignment in every section where a logo appears
+- Remove the circular up/down arrow navigation button, pagination dots, and slide counter text (e.g. "1 / 8") from ServiceCarousel
+- Remove all carousel logic: touch/swipe event handlers, scroll-snap styles, overflow hidden, and active slide index state
+- Render all service category cards as a plain vertically stacked block layout with normal page scroll
+- Preserve all card visuals exactly: images, titles, descriptions, "View Services" links, colors, fonts, and spacing
 
-**User-visible outcome:** Every logo displayed on the site shows the new image from `https://i.postimg.cc/52PW5DQj/logo.png`, with no old or duplicate logos remaining anywhere on the page.
+**User-visible outcome:** All service category cards are displayed stacked vertically on the page with no carousel controls, allowing normal smooth scrolling through all cards.

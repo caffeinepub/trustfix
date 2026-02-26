@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { categoryOrder, servicesData } from '../data/services';
 
 const WHATSAPP_URL = 'https://wa.me/918884447229';
@@ -111,89 +111,6 @@ function ServiceCardItem({ categoryId }: ServiceCardItemProps) {
 }
 
 export default function ServiceCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [dragStartX, setDragStartX] = useState<number | null>(null);
-  const [dragDelta, setDragDelta] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const total = categoryOrder.length;
-
-  const goTo = useCallback(
-    (index: number) => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-      setCurrentIndex((index + total) % total);
-      setTimeout(() => setIsAnimating(false), 400);
-    },
-    [isAnimating, total]
-  );
-
-  const goPrev = useCallback(() => goTo(currentIndex - 1), [currentIndex, goTo]);
-  const goNext = useCallback(() => goTo(currentIndex + 1), [currentIndex, goTo]);
-
-  // Touch handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setDragStartX(e.touches[0].clientX);
-    setDragDelta(0);
-    setIsDragging(true);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (dragStartX === null) return;
-    setDragDelta(e.touches[0].clientX - dragStartX);
-  };
-
-  const handleTouchEnd = () => {
-    if (dragDelta > 50) goPrev();
-    else if (dragDelta < -50) goNext();
-    setDragStartX(null);
-    setDragDelta(0);
-    setIsDragging(false);
-  };
-
-  // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setDragStartX(e.clientX);
-    setDragDelta(0);
-    setIsDragging(true);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (dragStartX === null || !isDragging) return;
-    setDragDelta(e.clientX - dragStartX);
-  };
-
-  const handleMouseUp = () => {
-    if (dragDelta > 50) goPrev();
-    else if (dragDelta < -50) goNext();
-    setDragStartX(null);
-    setDragDelta(0);
-    setIsDragging(false);
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      if (dragDelta > 50) goPrev();
-      else if (dragDelta < -50) goNext();
-      setDragStartX(null);
-      setDragDelta(0);
-      setIsDragging(false);
-    }
-  };
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [goPrev, goNext]);
-
-  const translateX = isDragging ? dragDelta : 0;
-
   return (
     <section className="py-12 px-4">
       <div className="max-w-lg mx-auto sm:max-w-xl md:max-w-2xl">
@@ -204,84 +121,11 @@ export default function ServiceCarousel() {
           </p>
         </div>
 
-        {/* Carousel container */}
-        <div className="relative select-none">
-          {/* Prev button */}
-          <button
-            onClick={goPrev}
-            aria-label="Previous service"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white border border-gray-200 shadow-md rounded-full w-9 h-9 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition-colors duration-200 focus:outline-none"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-
-          {/* Card track */}
-          <div
-            ref={trackRef}
-            className="overflow-hidden rounded-2xl cursor-grab active:cursor-grabbing"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave}
-            style={{ touchAction: 'pan-y' }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
-                transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
-                willChange: 'transform',
-              }}
-            >
-              {categoryOrder.map((categoryId) => (
-                <div
-                  key={categoryId}
-                  style={{ minWidth: '100%', maxWidth: '100%' }}
-                  className="px-1"
-                >
-                  <ServiceCardItem categoryId={categoryId} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Next button */}
-          <button
-            onClick={goNext}
-            aria-label="Next service"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white border border-gray-200 shadow-md rounded-full w-9 h-9 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition-colors duration-200 focus:outline-none"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Dot indicators */}
-        <div className="flex justify-center gap-2 mt-5">
-          {categoryOrder.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              aria-label={`Go to service ${i + 1}`}
-              className={`rounded-full transition-all duration-300 focus:outline-none ${
-                i === currentIndex
-                  ? 'bg-brand-blue w-6 h-2'
-                  : 'bg-gray-300 hover:bg-gray-400 w-2 h-2'
-              }`}
-            />
+        <div className="flex flex-col gap-4">
+          {categoryOrder.map((categoryId) => (
+            <ServiceCardItem key={categoryId} categoryId={categoryId} />
           ))}
         </div>
-
-        {/* Counter */}
-        <p className="text-center text-gray-400 text-xs mt-2">
-          {currentIndex + 1} / {total}
-        </p>
 
         <div className="text-center mt-8">
           <a
