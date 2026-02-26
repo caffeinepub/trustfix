@@ -1,304 +1,384 @@
-import { useNavigate } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Phone } from 'lucide-react';
-import { categoryOrder, servicesData } from '../data/services';
-import PaintingServiceCard from '../components/PaintingServiceCard';
-import CleaningServiceCard from '../components/CleaningServiceCard';
-import SubcategoryCard from '../components/SubcategoryCard';
-import ServiceCard from '../components/ServiceCard';
+import { useState } from 'react';
+import { useSearch } from '@tanstack/react-router';
+import { ChevronDown, ChevronUp, Star, CheckCircle, Phone, MessageCircle } from 'lucide-react';
+import { servicesData, categoryOrder, getWhatsAppLink, WHATSAPP_NUMBER, type Subcategory, type PaintingPackage } from '../data/services';
 import BookingFormPopup from '../components/BookingFormPopup';
 
-const WHATSAPP_URL = 'https://wa.me/918884447229';
+// ─── Painting Package Card ────────────────────────────────────────────────────
+function PaintingPackageCard({
+  pkg,
+  onBookNow,
+}: {
+  pkg: PaintingPackage;
+  onBookNow: (name: string) => void;
+}) {
+  const whatsappMsg = `Hi TrustFix, I'm interested in the ${pkg.name} painting package at Rs. ${pkg.pricePerSqft}/sqft. Please provide more details.`;
 
-function openWhatsApp(message?: string) {
-  const url = message
-    ? `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`
-    : WHATSAPP_URL;
-  window.open(url, '_blank');
+  return (
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
+      <div className="relative">
+        <img
+          src={pkg.image}
+          alt={pkg.name}
+          className="w-full h-44 object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/assets/generated/painting-service.dim_800x600.png';
+          }}
+        />
+        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+          Rs. {pkg.pricePerSqft}/sqft
+        </div>
+      </div>
+      <div className="p-5 flex flex-col flex-1">
+        <h3 className="font-bold text-lg text-gray-900 mb-1">{pkg.name}</h3>
+        <p className="text-xs text-gray-500 mb-2">{pkg.label}</p>
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-2">
+          {[1, 2, 3, 4, 5].map((s) => (
+            <Star key={s} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+          ))}
+          <span className="text-xs font-semibold text-gray-700 ml-1">{pkg.rating}</span>
+          <span className="text-xs text-gray-400">({pkg.reviewCount} reviews)</span>
+        </div>
+
+        {/* Jobs completed */}
+        <p className="text-xs text-green-600 font-medium mb-3">
+          ✅ Completed {pkg.jobCount} Jobs in Last 24 days
+        </p>
+
+        {/* Price */}
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-gray-400 line-through text-sm">Rs. {pkg.oldPricePerSqft}/sqft</span>
+          <span className="text-blue-700 font-bold text-lg">Rs. {pkg.pricePerSqft}/sqft</span>
+        </div>
+
+        {/* Features */}
+        <ul className="space-y-1 mb-4 flex-1">
+          {pkg.features.map((f, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+              <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        {/* Buttons */}
+        <div className="space-y-2 mt-auto">
+          <a
+            href={getWhatsAppLink(whatsappMsg)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
+          >
+            Free Inspection
+          </a>
+          <button
+            onClick={() => onBookNow(`${pkg.name} (Painting)`)}
+            className="block w-full text-center border-2 border-blue-600 text-blue-600 text-sm font-semibold py-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
+          >
+            Book Now
+          </button>
+          <button
+            onClick={() => {
+              const msg = `Hi TrustFix, I'd like to know more about the ${pkg.name} painting package.`;
+              window.open(getWhatsAppLink(msg), '_blank');
+            }}
+            className="block w-full text-center text-blue-600 text-xs underline py-1"
+          >
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-// Cleaning page layout order
-const CLEANING_TOP_IDS = ['bathroom-cleaning', 'kitchen-cleaning', 'home-cleaning'];
-const CLEANING_BELOW_IDS = ['sofa-cleaning', 'mattress-cleaning'];
-const CLEANING_INSPECTION_IDS = ['villa-cleaning', 'commercial-cleaning', 'carpet-cleaning'];
+// ─── Subcategory Card ─────────────────────────────────────────────────────────
+function SubcategoryCardInline({
+  sub,
+  onBookNow,
+}: {
+  sub: Subcategory;
+  onBookNow: (name: string) => void;
+}) {
+  const whatsappMsg = `Hi TrustFix, I'm interested in ${sub.name}. Please provide more details.`;
 
+  return (
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
+      <div className="relative">
+        <img
+          src={sub.image}
+          alt={sub.name}
+          className="w-full h-44 object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/assets/generated/pest-control-service.dim_800x600.png';
+          }}
+        />
+        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full max-w-[80%] truncate">
+          {sub.price}
+        </div>
+      </div>
+      <div className="p-5 flex flex-col flex-1">
+        <h3 className="font-bold text-lg text-gray-900 mb-1">{sub.name}</h3>
+        <p className="text-sm text-gray-600 mb-3 flex-1">{sub.description}</p>
+
+        {/* Features */}
+        <ul className="space-y-1 mb-4">
+          {sub.features.map((f, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+              <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        {/* Buttons */}
+        <div className="space-y-2 mt-auto">
+          <a
+            href={getWhatsAppLink(whatsappMsg)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-green-600 transition-all duration-200"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Get Quote
+          </a>
+          <button
+            onClick={() => onBookNow(`${sub.name}${sub.category ? ` (${sub.category})` : ''}`)}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Service Card ────────────────────────────────────────────────────────
+function MainServiceCard({
+  service,
+  isExpanded,
+  onToggle,
+  onBookNow,
+}: {
+  service: { id: string; name: string; description: string; price: string; image: string; features: string[]; subcategories?: Subcategory[]; packages?: PaintingPackage[] };
+  isExpanded: boolean;
+  onToggle: () => void;
+  onBookNow: (name: string) => void;
+}) {
+  const hasExpandable = (service.subcategories && service.subcategories.length > 0) || (service.packages && service.packages.length > 0);
+  const whatsappMsg = `Hi TrustFix, I'm interested in ${service.name}. Please provide more details.`;
+
+  return (
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      {/* Card Header */}
+      <div className="relative">
+        <img
+          src={service.image}
+          alt={service.name}
+          className="w-full h-48 object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/assets/generated/pest-control-service.dim_800x600.png';
+          }}
+        />
+        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+          {service.price}
+        </div>
+      </div>
+
+      <div className="p-5">
+        <h3 className="font-bold text-xl text-gray-900 mb-2">{service.name}</h3>
+        <p className="text-sm text-gray-600 mb-3">{service.description}</p>
+
+        {/* Features */}
+        <ul className="space-y-1 mb-4">
+          {service.features.map((f, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          <a
+            href={getWhatsAppLink(whatsappMsg)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-green-600 transition-all duration-200"
+          >
+            <MessageCircle className="w-4 h-4" />
+            WhatsApp
+          </a>
+          <button
+            onClick={() => onBookNow(`${service.name}`)}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
+          >
+            Book Now
+          </button>
+
+          {/* Expand/Collapse Button */}
+          {hasExpandable && (
+            <button
+              onClick={onToggle}
+              className="w-full flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 text-sm font-semibold py-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
+            >
+              {isExpanded ? (
+                <>
+                  <ChevronUp className="w-4 h-4" />
+                  Hide Subcategories
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-4 h-4" />
+                  View All Options
+                </>
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Expandable Subcategories / Packages */}
+      {hasExpandable && isExpanded && (
+        <div className="border-t border-gray-100 bg-gray-50 p-5">
+          {/* Painting Packages */}
+          {service.packages && service.packages.length > 0 && (
+            <div className="mb-6">
+              <h4 className="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
+                <span className="w-1 h-5 bg-blue-600 rounded-full inline-block"></span>
+                Painting Packages (Price Per Sqft)
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {service.packages.map((pkg) => (
+                  <PaintingPackageCard key={pkg.id} pkg={pkg} onBookNow={onBookNow} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Subcategories */}
+          {service.subcategories && service.subcategories.length > 0 && (
+            <div>
+              <h4 className="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
+                <span className="w-1 h-5 bg-blue-600 rounded-full inline-block"></span>
+                {service.packages && service.packages.length > 0 ? 'Additional Services' : 'Subcategories'}
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {service.subcategories.map((sub) => (
+                  <SubcategoryCardInline key={sub.id} sub={sub} onBookNow={onBookNow} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Services Page ────────────────────────────────────────────────────────────
 export default function Services() {
-  const navigate = useNavigate();
+  const search = useSearch({ from: '/services' });
+  const categoryParam = (search as { category?: string }).category;
 
-  // Read category from URL search params manually to avoid router type issues
-  const [categoryId, setCategoryId] = useState<string | undefined>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('category') || undefined;
-    }
-    return undefined;
-  });
-
-  // Booking popup state
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categoryParam && servicesData[categoryParam] ? categoryParam : categoryOrder[0]
+  );
+  const [expandedServices, setExpandedServices] = useState<Set<string>>(new Set());
   const [isBookingPopupOpen, setIsBookingPopupOpen] = useState(false);
   const [selectedServiceName, setSelectedServiceName] = useState('');
+
+  const currentCategory = servicesData[selectedCategory];
+
+  const toggleService = (serviceId: string) => {
+    setExpandedServices((prev) => {
+      const next = new Set(prev);
+      if (next.has(serviceId)) {
+        next.delete(serviceId);
+      } else {
+        next.add(serviceId);
+      }
+      return next;
+    });
+  };
 
   const handleBookNow = (serviceName: string) => {
     setSelectedServiceName(serviceName);
     setIsBookingPopupOpen(true);
   };
 
-  // Also handle /services/$serviceId legacy route
-  useEffect(() => {
-    const pathParts = window.location.pathname.split('/');
-    const servicesIdx = pathParts.indexOf('services');
-    if (servicesIdx !== -1 && pathParts[servicesIdx + 1]) {
-      const legacyId = pathParts[servicesIdx + 1];
-      if (servicesData[legacyId]) {
-        setCategoryId(legacyId);
-      }
-    }
-    // Also check search params on mount/navigation
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get('category');
-    if (cat) setCategoryId(cat);
-  }, []);
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50">
+      {/* Page Header */}
+      <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-12 px-4">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3">Our Services</h1>
+          <p className="text-blue-100 text-lg">Professional home services at your doorstep</p>
+        </div>
+      </div>
 
-  // Listen for popstate to handle back/forward
-  useEffect(() => {
-    const handler = () => {
-      const params = new URLSearchParams(window.location.search);
-      const cat = params.get('category');
-      setCategoryId(cat || undefined);
-    };
-    window.addEventListener('popstate', handler);
-    return () => window.removeEventListener('popstate', handler);
-  }, []);
-
-  const handleSelectCategory = (id: string) => {
-    setCategoryId(id);
-    // Update URL without full navigation to avoid router type issues
-    const url = new URL(window.location.href);
-    url.pathname = '/services';
-    url.searchParams.set('category', id);
-    window.history.pushState({}, '', url.toString());
-  };
-
-  const handleBack = () => {
-    setCategoryId(undefined);
-    const url = new URL(window.location.href);
-    url.pathname = '/services';
-    url.searchParams.delete('category');
-    window.history.pushState({}, '', url.toString());
-  };
-
-  // If no category selected, show category selection grid
-  if (!categoryId || !servicesData[categoryId]) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-gray-800 mb-3">Our Services</h1>
-            <p className="text-gray-500">Select a service to view details and book</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {categoryOrder.map((id) => {
-              const cat = servicesData[id];
-              if (!cat) return null;
+      {/* Category Tabs */}
+      <div className="sticky top-0 z-10 bg-white shadow-md">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex overflow-x-auto gap-1 py-3 scrollbar-hide">
+            {categoryOrder.map((catId) => {
+              const cat = servicesData[catId];
               return (
-                <div
-                  key={id}
-                  className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group border border-gray-100 hover:-translate-y-1"
-                  onClick={() => handleSelectCategory(id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSelectCategory(id)}
+                <button
+                  key={catId}
+                  onClick={() => setSelectedCategory(catId)}
+                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+                    selectedCategory === catId
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                 >
-                  <div className="relative overflow-hidden h-36">
-                    <img
-                      src={cat.image}
-                      alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                  </div>
-                  <div className="p-3">
-                    <h3 className="font-bold text-gray-800 text-sm group-hover:text-brand-blue transition-colors">
-                      {cat.name}
-                    </h3>
-                    <p className="text-gray-500 text-xs mt-1 line-clamp-2">{cat.description}</p>
-                  </div>
-                </div>
+                  {cat.icon} {cat.name}
+                </button>
               );
             })}
           </div>
         </div>
       </div>
-    );
-  }
 
-  const category = servicesData[categoryId];
-
-  return (
-    <>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-brand-blue transition-colors"
-            >
-              <ArrowLeft size={20} />
-              <span className="text-sm font-medium">All Services</span>
-            </button>
-            <div className="h-5 w-px bg-gray-200" />
-            <h1 className="text-lg font-bold text-gray-800">{category.name}</h1>
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          {/* Category description */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">{category.name} Services</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">{category.description}</p>
-          </div>
-
-          {/* PAINTING */}
-          {categoryId === 'painting' && (
-            <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.services.map((service, index) => (
-                  <PaintingServiceCard
-                    key={service.id}
-                    service={service}
-                    index={index}
-                    onBookNow={handleBookNow}
-                  />
-                ))}
-              </div>
-              <div className="mt-8 text-center">
-                <button
-                  onClick={() => openWhatsApp('Hi, I need a Free Inspection for Painting service.')}
-                  className="inline-flex items-center gap-2 bg-brand-orange text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-orange/90 transition-colors shadow-md"
-                >
-                  <Phone size={18} />
-                  Free Inspection
-                </button>
-              </div>
+      {/* Category Content */}
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {currentCategory && (
+          <>
+            {/* Category Header */}
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                {currentCategory.icon} {currentCategory.name}
+              </h2>
+              <p className="text-gray-600">{currentCategory.description}</p>
             </div>
-          )}
 
-          {/* CLEANING */}
-          {categoryId === 'cleaning' && (
-            <div>
-              {/* Top section: Bathroom, Kitchen, Home Cleaning */}
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Popular Cleaning Services</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {CLEANING_TOP_IDS.map((id, index) => {
-                    const service = category.services.find((s) => s.id === id);
-                    if (!service) return null;
-                    return (
-                      <CleaningServiceCard
-                        key={service.id}
-                        service={service}
-                        index={index}
-                        onBookNow={handleBookNow}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Below section: Sofa, Mattress */}
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Upholstery & Mattress</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
-                  {CLEANING_BELOW_IDS.map((id, index) => {
-                    const service = category.services.find((s) => s.id === id);
-                    if (!service) return null;
-                    return (
-                      <CleaningServiceCard
-                        key={service.id}
-                        service={service}
-                        index={index}
-                        onBookNow={handleBookNow}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Inspection flow: Villa, Commercial, Carpet */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Specialized Cleaning</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {CLEANING_INSPECTION_IDS.map((id, index) => {
-                    const service = category.services.find((s) => s.id === id);
-                    if (!service) return null;
-                    return (
-                      <CleaningServiceCard
-                        key={service.id}
-                        service={service}
-                        index={index}
-                        onBookNow={handleBookNow}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* PEST CONTROL */}
-          {categoryId === 'pest-control' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.services.map((service, index) => (
-                <ServiceCard
+            {/* Services Grid */}
+            <div className="space-y-6">
+              {currentCategory.services.map((service) => (
+                <MainServiceCard
                   key={service.id}
                   service={service}
-                  categoryId={categoryId}
-                  index={index}
+                  isExpanded={expandedServices.has(service.id)}
+                  onToggle={() => toggleService(service.id)}
                   onBookNow={handleBookNow}
                 />
               ))}
             </div>
-          )}
-
-          {/* ELECTRICAL, CARPENTRY, AC SERVICES, APPLIANCES REPAIR, PLUMBING */}
-          {['electrical', 'carpentry', 'ac-services', 'appliances-repair', 'plumbing'].includes(categoryId) && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.services.map((service, index) => (
-                <SubcategoryCard
-                  key={service.id}
-                  service={service}
-                  categoryName={category.name}
-                  index={index}
-                  onBookNow={handleBookNow}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* WhatsApp CTA */}
-          <div className="mt-12 bg-brand-blue/5 border border-brand-blue/20 rounded-2xl p-6 text-center">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Need Help Choosing?</h3>
-            <p className="text-gray-500 mb-4">Chat with us on WhatsApp for instant assistance and booking.</p>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors shadow-md"
-            >
-              <Phone size={18} />
-              Chat on WhatsApp
-            </a>
-          </div>
-        </div>
+          </>
+        )}
       </div>
 
       {/* Booking Popup */}
       <BookingFormPopup
         isOpen={isBookingPopupOpen}
         onClose={() => setIsBookingPopupOpen(false)}
-        selectedService={selectedServiceName}
+        serviceName={selectedServiceName}
       />
-    </>
+    </div>
   );
 }

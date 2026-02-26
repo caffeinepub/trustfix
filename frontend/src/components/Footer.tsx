@@ -47,6 +47,14 @@ export default function Footer() {
                 WhatsApp Us
               </a>
             </div>
+            {/* Address block */}
+            <div className="mt-3 space-y-0.5">
+              <p className="text-white/80 text-sm">Sharath M</p>
+              <p className="text-white/80 text-sm">12th Cross, Mookambika Nagar</p>
+              <p className="text-white/80 text-sm">Banashankari 3rd Stage</p>
+              <p className="text-white/80 text-sm">Hosakerehalli</p>
+              <p className="text-white/80 text-sm">Bangalore – 560085</p>
+            </div>
             <div className="flex gap-3 mt-4">
               <a href="#" className="text-white/70 hover:text-white transition-colors">
                 <SiFacebook size={20} />
@@ -88,8 +96,12 @@ export default function Footer() {
               <li><a href="/reviews" className="text-white/80 hover:text-white text-sm transition-colors">Reviews</a></li>
               <li><a href="/contact" className="text-white/80 hover:text-white text-sm transition-colors">Contact Us</a></li>
             </ul>
-            <div className="mt-6">
-              <p className="text-white/70 text-xs">📍 12th Cross, Mookambika Nagar, Bangalore</p>
+            <div className="mt-6 space-y-0.5">
+              <p className="text-white/70 text-xs">📍 Sharath M</p>
+              <p className="text-white/70 text-xs">12th Cross, Mookambika Nagar</p>
+              <p className="text-white/70 text-xs">Banashankari 3rd Stage</p>
+              <p className="text-white/70 text-xs">Hosakerehalli</p>
+              <p className="text-white/70 text-xs">Bangalore – 560085</p>
               <p className="text-white/70 text-xs mt-1">✉️ htrustfix@gmail.com</p>
             </div>
           </div>

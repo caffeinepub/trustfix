@@ -1,5 +1,5 @@
 import HeroSection from '../components/HeroSection';
-import ServiceCategoryGrid from '../components/ServiceCategoryGrid';
+import ServiceCarousel from '../components/ServiceCarousel';
 import FeaturedReviewsCarousel from '../components/FeaturedReviewsCarousel';
 import { getWhatsAppLink } from '../data/services';
 
@@ -30,8 +30,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Service Grid */}
-      <ServiceCategoryGrid />
+      {/* Service Carousel */}
+      <ServiceCarousel />
 
       {/* Why Choose Us */}
       <section className="py-12 bg-gray-50">

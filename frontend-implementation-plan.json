@@ -1,101 +1,22 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Book Now Popup Booking Form with WhatsApp Integration on All Subcategory Cards",
+  "title": "Update Contact Us footer address",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Create a reusable BookingFormPopup component that renders as a modal overlay with customer information fields, auto-filled service selection, property type dropdown, date/time pickers, and backdrop dismissal",
+      "summary": "Update the address block in the Footer component to display the new full address with name and postal code",
       "acceptanceCriteria": [
-        "BookingFormPopup renders as a centered modal overlay with a semi-transparent backdrop",
-        "All listed fields are present and functional",
-        "Selected Service field is auto-filled and read-only based on which subcategory triggered the popup",
-        "Property Type dropdown shows exactly: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial",
-        "Customer Name and Mobile Number are marked as required and prevent submission if empty",
-        "Popup can be closed via a close button or clicking the backdrop"
+        "The footer Contact Us section shows 'Sharath M' as the first line of the address",
+        "The full address reads: 12th Cross, Mookambika Nagar, Banashankari 3rd Stage, Hosakerehalli, Bangalore – 560085",
+        "The email htrustfix@gmail.com remains unchanged in the footer",
+        "Old address text (e.g., plain '12th Cross, Mookambika Nagar, Bangalore') is removed and replaced with the new full address"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/BookingFormPopup.tsx",
-          "operation": "create",
-          "description": "Create a modal overlay component that displays a booking form with fields for Customer Name (required text input), Mobile Number (required tel input), Address (required textarea), Selected Service (read-only text field pre-filled from props), Property Type (dropdown with options: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date input), Preferred Time (time input), and Notes (textarea). Include a close button in the header and make the backdrop clickable to dismiss. Use Tailwind CSS for styling with a semi-transparent backdrop (bg-black/50) and a centered white card. Add form validation to prevent submission when required fields are empty. Accept props for isOpen (boolean), onClose (function), selectedService (string), and onSubmit (function that receives form data)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Implement WhatsApp message generation and auto-redirect on BookingFormPopup submission without navigation or thank-you pages",
-      "acceptanceCriteria": [
-        "On form submit, WhatsApp opens in a new tab to wa.me/918884447229 with the pre-filled message",
-        "The message contains all 8 fields in the specified format",
-        "The message text is correctly URL-encoded so special characters and line breaks render properly in WhatsApp",
-        "No thank-you page or redirect occurs after submission"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/BookingFormPopup.tsx",
+          "path": "frontend/src/components/Footer.tsx",
           "operation": "modify",
-          "description": "Add form submission handler that constructs a WhatsApp message in the exact format: 'Hello TrustFix,\\nI want to book a service.\\n\\nName: {Customer Name}\\nPhone: {Mobile Number}\\nAddress: {Address}\\nService: {Service Name}\\nProperty Type: {Property Type}\\nDate: {Date}\\nTime: {Time}\\nNotes: {Notes}\\n\\n'. Use encodeURIComponent to URL-encode the entire message text. Open window.open(`https://wa.me/918884447229?text=${encodedMessage}`, '_blank') on form submission. After opening WhatsApp, close the popup by calling the onClose prop. Do not show any thank-you message or navigate away from the current page."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Add 'Book Now' button to every subcategory card component (CleaningServiceCard, PaintingServiceCard, PestControlCard, SubcategoryCard) that opens the BookingFormPopup with the service name pre-filled",
-      "acceptanceCriteria": [
-        "Every subcategory card in all 8 service categories displays a 'Book Now' button",
-        "CleaningServiceCard, PaintingServiceCard, PestControlCard, and SubcategoryCard all have the Book Now button",
-        "Clicking any Book Now button opens the BookingFormPopup with the corresponding service name pre-filled",
-        "Existing card layout, colors, images, pricing, animations, and existing WhatsApp/Get Quote buttons are unchanged",
-        "The Book Now button does not replace existing buttons — it is added alongside them"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/CleaningServiceCard.tsx",
-          "operation": "modify",
-          "description": "Add a 'Book Now' button alongside the existing WhatsApp booking buttons in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it consistently with existing buttons using the site's color scheme (e.g., bg-primary text-white or matching the existing button styles). Do not modify the card layout, image, price badge, features list, or existing WhatsApp buttons. Position the Book Now button in the button group without disrupting the existing layout."
-        },
-        {
-          "path": "frontend/src/components/PaintingServiceCard.tsx",
-          "operation": "modify",
-          "description": "Add a 'Book Now' button alongside the existing WhatsApp CTA buttons in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it to match the existing button design and site theme. Keep all existing elements (image, price badge, star rating, features, WhatsApp buttons) unchanged. Insert the Book Now button into the button container without altering spacing or layout."
-        },
-        {
-          "path": "frontend/src/components/PestControlCard.tsx",
-          "operation": "modify",
-          "description": "Add a 'Book Now' button alongside the existing WhatsApp booking link in the card footer. The button should call an onBookNow callback prop passing the service.name. Style it to match the site's design system and existing buttons. Do not modify the image, price badge, features list, or existing WhatsApp link. Position the Book Now button next to the existing action buttons."
-        },
-        {
-          "path": "frontend/src/components/SubcategoryCard.tsx",
-          "operation": "modify",
-          "description": "Add a 'Book Now' button alongside the existing 'Get Quote' WhatsApp button in the card footer. The button should call an onBookNow callback prop passing the subcategory.name. Style it consistently with the existing Get Quote button using matching colors and spacing. Keep the card image, features list, and existing WhatsApp button unchanged. Position the Book Now button in the action area without disrupting the current layout."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Wire BookingFormPopup state management into Home and Services pages to control popup visibility and selected service without modifying floating action buttons",
-      "acceptanceCriteria": [
-        "BookingFormPopup state is managed without breaking existing page routing or layout",
-        "FloatingWhatsAppButton and FloatingCallButton components are not modified",
-        "Popup opens correctly from subcategory cards on both the Home page and the Services page",
-        "Closing the popup returns the user to the same page/scroll position without navigation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "modify",
-          "description": "Add React state for popup visibility (isBookingPopupOpen: boolean) and selected service name (selectedServiceName: string). Pass onBookNow callback to ServiceCategoryGrid that sets the selected service name and opens the popup. Import and render BookingFormPopup component at the end of the page content (before closing tags) with isOpen={isBookingPopupOpen}, selectedService={selectedServiceName}, onClose={() => setIsBookingPopupOpen(false)}, and onSubmit handler that opens WhatsApp (handled in the popup component itself). Ensure FloatingWhatsAppButton remains completely unchanged and the popup does not interfere with existing page flow or navigation."
-        },
-        {
-          "path": "frontend/src/pages/Services.tsx",
-          "operation": "modify",
-          "description": "Add React state for popup visibility (isBookingPopupOpen: boolean) and selected service name (selectedServiceName: string). Create an onBookNow callback function that accepts a service name, updates selectedServiceName state, and sets isBookingPopupOpen to true. Pass this callback down to CleaningServiceCard, PaintingServiceCard, PestControlCard, and SubcategoryCard components where they are rendered in the selected category sections. Import and render BookingFormPopup component at the end of the page return (before closing fragment/div) with isOpen, selectedService, and onClose props. Do not modify FloatingWhatsAppButton or FloatingCallButton. Ensure the popup overlay does not disrupt existing URL search param navigation or browser history management."
-        },
-        {
-          "path": "frontend/src/components/ServiceCategoryGrid.tsx",
-          "operation": "modify",
-          "description": "Add an optional onBookNow callback prop (function accepting service name string) to the component interface. This prop is currently unused in this component because ServiceCategoryGrid renders category cards that navigate to the Services page, not individual subcategory cards with Book Now buttons. Keep this component unchanged unless subcategory cards are rendered here. If ServiceCard components are used here and need Book Now functionality, pass the onBookNow prop through to them."
+          "description": "Update the address section in the Contact Us block to display the new multi-line address. Replace the existing address text with: 'Sharath M' on the first line, followed by '12th Cross, Mookambika Nagar', 'Banashankari 3rd Stage', 'Hosakerehalli', and 'Bangalore – 560085' on subsequent lines. Preserve the existing email htrustfix@gmail.com and all other footer content unchanged."
         }
       ]
     }

@@ -1,65 +1,24 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T20:40:40.235Z",
+  "generatedAt": "2026-02-26T10:44:23.912Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Create a reusable BookingFormPopup component that renders as a modal overlay (not a new page). The popup must include these fields: Customer Name (required, text), Mobile Number (required, tel), Address (required, text/textarea), Selected Service (auto-filled from the clicked subcategory, read-only text), Property Type (dropdown: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date picker), Preferred Time (time picker), and Notes (textarea). Include a close/dismiss button. The popup must be accessible and closeable by clicking the backdrop.",
+        "summary": "Update the address block in the Footer component (frontend/src/components/Footer.tsx) to display the following address:\n\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085\n\nThe email htrustfix@gmail.com must remain unchanged.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/BookingFormPopup.tsx"
+          "frontend/src/components/Footer.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/BookingFormPopup.tsx"
-        ]
-      },
-      {
-        "id": "REQ-2",
-        "summary": "On BookingFormPopup submission, do NOT navigate away or show a thank-you page. Instead, construct a URL-encoded WhatsApp message and automatically open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab. The message must follow this format exactly:\n\nHello TrustFix,\nI want to book a service.\n\nName: {Customer Name}\nPhone: {Mobile Number}\nAddress: {Address}\nService: {Service Name}\nProperty Type: {Property Type}\nDate: {Date}\nTime: {Time}\nNotes: {Notes}\n\nAll field values must be URL-encoded using encodeURIComponent.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/BookingFormPopup.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/BookingFormPopup.tsx"
-        ]
-      },
-      {
-        "id": "REQ-3",
-        "summary": "Add a 'Book Now' button to every subcategory card across all service categories: Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, and Plumbing. This applies to the SubcategoryCard component and any specialized card components (CleaningServiceCard, PaintingServiceCard, PestControlCard). Each button must pass the service/subcategory name to the BookingFormPopup as the auto-filled Selected Service value. The button styling must be consistent with the existing site design (do not alter existing card layout, colors, images, pricing, or animations).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/CleaningServiceCard.tsx",
-          "frontend/src/components/PaintingServiceCard.tsx",
-          "frontend/src/components/PestControlCard.tsx",
-          "frontend/src/components/SubcategoryCard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/CleaningServiceCard.tsx",
-          "frontend/src/components/PaintingServiceCard.tsx",
-          "frontend/src/components/PestControlCard.tsx",
-          "frontend/src/components/SubcategoryCard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Wire the BookingFormPopup state (open/closed and selected service name) into the Services page and any page that renders subcategory cards (Home, Services). Use React state to manage popup visibility and the currently selected service name. The floating WhatsApp button (FloatingWhatsAppButton and FloatingCallButton) must remain completely unchanged.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/pages/Services.tsx",
-          "frontend/src/components/ServiceCategoryGrid.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Services.tsx"
+          "frontend/src/components/Footer.tsx"
         ]
       }
     ]
@@ -69,13 +28,7 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/BookingFormPopup.tsx",
-    "frontend/src/components/CleaningServiceCard.tsx",
-    "frontend/src/components/PaintingServiceCard.tsx",
-    "frontend/src/components/PestControlCard.tsx",
-    "frontend/src/components/ServiceCard.tsx",
-    "frontend/src/components/SubcategoryCard.tsx",
-    "frontend/src/pages/Services.tsx",
+    "frontend/src/components/Footer.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

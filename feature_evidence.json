@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-reusable-bookingformpopup-component-that-renders-as-a-modal-overlay-not-a-new-page-the-popup-must-include-these-fields-customer-name-required-text-mobile-number-required-tel-address-required-text-textarea-selected-service-auto-filled-from-the-clicked-subcategory-read-only-text-property-type-dropdown-1bhk-2bhk-3bhk-square-feet-villa-commercial-preferred-date-date-picker-preferred-time-time-picker-and-notes-textarea-include-a-close-dismiss-button-the-popup-must-be-accessible-and-closeable-by-clicking-the-backdrop",
-      "featureTitle": "Create a reusable BookingFormPopup component that renders as a modal overlay (not a new page). The popup must include these fields: Customer Name (required, text), Mobile Number (required, tel), Address (required, text/textarea), Selected Service (auto-filled from the clicked subcategory, read-only text), Property Type (dropdown: 1BHK, 2BHK, 3BHK, Square Feet, Villa, Commercial), Preferred Date (date picker), Preferred Time (time picker), and Notes (textarea). Include a close/dismiss button. The popup must be accessible and closeable by clicking the backdrop.",
+      "featureId": "feature-update-the-address-block-in-the-footer-component-frontend-src-components-footer-tsx-to-display-the-following-address-sharath-m-12th-cross-mookambika-nagar-banashankari-3rd-stage-hosakerehalli-bangalore-560085-the-email-htrustfix-gmail-com-must-remain-unchanged",
+      "featureTitle": "Update the address block in the Footer component (frontend/src/components/Footer.tsx) to display the following address:\n\nSharath M\n12th Cross, Mookambika Nagar\nBanashankari 3rd Stage\nHosakerehalli\nBangalore – 560085\n\nThe email htrustfix@gmail.com must remain unchanged.",
       "files": [
-        "frontend/src/components/BookingFormPopup.tsx"
+        "frontend/src/components/Footer.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -17,66 +17,6 @@
       ],
       "testIds": [
         "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-on-bookingformpopup-submission-do-not-navigate-away-or-show-a-thank-you-page-instead-construct-a-url-encoded-whatsapp-message-and-automatically-open-https-wa-me-918884447229-text-encoded-message-in-a-new-tab-the-message-must-follow-this-format-exactly-hello-trustfix-i-want-to-book-a-service-name-customer-name-phone-mobile-number-address-address-service-service-name-property-type-property-type-date-date-time-time-notes-notes-all-field-values-must-be-url-encoded-using-encodeuricomponent",
-      "featureTitle": "On BookingFormPopup submission, do NOT navigate away or show a thank-you page. Instead, construct a URL-encoded WhatsApp message and automatically open `https://wa.me/918884447229?text=ENCODED_MESSAGE` in a new tab. The message must follow this format exactly:\n\nHello TrustFix,\nI want to book a service.\n\nName: {Customer Name}\nPhone: {Mobile Number}\nAddress: {Address}\nService: {Service Name}\nProperty Type: {Property Type}\nDate: {Date}\nTime: {Time}\nNotes: {Notes}\n\nAll field values must be URL-encoded using encodeURIComponent.",
-      "files": [
-        "frontend/src/components/BookingFormPopup.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-book-now-button-to-every-subcategory-card-across-all-service-categories-cleaning-painting-pest-control-electrical-carpentry-ac-appliances-and-plumbing-this-applies-to-the-subcategorycard-component-and-any-specialized-card-components-cleaningservicecard-paintingservicecard-pestcontrolcard-each-button-must-pass-the-service-subcategory-name-to-the-bookingformpopup-as-the-auto-filled-selected-service-value-the-button-styling-must-be-consistent-with-the-existing-site-design-do-not-alter-existing-card-layout-colors-images-pricing-or-animations",
-      "featureTitle": "Add a 'Book Now' button to every subcategory card across all service categories: Cleaning, Painting, Pest Control, Electrical, Carpentry, AC, Appliances, and Plumbing. This applies to the SubcategoryCard component and any specialized card components (CleaningServiceCard, PaintingServiceCard, PestControlCard). Each button must pass the service/subcategory name to the BookingFormPopup as the auto-filled Selected Service value. The button styling must be consistent with the existing site design (do not alter existing card layout, colors, images, pricing, or animations).",
-      "files": [
-        "frontend/src/components/CleaningServiceCard.tsx",
-        "frontend/src/components/PaintingServiceCard.tsx",
-        "frontend/src/components/PestControlCard.tsx",
-        "frontend/src/components/SubcategoryCard.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-wire-the-bookingformpopup-state-open-closed-and-selected-service-name-into-the-services-page-and-any-page-that-renders-subcategory-cards-home-services-use-react-state-to-manage-popup-visibility-and-the-currently-selected-service-name-the-floating-whatsapp-button-floatingwhatsappbutton-and-floatingcallbutton-must-remain-completely-unchanged",
-      "featureTitle": "Wire the BookingFormPopup state (open/closed and selected service name) into the Services page and any page that renders subcategory cards (Home, Services). Use React state to manage popup visibility and the currently selected service name. The floating WhatsApp button (FloatingWhatsAppButton and FloatingCallButton) must remain completely unchanged.",
-      "files": [
-        "frontend/src/pages/Services.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
       ],
       "confidence": "high"
     }
