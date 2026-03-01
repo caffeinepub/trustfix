@@ -1,37 +1,39 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-28T20:42:58.722Z",
-  "summary": "The diff implements most of the requested requirements. REQ-1 (remove snap scroll), REQ-2 (remove navigation overlays), REQ-3 (static carousel layouts), and REQ-4 (fade-up animations) appear well-addressed. REQ-5 has partial evidence — the 'View All Options' button is noted as removed in the file summary, but the Services.tsx diff is truncated so the 'expand instantly on first click' behaviour cannot be fully confirmed. The diff also introduces a scrollbar-hide CSS utility class that was not requested, though it is minor.",
+  "generatedAt": "2026-03-01T16:55:09.624Z",
+  "summary": "The diff implements all five requirements substantially. REQ-1 (8 service cards with water-waves scroll animation via IntersectionObserver and staggered delay) is implemented in ServiceCardWithExpansion.tsx and Home.tsx. REQ-2 (inline expansion on card click, no navigation) is implemented via the expandedCategory state in Home.tsx and ExpandedServicePanel.tsx. REQ-3 (complete pricing data in services.ts) is present with the full data structure including subcategoryGroups, addOnOptions, and serviceVisitCharge fields. REQ-4 (sq.ft calculator for Commercial/Construction pest control) is implemented in PricingCalculator.tsx and wired into ExpandedServicePanel.tsx. REQ-5 (add-on options with toggleable chips and WhatsApp message inclusion) is implemented in AddOnOptions.tsx and integrated through ExpandedServicePanel.tsx and whatsappHelper.ts. Minor concerns exist around truncated diffs making full verification of all pricing values impossible, but the structure and key values visible are consistent with requirements.",
   "missing_requirements": [
     {
-      "id": "REQ-5",
-      "requirement": "When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required.",
-      "reason": "The Services.tsx diff is truncated and only shows accordion/chevron toggle UI structure. The file summary states 'View All Options button fully removed' but the expand-on-first-click behaviour cannot be confirmed from the truncated diff. The presence of ChevronDown/ChevronUp imports and 'expandable accordion' language in the summary raises doubt about whether subcategories expand without any toggle interaction.",
+      "id": "REQ-3",
+      "requirement": "All 8 service categories have complete and accurate pricing data in services.ts — the truncated diff prevents full verification of Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, and Appliances Repair pricing entries.",
+      "reason": "The services.ts diff is truncated after showing only part of the pestControl entry. While the data structure and several prices are confirmed, the full pricing for 7 of 8 services cannot be verified from the truncated content.",
       "evidence": [
-        "frontend/src/pages/Services.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/data/services.ts"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "A scrollbar-hide CSS utility class was added to index.css, hiding scrollbars on elements that use it.",
-      "reason": "The build request did not request any scrollbar hiding or scrollbar styling changes; it only requested removal of snap scroll and addition of fade-up animations.",
+      "description": "BookingFormPopup modal integrated inside the expanded service panel on the Home page",
+      "reason": "The build request specifies only Book Now and WhatsApp buttons within the expanded card panel. ExpandedServicePanel.tsx imports and uses BookingFormPopup which introduces a separate booking form popup not specified for the Home page inline expansion.",
       "evidence": [
-        "frontend/src/index.css"
+        "frontend/src/components/ExpandedServicePanel.tsx"
       ]
     }
   ],
   "confidence": 0.78,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/FeaturedReviewsCarousel.tsx",
-    "frontend/src/components/ServiceCarousel.tsx",
-    "frontend/src/hooks/useFadeUpOnScroll.ts",
+    "frontend/src/components/AddOnOptions.tsx",
+    "frontend/src/components/ExpandedServicePanel.tsx",
+    "frontend/src/components/PricingCalculator.tsx",
+    "frontend/src/components/ServiceCardWithExpansion.tsx",
+    "frontend/src/data/services.ts",
     "frontend/src/index.css",
     "frontend/src/pages/Home.tsx",
     "frontend/src/pages/Services.tsx",
+    "frontend/src/utils/whatsappHelper.ts",
     "project_state.json"
   ]
 }

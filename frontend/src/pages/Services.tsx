@@ -1,346 +1,136 @@
-import { useState, useEffect } from 'react';
-import { useSearch } from '@tanstack/react-router';
-import { ChevronDown, ChevronUp, CheckCircle, MessageCircle, Star } from 'lucide-react';
-import {
-  servicesData,
-  categoryOrder,
-  getWhatsAppLink,
-  type Service,
-  type Subcategory,
-  type PaintingPackage,
-} from '@/data/services';
-import BookingFormPopup from '@/components/BookingFormPopup';
+import { useState, useEffect } from "react";
+import { useSearch, useNavigate } from "@tanstack/react-router";
+import { servicesData, categoryOrder } from "../data/services";
+import ServiceCard from "../components/ServiceCard";
+import SubcategoryCard from "../components/SubcategoryCard";
+import PestControlCard from "../components/PestControlCard";
+import CleaningServiceCard from "../components/CleaningServiceCard";
+import PaintingServiceCard from "../components/PaintingServiceCard";
+import BookingFormPopup from "../components/BookingFormPopup";
 
-interface ServiceSearch {
+type ServiceItem = {
+  id?: string;
+  name: string;
+  description?: string;
+  price?: number | string;
+  priceUnit?: string;
+  priceType?: string;
+  image?: string;
+  features?: string[];
   category?: string;
-}
+  propertyType?: string;
+  [key: string]: unknown;
+};
 
-// ─── Painting Package Card ────────────────────────────────────────────────────
-function PaintingPackageCard({
-  pkg,
-  onBookNow,
-}: {
-  pkg: PaintingPackage;
-  onBookNow: (name: string) => void;
-}) {
-  const whatsappMsg = `Hi TrustFix, I'm interested in the ${pkg.name} painting package at Rs. ${pkg.pricePerSqft}/sqft. Please provide more details.`;
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      <div className="relative">
-        <img
-          src={pkg.image}
-          alt={pkg.name}
-          className="w-full h-44 object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/assets/generated/painting-service.dim_800x600.png';
-          }}
-        />
-        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-          Rs. {pkg.pricePerSqft}/sqft
-        </div>
-      </div>
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-lg text-gray-900 mb-1">{pkg.name}</h3>
-        <p className="text-xs text-gray-500 mb-2">{pkg.label}</p>
-
-        <div className="flex items-center gap-1 mb-2">
-          {[1, 2, 3, 4, 5].map((s) => (
-            <Star key={s} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-          ))}
-          <span className="text-xs font-semibold text-gray-700 ml-1">{pkg.rating}</span>
-          <span className="text-xs text-gray-400">({pkg.reviewCount} reviews)</span>
-        </div>
-
-        <p className="text-xs text-green-600 font-medium mb-3">
-          ✅ Completed {pkg.jobCount} Jobs in Last 24 days
-        </p>
-
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-gray-400 line-through text-sm">Rs. {pkg.oldPricePerSqft}/sqft</span>
-          <span className="text-blue-700 font-bold text-lg">Rs. {pkg.pricePerSqft}/sqft</span>
-        </div>
-
-        <ul className="space-y-1 mb-4 flex-1">
-          {pkg.features.map((f, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
-              <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        <div className="space-y-2 mt-auto">
-          <a
-            href={getWhatsAppLink(whatsappMsg)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
-          >
-            Free Inspection
-          </a>
-          <button
-            onClick={() => onBookNow(`${pkg.name} (Painting)`)}
-            className="block w-full text-center border-2 border-blue-600 text-blue-600 text-sm font-semibold py-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
-          >
-            Book Now
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Subcategory Card ─────────────────────────────────────────────────────────
-function SubcategoryCardInline({
-  sub,
-  onBookNow,
-}: {
-  sub: Subcategory;
-  onBookNow: (name: string) => void;
-}) {
-  const whatsappMsg = `Hi TrustFix, I'm interested in ${sub.name}. Please provide more details.`;
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      <div className="relative">
-        <img
-          src={sub.image}
-          alt={sub.name}
-          className="w-full h-44 object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/assets/generated/pest-control-service.dim_800x600.png';
-          }}
-        />
-        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full max-w-[80%] truncate">
-          {sub.price}
-        </div>
-      </div>
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-lg text-gray-900 mb-1">{sub.name}</h3>
-        <p className="text-sm text-gray-600 mb-3 flex-1">{sub.description}</p>
-
-        <ul className="space-y-1 mb-4">
-          {sub.features.map((f, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
-              <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        <div className="space-y-2 mt-auto">
-          <a
-            href={getWhatsAppLink(whatsappMsg)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-green-600 transition-all duration-200"
-          >
-            <MessageCircle className="w-4 h-4" />
-            Get Quote
-          </a>
-          <button
-            onClick={() => onBookNow(`${sub.name}${sub.category ? ` (${sub.category})` : ''}`)}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
-          >
-            Book Now
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main Service Card ────────────────────────────────────────────────────────
-function MainServiceCard({
-  service,
-  isExpanded,
-  onToggle,
-  onBookNow,
-}: {
-  service: Service;
-  isExpanded: boolean;
-  onToggle: () => void;
-  onBookNow: (name: string) => void;
-}) {
-  const hasExpandable =
-    (service.subcategories && service.subcategories.length > 0) ||
-    (service.packages && service.packages.length > 0);
-  const whatsappMsg = `Hi TrustFix, I'm interested in ${service.name}. Please provide more details.`;
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-      {/* Card Header */}
-      <div className="relative">
-        <img
-          src={service.image}
-          alt={service.name}
-          className="w-full h-48 object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/assets/generated/pest-control-service.dim_800x600.png';
-          }}
-        />
-        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-          {service.price}
-        </div>
-      </div>
-
-      <div className="p-5">
-        <h3 className="font-bold text-xl text-gray-900 mb-2">{service.name}</h3>
-        <p className="text-sm text-gray-600 mb-3">{service.description}</p>
-
-        <ul className="space-y-1 mb-4">
-          {service.features.map((f, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-              <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          <a
-            href={getWhatsAppLink(whatsappMsg)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-green-600 transition-all duration-200"
-          >
-            <MessageCircle className="w-4 h-4" />
-            WhatsApp
-          </a>
-          <button
-            onClick={() => onBookNow(service.name)}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-200"
-          >
-            Book Now
-          </button>
-
-          {/* Expand/Collapse — no "View All Options" label, just a chevron toggle */}
-          {hasExpandable && (
-            <button
-              onClick={onToggle}
-              className="w-full flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 text-sm font-semibold py-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
-            >
-              {isExpanded ? (
-                <>
-                  <ChevronUp className="w-4 h-4" />
-                  Hide Subcategories
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-4 h-4" />
-                  Show Subcategories
-                </>
-              )}
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Expandable Subcategories / Packages */}
-      {hasExpandable && isExpanded && (
-        <div className="border-t border-gray-100 bg-gray-50 p-5">
-          {service.packages && service.packages.length > 0 && (
-            <div className="mb-6">
-              <h4 className="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
-                <span className="w-1 h-5 bg-blue-600 rounded-full inline-block" />
-                Painting Packages (Price Per Sqft)
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {service.packages.map((pkg) => (
-                  <PaintingPackageCard key={pkg.id} pkg={pkg} onBookNow={onBookNow} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {service.subcategories && service.subcategories.length > 0 && (
-            <div>
-              <h4 className="font-bold text-gray-800 text-base mb-4 flex items-center gap-2">
-                <span className="w-1 h-5 bg-blue-600 rounded-full inline-block" />
-                {service.packages && service.packages.length > 0
-                  ? 'Additional Services'
-                  : 'Subcategories'}
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {service.subcategories.map((sub) => (
-                  <SubcategoryCardInline key={sub.id} sub={sub} onBookNow={onBookNow} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Services Page ────────────────────────────────────────────────────────────
 export default function Services() {
-  const search = useSearch({ from: '/services' }) as ServiceSearch;
-  const categoryParam = search.category;
-
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    categoryParam && servicesData[categoryParam] ? categoryParam : categoryOrder[0]
+  const search = useSearch({ from: "/services" }) as { category?: string };
+  const navigate = useNavigate();
+  const [activeCategory, setActiveCategory] = useState<string>(
+    search.category || categoryOrder[0]
   );
-  const [expandedServices, setExpandedServices] = useState<Set<string>>(new Set());
-  const [isBookingPopupOpen, setIsBookingPopupOpen] = useState(false);
-  const [selectedServiceName, setSelectedServiceName] = useState('');
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedServiceName, setSelectedServiceName] = useState("");
 
   useEffect(() => {
-    if (categoryParam && servicesData[categoryParam]) {
-      setSelectedCategory(categoryParam);
+    if (search.category && categoryOrder.includes(search.category)) {
+      setActiveCategory(search.category);
     }
-  }, [categoryParam]);
+  }, [search.category]);
 
-  const currentCategory = servicesData[selectedCategory];
-
-  const toggleService = (serviceId: string) => {
-    setExpandedServices((prev) => {
-      const next = new Set(prev);
-      if (next.has(serviceId)) {
-        next.delete(serviceId);
-      } else {
-        next.add(serviceId);
-      }
-      return next;
-    });
+  const handleCategoryChange = (catId: string) => {
+    setActiveCategory(catId);
+    navigate({ to: "/services", search: { category: catId } });
   };
 
   const handleBookNow = (serviceName: string) => {
     setSelectedServiceName(serviceName);
-    setIsBookingPopupOpen(true);
+    setIsBookingOpen(true);
+  };
+
+  const currentCategory = servicesData[activeCategory];
+
+  const renderServiceCard = (service: ServiceItem, index: number) => {
+    const onBookNow = () => handleBookNow(service.name);
+
+    if (activeCategory === "pestControl") {
+      return (
+        <PestControlCard
+          key={service.id ?? `${activeCategory}-${index}`}
+          service={service}
+          onBookNow={onBookNow}
+        />
+      );
+    }
+    if (activeCategory === "cleaning") {
+      return (
+        <CleaningServiceCard
+          key={service.id ?? `${activeCategory}-${index}`}
+          service={service}
+          onBookNow={onBookNow}
+        />
+      );
+    }
+    if (activeCategory === "painting") {
+      return (
+        <PaintingServiceCard
+          key={service.id ?? `${activeCategory}-${index}`}
+          service={service}
+          onBookNow={onBookNow}
+        />
+      );
+    }
+    if (
+      service.subcategories &&
+      Array.isArray(
+        (service as unknown as { subcategories: unknown[] }).subcategories
+      )
+    ) {
+      return (
+        <SubcategoryCard
+          key={service.id ?? `${activeCategory}-${index}`}
+          service={service}
+          onBookNow={onBookNow}
+        />
+      );
+    }
+    return (
+      <ServiceCard
+        key={service.id ?? `${activeCategory}-${index}`}
+        service={service}
+        onBookNow={onBookNow}
+      />
+    );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50">
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3">Our Services</h1>
-          <p className="text-blue-100 text-lg">Professional home services at your doorstep</p>
-        </div>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="bg-primary text-primary-foreground py-10 px-4 text-center">
+        <h1 className="text-3xl font-bold mb-2">Our Services</h1>
+        <p className="opacity-90 max-w-xl mx-auto">
+          Professional home services at your doorstep. Trusted by thousands
+          across Bangalore.
+        </p>
       </div>
 
       {/* Category Tabs */}
-      <div className="sticky top-0 z-10 bg-white shadow-md">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex overflow-x-auto gap-1 py-3 scrollbar-hide">
+      <div className="sticky top-16 z-30 bg-background border-b border-border shadow-sm">
+        <div className="max-w-6xl mx-auto px-2">
+          <div className="flex overflow-x-auto scrollbar-hide gap-1 py-2">
             {categoryOrder.map((catId) => {
               const cat = servicesData[catId];
               if (!cat) return null;
               return (
                 <button
                   key={catId}
-                  onClick={() => setSelectedCategory(catId)}
-                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
-                    selectedCategory === catId
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600'
+                  onClick={() => handleCategoryChange(catId)}
+                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                    activeCategory === catId
+                      ? "bg-primary text-primary-foreground shadow"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   }`}
                 >
-                  {cat.icon} {cat.name}
+                  {cat.name}
                 </button>
               );
             })}
@@ -348,38 +138,63 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Category Content */}
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {currentCategory && (
+      {/* Services Grid */}
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        {currentCategory ? (
           <>
-            {/* Category Header */}
-            <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                {currentCategory.icon} {currentCategory.name}
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-foreground">
+                {currentCategory.name}
               </h2>
-              <p className="text-gray-600">{currentCategory.description}</p>
+              {currentCategory.description && (
+                <p className="text-muted-foreground mt-1">
+                  {currentCategory.description}
+                </p>
+              )}
             </div>
 
-            {/* Services Grid */}
-            <div className="space-y-6">
-              {currentCategory.services.map((service) => (
-                <MainServiceCard
-                  key={service.id}
-                  service={service}
-                  isExpanded={expandedServices.has(service.id)}
-                  onToggle={() => toggleService(service.id)}
-                  onBookNow={handleBookNow}
-                />
-              ))}
-            </div>
+            {/* For Pest Control: render subcategoryGroups directly */}
+            {currentCategory.subcategoryGroups &&
+            currentCategory.subcategoryGroups.length > 0 ? (
+              <div className="space-y-10">
+                {currentCategory.subcategoryGroups.map((group, groupIndex) => (
+                  <div key={groupIndex}>
+                    <h3 className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+                      {group.name}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {group.services.map((service: ServiceItem, sIdx: number) =>
+                        renderServiceCard(service, sIdx)
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : currentCategory.services && currentCategory.services.length > 0 ? (
+              /* Direct display of all services — no toggle, no dropdown */
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentCategory.services.map(
+                  (service: ServiceItem, index: number) =>
+                    renderServiceCard(service, index)
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-16 text-muted-foreground">
+                <p>No services available in this category yet.</p>
+              </div>
+            )}
           </>
+        ) : (
+          <div className="text-center py-16 text-muted-foreground">
+            <p>Select a category to view services.</p>
+          </div>
         )}
       </div>
 
-      {/* Booking Popup */}
+      {/* Booking Popup — uses isOpen + serviceName props as per BookingFormPopup interface */}
       <BookingFormPopup
-        isOpen={isBookingPopupOpen}
-        onClose={() => setIsBookingPopupOpen(false)}
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
         serviceName={selectedServiceName}
       />
     </div>

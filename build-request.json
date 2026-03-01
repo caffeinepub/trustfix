@@ -1,124 +1,119 @@
 {
   "kind": "build_request",
-  "title": "Remove all scroll controls and implement manual smooth scrolling with fade-up animations",
-  "projectName": "TrustFix",
+  "title": "Main page service cards with water waves scroll animation and full pricing",
+  "projectName": "TrustFix Home Services",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
+      "text": "Update the Home page to display all 8 service cards (Pest Control, Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, Appliances Repair) in a vertical stacked layout. Each card must animate into view one at a time as the user scrolls — using a water-waves / ripple pop-up effect (scale from below with a wave-like easing, not a plain fade). Cards should appear sequentially with a staggered delay so they pop up one after another.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-6",
+          "msg-8",
+          "msg-10"
         ],
         "quotes": [
-          "No snap scroll",
-          "No auto movement",
-          "Scroll must be fully manual and smooth",
-          "Remove completely: Snap scroll, Auto/programmatic scroll movement, Scroll locking behaviour"
+          "Services cards ondonde show agbeku",
+          "Scroll madbekadre kelgininda melakke pop up agbeku water waves effect Alli",
+          "Main page alli scroll madbekadre service ondonde show agbeku with effect"
         ]
       },
       "acceptanceCriteria": [
-        "No scroll-snap-type or scroll-snap-align CSS rules exist anywhere in the frontend",
-        "No JavaScript programmatically calls window.scrollTo with smooth/instant or element.scrollIntoView in a way that hijacks user scrolling",
-        "Page scrolls freely at the user's own pace with no jumps, speed boosts, or locking"
+        "Home page shows exactly 8 service category cards",
+        "On scroll, each card animates in one at a time with a water-waves / ripple-pop effect",
+        "Cards appear sequentially (staggered), not all at once",
+        "Animation triggers via IntersectionObserver (visible only when scrolled into view)"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
+      "text": "Clicking any service card on the Home page must immediately open that service's full categories and pricing inline or as an expanded panel/modal — with no intermediate navigation step or extra page. All subcategories and prices for the selected service must be visible directly upon card click.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-6"
         ],
         "quotes": [
-          "No pagination dots",
-          "No arrow icon",
-          "Remove completely: Pagination dots, Middle arrow icon, Any scroll control overlay"
+          "Services card click madida takshana ella categories open agbeku aste no additional options"
         ]
       },
       "acceptanceCriteria": [
-        "No pagination dot indicators are rendered anywhere on any page",
-        "No arrow/chevron navigation icons appear for scrolling or sliding",
-        "No overlay controls for scroll or carousel navigation are visible"
+        "Clicking a service card on the Home page directly reveals its categories and pricing without navigating to another page",
+        "No intermediate step or extra navigation required",
+        "All subcategories and prices for the clicked service are visible"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
+      "text": "Update the services data in frontend/src/data/services.ts to include the complete pricing for all 8 services as provided:\n\n**Pest Control – Residential (flat):** General Pest Control ₹1,499 | Cockroach Control ₹1,299 | Ant Control ₹1,099 | Bed Bug Treatment ₹3,499 | Mosquito Control ₹1,799 | Termite Treatment ₹5,999\n**Pest Control – Commercial (₹/sq.ft):** Office ₹6 | Shop ₹6 | Warehouse ₹5 | Restaurant ₹6\n**Pest Control – Construction (₹/sq.ft):** Pre-Construction Anti-Termite ₹6 | Post-Construction Anti-Termite ₹5\n\n**Deep Cleaning:** 1BHK ₹3,499 | 2BHK ₹4,999 | 3BHK ₹6,499 | 4BHK ₹7,999 | Kitchen Deep Cleaning ₹2,499 | Bathroom Deep Cleaning ₹1,499 | Sofa Cleaning ₹799/seat | Mattress Cleaning ₹799 | Carpet Cleaning ₹18/sq.ft | Water Tank Cleaning ₹2,499 | Office Deep Cleaning ₹8/sq.ft\n\n**Painting:** Interior Basic ₹18/sq.ft | Interior Premium ₹25/sq.ft | Luxury Finish ₹35/sq.ft | Exterior Painting ₹22/sq.ft | Single Room ₹6,999 | Waterproof Coating ₹28/sq.ft | Texture Painting ₹45/sq.ft\n\n**Electrical (Service Visit ₹499 compulsory):** Wiring Repair ₹699 | Switch/Socket ₹299 | Fan Installation ₹499 | Light Installation ₹299 | MCB Replacement ₹799 | Inverter Installation ₹1,499 | DB Board Installation ₹2,999 | Earthing ₹3,999\n\n**Plumbing (Service Visit ₹499 compulsory):** Leak Repair ₹699 | Tap Installation ₹499 | Pipe Replacement ₹799 | Drain Block Removal ₹999 | Bathroom Fittings ₹1,499 | Motor Installation ₹2,499 | Borewell Connection ₹3,999\n\n**Carpentry (Service Visit ₹499 compulsory):** Door Repair ₹799 | Cupboard Repair ₹999 | Furniture Assembly ₹1,299 | Modular Kitchen Repair ₹2,999 | Wood Polishing ₹35/sq.ft | New Wardrobe Installation ₹8,999 onwards\n\n**AC Services (Service Visit ₹499 compulsory):** AC General Service ₹799 | AC Deep Service ₹1,499 | AC Installation ₹2,499 | AC Uninstallation ₹999 | Gas Refill ₹3,499 | PCB Repair ₹4,999 | AC Jet Wash ₹1,299\n\n**Appliances Repair (Service Visit ₹499 compulsory):** Washing Machine ₹699 onwards | Refrigerator ₹799 onwards | Microwave ₹699 onwards | TV Repair ₹999 onwards | Geyser Repair ₹699 onwards | Chimney Service ₹1,299 | Hob Repair ₹1,499\n\n**Add-on Options (all services):** Same Day Emergency +₹999 | Sunday/Holiday +₹799 | Warranty Certificate – Included",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-8"
         ],
         "quotes": [
-          "No auto movement",
-          "Scroll must be fully manual and smooth",
-          "Any scroll control overlay"
+          "Full professional service portfolio"
         ]
       },
       "acceptanceCriteria": [
-        "ServiceCarousel renders as a static stacked/grid list with no sliding or auto-advance",
-        "FeaturedReviewsCarousel renders all fetched reviews statically with no auto-advance interval",
-        "No setInterval or setTimeout driving scroll/slide movement exists in these components"
+        "All 8 service categories have complete and accurate pricing data in services.ts",
+        "Pest Control has three subcategory groups: Residential (flat), Commercial (per sq.ft), Construction (per sq.ft)",
+        "Electrical, Plumbing, Carpentry, AC Services, Appliances Repair all show ₹499 service visit charge",
+        "Add-on options are stored and shown for all services"
       ]
     },
     {
       "id": "REQ-4",
-      "text": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+      "text": "For Pest Control's Commercial and Construction subcategories, show an inline square footage calculator inside the expanded card panel. The user enters a sq.ft value and the total price is computed in real time (e.g., 800 sq.ft × ₹6 = ₹4,800). Display the computed total prominently alongside a Book Now / WhatsApp button.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-6"
         ],
         "quotes": [
-          "Only very soft fade-up animation when section enters viewport",
-          "Animation must not interfere with scrolling",
-          "Sections must appear from bottom → top, Smooth pop-up animation, Soft water-wave style entrance"
+          "Pest control Alli commercial office construction ge matra square feet wise price haku"
         ]
       },
       "acceptanceCriteria": [
-        "Each home page section fades in softly from slightly below its natural position when it enters the viewport",
-        "Animation uses CSS transitions or keyframes only — no JS scroll manipulation",
-        "Scrolling remains 100% manual and smooth at all times during and after animations",
-        "Animation triggers once per section and does not re-trigger on scroll up"
+        "Commercial and Construction pest control subcategories show a sq.ft input field",
+        "Entering a sq.ft value calculates and displays the total price in real time",
+        "Book Now and WhatsApp buttons use the calculated price in the pre-filled message",
+        "Residential pest control shows flat pricing without a calculator"
       ]
     },
     {
       "id": "REQ-5",
-      "text": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+      "text": "Display Add-on Options (Same Day Emergency +₹999, Sunday/Holiday +₹799, Warranty Certificate – Included) as selectable checkboxes or toggle chips inside every expanded service card panel. When selected, add-on costs must be reflected in the total shown and included in any WhatsApp or booking message.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-recent"
+          "msg-8"
         ],
         "quotes": [
-          "View All Options button must be fully removed",
-          "No dropdown control should remain",
-          "All subcategory services must expand instantly",
-          "Show all services directly, No extra click required"
+          "ADD-ON OPTIONS (All Services): Same Day Emergency – +₹999 | Sunday / Holiday – +₹799 | Warranty Certificate – Included"
         ]
       },
       "acceptanceCriteria": [
-        "No 'View All Options' button or equivalent toggle is rendered anywhere on the Services page",
-        "Clicking a main service category immediately shows all its subcategory cards without any secondary interaction",
-        "All subcategory services are visible directly after the first click on the parent category"
+        "Add-on options appear in every expanded service panel",
+        "Selecting Emergency or Holiday toggles adds the cost to the displayed total",
+        "Warranty Certificate is always shown as included at no extra charge",
+        "Selected add-ons are reflected in WhatsApp pre-filled messages"
       ]
     }
   ],
   "constraints": [
-    "Do not change any layout, colors, spacing, fonts, buttons, or visual design",
-    "Do not redesign any page or component",
-    "Do not modify backend logic or data structures",
-    "Animation must never interfere with manual scrolling"
+    "Do not change the backend schema or Motoko actor",
+    "Do not modify files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui",
+    "Water waves animation must be CSS/JS only — no external animation libraries beyond what is already in the project",
+    "Service card click on Home page must open categories inline or as a modal, not navigate to a separate route"
   ],
   "nonGoals": [
-    "Adding new pages or features",
-    "Changing the visual theme or branding",
-    "Modifying backend Motoko code",
-    "Adding any new scroll-based navigation patterns"
+    "AMC yearly packages (not requested in this build)",
+    "Adding new backend routes or storage for pricing data",
+    "Changing the Services page tab layout",
+    "Authentication or login features"
   ],
   "imageRequirements": {
     "required": [],

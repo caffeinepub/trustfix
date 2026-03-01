@@ -1,124 +1,207 @@
-import { useRef } from 'react';
-import HeroSection from '@/components/HeroSection';
-import ServiceCarousel from '@/components/ServiceCarousel';
-import FeaturedReviewsCarousel from '@/components/FeaturedReviewsCarousel';
-import { useFadeUpOnScroll } from '@/hooks/useFadeUpOnScroll';
-import { getWhatsAppLink } from '@/data/services';
+import { useRef, useEffect, useState } from "react";
+import HeroSection from "../components/HeroSection";
+import FeaturedReviewsCarousel from "../components/FeaturedReviewsCarousel";
+import ServiceCardWithExpansion from "../components/ServiceCardWithExpansion";
+import { Shield, Clock, Star, Users, CheckCircle, Phone } from "lucide-react";
+import { PHONE_NUMBER, getWhatsAppLink, servicesData, categoryOrder } from "../data/services";
+
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+}
 
 function FadeSection({
   children,
-  className = '',
+  delay = 0,
+  className = "",
 }: {
   children: React.ReactNode;
+  delay?: number;
   className?: string;
 }) {
-  const { ref, isVisible } = useFadeUpOnScroll(0.1);
+  const { ref, isVisible } = useScrollReveal();
   return (
-    <section
-      ref={ref as React.RefObject<HTMLElement>}
-      className={`fade-up-section ${isVisible ? 'fade-up-visible' : ''} ${className}`}
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(40px)",
+        transition: `opacity 0.7s ease ${delay}ms, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      }}
     >
       {children}
-    </section>
+    </div>
   );
 }
 
-const trustBadges = [
-  { icon: '🏆', title: '5000+', subtitle: 'Happy Customers' },
-  { icon: '⭐', title: '4.8/5', subtitle: 'Average Rating' },
-  { icon: '🔧', title: '8+', subtitle: 'Services Offered' },
-  { icon: '📍', title: 'Bangalore', subtitle: 'Serving All Areas' },
+const stats = [
+  { icon: Users, value: "5000+", label: "Happy Customers" },
+  { icon: CheckCircle, value: "10000+", label: "Services Completed" },
+  { icon: Star, value: "4.9/5", label: "Average Rating" },
+  { icon: Clock, value: "Same Day", label: "Service Available" },
+];
+
+const whyChooseUs = [
+  {
+    icon: Shield,
+    title: "Verified Professionals",
+    desc: "All our technicians are background-verified and trained.",
+  },
+  {
+    icon: Clock,
+    title: "On-Time Service",
+    desc: "We respect your time and always arrive as scheduled.",
+  },
+  {
+    icon: Star,
+    title: "Quality Guaranteed",
+    desc: "100% satisfaction guarantee on every service we provide.",
+  },
+  {
+    icon: CheckCircle,
+    title: "Transparent Pricing",
+    desc: "No hidden charges. Fixed prices for all services.",
+  },
 ];
 
 export default function Home() {
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+
+  const handleToggle = (categoryId: string) => {
+    setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));
+  };
+
   return (
-    <div>
-      {/* Hero — always visible, no animation needed */}
+    <div className="min-h-screen bg-background">
+      {/* Hero - no animation, always visible */}
       <HeroSection />
 
-      {/* Trust Badges */}
-      <FadeSection className="bg-brand-blue py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {trustBadges.map((badge) => (
-              <div key={badge.title} className="text-center text-white">
-                <div className="text-2xl mb-1">{badge.icon}</div>
-                <div className="font-bold text-lg">{badge.title}</div>
-                <div className="text-white/80 text-xs">{badge.subtitle}</div>
-              </div>
+      {/* Stats */}
+      <FadeSection className="bg-primary text-primary-foreground py-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {stats.map((stat, i) => (
+              <FadeSection key={stat.label} delay={i * 80}>
+                <div className="flex flex-col items-center gap-2">
+                  <stat.icon className="w-7 h-7 opacity-80" />
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-sm opacity-80">{stat.label}</div>
+                </div>
+              </FadeSection>
             ))}
           </div>
         </div>
       </FadeSection>
 
-      {/* Service Carousel */}
-      <FadeSection className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-800 mb-3">Our Services</h2>
-            <p className="text-gray-500 text-base max-w-xl mx-auto">
-              Professional home services at your doorstep. Trusted by thousands of happy customers.
-            </p>
-          </div>
-          <ServiceCarousel />
+      {/* Services Section — vertical stacked cards with water-waves animation */}
+      <section className="py-14 px-4 bg-background">
+        <FadeSection className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-foreground mb-3">Our Services</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Professional home services at your doorstep. Tap any service to see all options &amp; pricing.
+          </p>
+        </FadeSection>
+
+        <div className="max-w-2xl mx-auto space-y-4">
+          {categoryOrder.map((categoryId, index) => {
+            const category = servicesData[categoryId];
+            if (!category) return null;
+            return (
+              <ServiceCardWithExpansion
+                key={categoryId}
+                category={category}
+                index={index}
+                isExpanded={expandedCategory === categoryId}
+                onToggle={() => handleToggle(categoryId)}
+              />
+            );
+          })}
         </div>
-      </FadeSection>
+      </section>
 
       {/* Why Choose Us */}
-      <FadeSection className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Why Choose TrustFix?</h2>
-            <p className="text-gray-500 text-sm">We deliver quality, reliability, and trust</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[
-              { icon: '✅', title: 'Verified Professionals', desc: 'All our technicians are background-verified and trained' },
-              { icon: '💰', title: 'Transparent Pricing', desc: 'No hidden charges. Fixed prices for most services' },
-              { icon: '⏰', title: 'On-Time Service', desc: 'We respect your time and always arrive on schedule' },
-              { icon: '🛡️', title: 'Service Guarantee', desc: 'Not satisfied? We will redo the service for free' },
-              { icon: '📱', title: 'Easy Booking', desc: 'Book via WhatsApp in seconds, no app needed' },
-              { icon: '🌟', title: '4.8 Star Rated', desc: 'Consistently rated 5 stars by our happy customers' },
-            ].map((item) => (
-              <div key={item.title} className="bg-white rounded-2xl p-5 shadow-card border border-gray-100 flex gap-4">
-                <span className="text-3xl flex-shrink-0">{item.icon}</span>
+      <section className="py-14 px-4 bg-muted/40">
+        <FadeSection className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-foreground mb-3">
+            Why Choose TrustFix?
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            We are committed to delivering the best home services experience.
+          </p>
+        </FadeSection>
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {whyChooseUs.map((item, i) => (
+            <FadeSection key={item.title} delay={i * 100}>
+              <div className="bg-card rounded-2xl p-6 shadow-soft flex gap-4 items-start">
+                <div className="bg-primary/10 rounded-xl p-3 flex-shrink-0">
+                  <item.icon className="w-6 h-6 text-primary" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </FadeSection>
+          ))}
         </div>
-      </FadeSection>
+      </section>
 
       {/* Reviews */}
-      <FadeSection className="py-12 bg-blue-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">What Our Customers Say</h2>
-            <p className="text-gray-500 text-sm">Trusted by thousands of happy customers in Bangalore</p>
-          </div>
-          <FeaturedReviewsCarousel />
-        </div>
-      </FadeSection>
-
-      {/* CTA Banner */}
-      <FadeSection className="py-12 bg-brand-blue">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-            Ready to Book a Service?
+      <section className="py-14 px-4 bg-background">
+        <FadeSection className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-foreground mb-3">
+            What Our Customers Say
           </h2>
-          <p className="text-white/80 mb-6 text-sm sm:text-base">
-            Get instant quotes and book via WhatsApp. Available 7 days a week.
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Real reviews from real customers who trust TrustFix.
           </p>
+        </FadeSection>
+        <FadeSection delay={100}>
+          <FeaturedReviewsCarousel />
+        </FadeSection>
+      </section>
+
+      {/* CTA */}
+      <FadeSection className="py-14 px-4 bg-primary text-primary-foreground text-center">
+        <h2 className="text-3xl font-bold mb-3">Ready to Book a Service?</h2>
+        <p className="mb-6 opacity-90 max-w-md mx-auto">
+          Get professional home services at your doorstep. Call or WhatsApp us now!
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href={getWhatsAppLink('Hello TrustFix! I want to book a home service.')}
+            href={getWhatsAppLink("Book a service")}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-brand-blue font-bold px-8 py-4 rounded-full text-lg hover:bg-yellow-300 transition-all duration-300 shadow-lg"
+            className="inline-flex items-center justify-center gap-2 bg-white text-primary font-semibold px-8 py-3 rounded-full shadow hover:bg-white/90 transition"
           >
-            📲 Book on WhatsApp
+            Book on WhatsApp
+          </a>
+          <a
+            href={`tel:${PHONE_NUMBER}`}
+            className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition"
+          >
+            <Phone className="w-4 h-4" />
+            Call Now
           </a>
         </div>
       </FadeSection>

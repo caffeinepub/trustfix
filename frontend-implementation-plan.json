@@ -1,126 +1,119 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Remove all scroll controls and implement manual smooth scrolling with fade-up animations",
+  "title": "Main page service cards with water waves scroll animation and full pricing",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties, JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages",
+      "summary": "Display all 8 service cards on Home page with vertical stacked layout and water-waves scroll animation that triggers sequentially",
       "acceptanceCriteria": [
-        "No scroll-snap-type or scroll-snap-align CSS rules exist anywhere in the frontend",
-        "No JavaScript programmatically calls window.scrollTo with smooth/instant or element.scrollIntoView in a way that hijacks user scrolling",
-        "Page scrolls freely at the user's own pace with no jumps, speed boosts, or locking"
+        "Home page shows exactly 8 service category cards",
+        "On scroll, each card animates in one at a time with a water-waves / ripple-pop effect",
+        "Cards appear sequentially (staggered), not all at once",
+        "Animation triggers via IntersectionObserver (visible only when scrolled into view)"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Replace the existing ServiceCategoryGrid component with a new vertically stacked layout of 8 service cards. Each card must use IntersectionObserver to trigger a water-waves animation effect on scroll with staggered delays. Position this section after the stats section and before the 'Why Choose Us' section. Each card should be clickable and trigger expansion inline."
+        },
+        {
+          "path": "frontend/src/components/ServiceCardWithExpansion.tsx",
+          "operation": "create",
+          "description": "Create a new component that displays a service category card with an image from frontend/public/assets/generated/ (e.g., generated/pest-control-category.dim_800x500.jpg), title, and brief description. On click, expand inline to show all subcategories and pricing without navigation. Include IntersectionObserver logic for water-waves animation with configurable stagger delay prop. Use transform scale and wave-like cubic-bezier easing for the ripple-pop effect."
+        },
+        {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Remove all scroll-snap-type, scroll-snap-align, and any scroll-behavior CSS properties from all selectors. Ensure no global scroll locking or snap rules exist."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Remove any scroll-snap utilities or scroll behavior configurations from Tailwind config if present."
-        },
-        {
-          "path": "frontend/src/components/ServiceCarousel.tsx",
-          "operation": "modify",
-          "description": "Remove any programmatic scrollTo, scrollIntoView, or scroll position manipulation logic that creates snap or auto-scroll behavior."
-        },
-        {
-          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
-          "operation": "modify",
-          "description": "Remove any programmatic scrollTo, scrollIntoView, or scroll position manipulation logic that creates snap or auto-scroll behavior."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Review and remove or modify the scroll-to-top-on-route-change behavior if it uses instant/programmatic scrolling that hijacks user control. Ensure it does not interfere with manual scrolling."
+          "description": "Add CSS keyframes and classes for the water-waves / ripple-pop animation effect. Define a @keyframes rule that scales from 0.8 to 1 with a wave-like cubic-bezier easing function (e.g., cubic-bezier(0.34, 1.56, 0.64, 1)). Include opacity transition from 0 to 1. Add utility classes for applying this animation with various stagger delays."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app",
+      "summary": "Clicking any service card on Home page opens full categories and pricing inline or as expanded panel without navigation",
       "acceptanceCriteria": [
-        "No pagination dot indicators are rendered anywhere on any page",
-        "No arrow/chevron navigation icons appear for scrolling or sliding",
-        "No overlay controls for scroll or carousel navigation are visible"
+        "Clicking a service card on the Home page directly reveals its categories and pricing without navigating to another page",
+        "No intermediate step or extra navigation required",
+        "All subcategories and prices for the clicked service are visible"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ServiceCarousel.tsx",
+          "path": "frontend/src/components/ServiceCardWithExpansion.tsx",
           "operation": "modify",
-          "description": "Remove all pagination dots, arrow icons, and navigation overlay UI elements from the component render output."
+          "description": "Implement inline expansion state management within the ServiceCardWithExpansion component. When clicked, toggle an expanded state that reveals a panel below the card showing all subcategories with their pricing. Use smooth height transition animations. Ensure only one card can be expanded at a time by managing expansion state at the parent level in Home.tsx."
         },
         {
-          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
-          "operation": "modify",
-          "description": "Remove all pagination dots, arrow icons, and navigation control overlays from the component render output."
+          "path": "frontend/src/components/ExpandedServicePanel.tsx",
+          "operation": "create",
+          "description": "Create a component that displays the full expanded view of a service's subcategories and pricing. Accept service data as props and render all categories, subcategories, prices, and action buttons. For services with square footage pricing, integrate the PricingCalculator component. Include WhatsApp and Book Now buttons for each subcategory. Display Add-on Options as selectable checkboxes at the bottom."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Convert any carousel or slider components into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance",
+      "summary": "Update services.ts with complete pricing for all 8 services including Pest Control subcategory groups, service visit charges, and add-on options",
       "acceptanceCriteria": [
-        "ServiceCarousel renders as a static stacked/grid list with no sliding or auto-advance",
-        "FeaturedReviewsCarousel renders all fetched reviews statically with no auto-advance interval",
-        "No setInterval or setTimeout driving scroll/slide movement exists in these components"
+        "All 8 service categories have complete and accurate pricing data in services.ts",
+        "Pest Control has three subcategory groups: Residential (flat), Commercial (per sq.ft), Construction (per sq.ft)",
+        "Electrical, Plumbing, Carpentry, AC Services, Appliances Repair all show ₹499 service visit charge",
+        "Add-on options are stored and shown for all services"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ServiceCarousel.tsx",
+          "path": "frontend/src/data/services.ts",
           "operation": "modify",
-          "description": "Convert the carousel into a static vertically stacked or grid layout. Remove all swipe handlers, navigation state (current index), interval timers, and any auto-advance logic. Render all service category cards in a plain static list."
-        },
-        {
-          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
-          "operation": "modify",
-          "description": "Convert the carousel into a static grid or list layout. Remove all interval timers (setInterval/setTimeout), navigation state, swipe handlers, and auto-advance logic. Render all fetched reviews statically without any sliding or cycling."
+          "description": "Replace existing service data with the complete pricing structure for all 8 services. For Pest Control, create three subcategory groups (residential with flat pricing, commercial per sq.ft, construction per sq.ft). Add serviceVisitCharge field (₹499) to Electrical, Plumbing, Carpentry, AC Services, and Appliances Repair categories. Create a new addOnOptions array containing Same Day Emergency (+₹999), Sunday/Holiday (+₹799), and Warranty Certificate (Included). Update the ServiceCategory type definition to support subcategoryGroups, pricingType (flat or perSqFt), serviceVisitCharge, and addOnOptions fields."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver",
+      "summary": "Add inline square footage calculator for Pest Control Commercial and Construction subcategories with real-time total price computation",
       "acceptanceCriteria": [
-        "Each home page section fades in softly from slightly below its natural position when it enters the viewport",
-        "Animation uses CSS transitions or keyframes only — no JS scroll manipulation",
-        "Scrolling remains 100% manual and smooth at all times during and after animations",
-        "Animation triggers once per section and does not re-trigger on scroll up"
+        "Commercial and Construction pest control subcategories show a sq.ft input field",
+        "Entering a sq.ft value calculates and displays the total price in real time",
+        "Book Now and WhatsApp buttons use the calculated price in the pre-filled message",
+        "Residential pest control shows flat pricing without a calculator"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useFadeUpOnScroll.ts",
+          "path": "frontend/src/components/PricingCalculator.tsx",
           "operation": "create",
-          "description": "Create a custom hook that uses IntersectionObserver to detect when an element enters the viewport and applies a fade-up animation class. The hook must trigger once per element and must not interfere with scroll behavior in any way."
+          "description": "Create a component that accepts per-sq.ft pricing and renders an input field for square footage. Calculate and display the total price in real time as the user types (e.g., 800 sq.ft × ₹6 = ₹4,800). Include validation for numeric input. Pass the calculated total to Book Now and WhatsApp action buttons. Style with clear labels and prominent total display."
         },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/ExpandedServicePanel.tsx",
           "operation": "modify",
-          "description": "Add CSS for a soft fade-up animation (opacity 0→1, translateY 20px→0) with smooth transitions. Define initial hidden state and visible state classes for the animation."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "modify",
-          "description": "Apply the useFadeUpOnScroll hook to each major section (hero, trust badges, service carousel section, why choose us, featured reviews, CTA banner). Ensure animations trigger once per section as they enter the viewport without affecting scroll behavior."
+          "description": "Conditionally render the PricingCalculator component for Pest Control Commercial and Construction subcategory groups. For flat pricing subcategories (Residential), display the price directly without a calculator. Pass the calculator's computed total to the WhatsApp link and booking form."
         }
       ]
     },
     {
       "id": "REQ-5",
-      "summary": "In the Services page, remove the 'View All Options' button entirely from all service category sections and expand all subcategory service cards instantly when a main service category is clicked",
+      "summary": "Display Add-on Options as selectable checkboxes in every expanded service panel with costs reflected in total and WhatsApp messages",
       "acceptanceCriteria": [
-        "No 'View All Options' button or equivalent toggle is rendered anywhere on the Services page",
-        "Clicking a main service category immediately shows all its subcategory cards without any secondary interaction",
-        "All subcategory services are visible directly after the first click on the parent category"
+        "Add-on options appear in every expanded service panel",
+        "Selecting Emergency or Holiday toggles adds the cost to the displayed total",
+        "Warranty Certificate is always shown as included at no extra charge",
+        "Selected add-ons are reflected in WhatsApp pre-filled messages"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/Services.tsx",
+          "path": "frontend/src/components/AddOnOptions.tsx",
+          "operation": "create",
+          "description": "Create a component that displays add-on options (Same Day Emergency +₹999, Sunday/Holiday +₹799, Warranty Certificate - Included) as checkboxes or toggle chips. Manage selected state and compute the total add-on cost. Pass selected add-ons and total cost to parent via callback. Style the Warranty Certificate option to indicate it's always included at no extra charge (e.g., with a checkmark icon and disabled state)."
+        },
+        {
+          "path": "frontend/src/components/ExpandedServicePanel.tsx",
           "operation": "modify",
-          "description": "Remove the 'View All Options' button and any equivalent dropdown toggle controls from all service category sections. Modify the expand/collapse logic so that clicking a main service category immediately displays all subcategory cards with no extra click or button required. Ensure all subcategories are visible instantly after the first category click."
+          "description": "Integrate the AddOnOptions component at the bottom of each expanded service panel. Track selected add-ons state and add their costs to the displayed service total. Include selected add-on details in the WhatsApp pre-filled message format (e.g., 'Add-ons: Same Day Emergency +₹999'). Pass the updated total to all Book Now and WhatsApp buttons."
+        },
+        {
+          "path": "frontend/src/utils/whatsappHelper.ts",
+          "operation": "create",
+          "description": "Create a utility function that generates WhatsApp pre-filled messages including service name, subcategory, base price, selected add-ons with costs, and final total. Handle both flat pricing and per-sq.ft calculated pricing. Format the message clearly with line breaks and itemized costs."
         }
       ]
     }

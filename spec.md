@@ -1,14 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Remove all scroll controls, snap/auto-scroll behaviour, and carousel navigation overlays from the TrustFix app, and add soft fade-up entrance animations to Home page sections.
+**Goal:** Revamp the Home page service cards with a water-waves scroll animation and expand each card inline to show full pricing, subcategories, a sq.ft calculator for applicable pest control types, and selectable add-on options.
 
 **Planned changes:**
-- Remove all CSS scroll-snap properties (`scroll-snap-type`, `scroll-snap-align`) and any JavaScript scroll locking, programmatic scroll jumps, or auto-scroll movement across all components and pages
-- Remove all scroll control UI overlays: pagination dots, arrow/chevron navigation icons, and carousel navigation overlays from every component (including ServiceCarousel and FeaturedReviewsCarousel)
-- Convert ServiceCarousel into a static vertically stacked or grid layout with no sliding, swipe handlers, or interval timers
-- Convert FeaturedReviewsCarousel into a static grid or list displaying all reviews with no auto-advance interval or navigation state
-- Add a soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major Home page section using IntersectionObserver — triggers once per section, never interferes with manual scrolling
-- Remove the "View All Options" button from all service category sections on the Services page; subcategory cards must expand and display immediately upon clicking the parent category with no secondary interaction required
+- Update the Home page to display all 8 service category cards (Pest Control, Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, Appliances Repair) in a vertical stacked layout
+- Add a water-waves / ripple pop-up scroll animation using IntersectionObserver so each card animates into view one at a time with staggered delay (CSS/JS only, no external animation libraries)
+- Clicking a service card on the Home page directly expands an inline panel or modal showing all subcategories and prices — no navigation to a separate page
+- Update `frontend/src/data/services.ts` with complete pricing for all 8 services, including ₹499 service visit charges for Electrical, Plumbing, Carpentry, AC Services, and Appliances Repair; Pest Control split into Residential (flat), Commercial (₹/sq.ft), and Construction (₹/sq.ft)
+- Add an inline sq.ft calculator inside the expanded Pest Control card for Commercial and Construction subcategories, with real-time total calculation and Book Now / WhatsApp buttons using the computed price
+- Display Add-on Options (Same Day Emergency +₹999, Sunday/Holiday +₹799, Warranty Certificate – Included) as selectable checkboxes or toggle chips in every expanded service panel, with costs reflected in the displayed total and WhatsApp pre-filled messages
 
-**User-visible outcome:** The app scrolls freely and manually at all times with no jumps or locking. Home page sections fade up softly as they enter the viewport. Carousels are replaced with static layouts. The Services page shows all subcategory cards immediately on category click with no extra button.
+**User-visible outcome:** On the Home page, users see all 8 service cards animate in one by one as they scroll. Tapping any card instantly reveals its full subcategories, pricing, optional add-ons, and (for commercial/construction pest control) a live sq.ft price calculator — all without leaving the page.

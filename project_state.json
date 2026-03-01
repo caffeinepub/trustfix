@@ -1,59 +1,83 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "TrustFix app — removing snap scroll, auto movement, pagination dots, arrow icons, and scroll overlays. Implementing fully manual smooth scrolling with soft fade-up viewport animations. Also removing 'View All Options' button so subcategory services expand instantly on click.",
+  "summary": "Home services app with a main page displaying all 8 service cards (Pest Control, Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, Appliances Repair) with scroll-triggered water waves pop-up animation. Clicking a card opens categories and pricing directly. Pest Control has sq.ft wise pricing for commercial/construction. Electrical, Plumbing, Carpentry, AC, Appliances have ₹499 service visit charge. Add-on options (Emergency +₹999, Holiday +₹799, Warranty included) apply to all services.",
   "architectural_notes": [
-    "Scrolling must be 100% manual — no snap scroll, no auto movement, no scroll locking, no pagination dots, no arrow icons, no scroll control overlays",
-    "Sections animate with soft fade-up when entering viewport; animation must not interfere with scrolling",
-    "'View All Options' button fully removed; all subcategory services expand instantly when main service is clicked"
+    "Service cards use IntersectionObserver for scroll-triggered water waves animation",
+    "₹499 service visit charge applies to Electrical, Plumbing, Carpentry, AC Services, Appliances Repair"
   ],
   "known_issues": [],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-remove-all-snap-scroll-behaviour-from-the-entire-app-eliminate-any-css-scroll-snap-properties-scroll-snap-type-scroll-snap-align-javascript-driven-scroll-locking-programmatic-scroll-jumps-and-any-auto-scroll-or-auto-advance-movement-across-all-components-and-pages",
-      "title": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
+      "id": "feature-update-the-home-page-to-display-all-8-service-cards-pest-control-deep-cleaning-painting-electrical-plumbing-carpentry-ac-services-appliances-repair-in-a-vertical-stacked-layout-each-card-must-animate-into-view-one-at-a-time-as-the-user-scrolls-using-a-water-waves-ripple-pop-up-effect-scale-from-below-with-a-wave-like-easing-not-a-plain-fade-cards-should-appear-sequentially-with-a-staggered-delay-so-they-pop-up-one-after-another",
+      "title": "Update the Home page to display all 8 service cards (Pest Control, Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, Appliances Repair) in a vertical stacked layout. Each card must animate into view one at a time as the user scrolls — using a water-waves / ripple pop-up effect (scale from below with a wave-like easing, not a plain fade). Cards should appear sequentially with a staggered delay so they pop up one after another.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-remove-all-scroll-control-ui-overlays-pagination-dots-middle-center-arrow-icons-and-any-carousel-navigation-overlays-from-every-component-in-the-app-including-servicecarousel-featuredreviewscarousel-and-any-other-carousel-or-slider-components",
-      "title": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
+      "id": "feature-clicking-any-service-card-on-the-home-page-must-immediately-open-that-service-s-full-categories-and-pricing-inline-or-as-an-expanded-panel-modal-with-no-intermediate-navigation-step-or-extra-page-all-subcategories-and-prices-for-the-selected-service-must-be-visible-directly-upon-card-click",
+      "title": "Clicking any service card on the Home page must immediately open that service's full categories and pricing inline or as an expanded panel/modal — with no intermediate navigation step or extra page. All subcategories and prices for the selected service must be visible directly upon card click.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-convert-any-carousel-or-slider-components-servicecarousel-featuredreviewscarousel-into-plain-static-layouts-servicecarousel-should-render-as-a-vertically-stacked-or-simple-grid-list-and-featuredreviewscarousel-should-render-all-reviews-in-a-static-grid-or-list-with-no-auto-advance-remove-all-swipe-handlers-interval-timers-and-navigation-state-from-these-components",
-      "title": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
+      "id": "feature-update-the-services-data-in-frontend-src-data-services-ts-to-include-the-complete-pricing-for-all-8-services-as-provided-pest-control-residential-flat-general-pest-control-1-499-cockroach-control-1-299-ant-control-1-099-bed-bug-treatment-3-499-mosquito-control-1-799-termite-treatment-5-999-pest-control-commercial-sq-ft-office-6-shop-6-warehouse-5-restaurant-6-pest-control-construction-sq-ft-pre-construction-anti-termite-6-post-construction-anti-termite-5-deep-cleaning-1bhk-3-499-2bhk-4-999-3bhk-6-499-4bhk-7-999-kitchen-deep-cleaning-2-499-bathroom-deep-cleaning-1-499-sofa-cleaning-799-seat-mattress-cleaning-799-carpet-cleaning-18-sq-ft-water-tank-cleaning-2-499-office-deep-cleaning-8-sq-ft-painting-interior-basic-18-sq-ft-interior-premium-25-sq-ft-luxury-finish-35-sq-ft-exterior-painting-22-sq-ft-single-room-6-999-waterproof-coating-28-sq-ft-texture-painting-45-sq-ft-electrical-service-visit-499-compulsory-wiring-repair-699-switch-socket-299-fan-installation-499-light-installation-299-mcb-replacement-799-inverter-installation-1-499-db-board-installation-2-999-earthing-3-999-plumbing-service-visit-499-compulsory-leak-repair-699-tap-installation-499-pipe-replacement-799-drain-block-removal-999-bathroom-fittings-1-499-motor-installation-2-499-borewell-connection-3-999-carpentry-service-visit-499-compulsory-door-repair-799-cupboard-repair-999-furniture-assembly-1-299-modular-kitchen-repair-2-999-wood-polishing-35-sq-ft-new-wardrobe-installation-8-999-onwards-ac-services-service-visit-499-compulsory-ac-general-service-799-ac-deep-service-1-499-ac-installation-2-499-ac-uninstallation-999-gas-refill-3-499-pcb-repair-4-999-ac-jet-wash-1-299-appliances-repair-service-visit-499-compulsory-washing-machine-699-onwards-refrigerator-799-onwards-microwave-699-onwards-tv-repair-999-onwards-geyser-repair-699-onwards-chimney-service-1-299-hob-repair-1-499-add-on-options-all-services-same-day-emergency-999-sunday-holiday-799-warranty-certificate-included",
+      "title": "Update the services data in frontend/src/data/services.ts to include the complete pricing for all 8 services as provided:\n\n**Pest Control – Residential (flat):** General Pest Control ₹1,499 | Cockroach Control ₹1,299 | Ant Control ₹1,099 | Bed Bug Treatment ₹3,499 | Mosquito Control ₹1,799 | Termite Treatment ₹5,999\n**Pest Control – Commercial (₹/sq.ft):** Office ₹6 | Shop ₹6 | Warehouse ₹5 | Restaurant ₹6\n**Pest Control – Construction (₹/sq.ft):** Pre-Construction Anti-Termite ₹6 | Post-Construction Anti-Termite ₹5\n\n**Deep Cleaning:** 1BHK ₹3,499 | 2BHK ₹4,999 | 3BHK ₹6,499 | 4BHK ₹7,999 | Kitchen Deep Cleaning ₹2,499 | Bathroom Deep Cleaning ₹1,499 | Sofa Cleaning ₹799/seat | Mattress Cleaning ₹799 | Carpet Cleaning ₹18/sq.ft | Water Tank Cleaning ₹2,499 | Office Deep Cleaning ₹8/sq.ft\n\n**Painting:** Interior Basic ₹18/sq.ft | Interior Premium ₹25/sq.ft | Luxury Finish ₹35/sq.ft | Exterior Painting ₹22/sq.ft | Single Room ₹6,999 | Waterproof Coating ₹28/sq.ft | Texture Painting ₹45/sq.ft\n\n**Electrical (Service Visit ₹499 compulsory):** Wiring Repair ₹699 | Switch/Socket ₹299 | Fan Installation ₹499 | Light Installation ₹299 | MCB Replacement ₹799 | Inverter Installation ₹1,499 | DB Board Installation ₹2,999 | Earthing ₹3,999\n\n**Plumbing (Service Visit ₹499 compulsory):** Leak Repair ₹699 | Tap Installation ₹499 | Pipe Replacement ₹799 | Drain Block Removal ₹999 | Bathroom Fittings ₹1,499 | Motor Installation ₹2,499 | Borewell Connection ₹3,999\n\n**Carpentry (Service Visit ₹499 compulsory):** Door Repair ₹799 | Cupboard Repair ₹999 | Furniture Assembly ₹1,299 | Modular Kitchen Repair ₹2,999 | Wood Polishing ₹35/sq.ft | New Wardrobe Installation ₹8,999 onwards\n\n**AC Services (Service Visit ₹499 compulsory):** AC General Service ₹799 | AC Deep Service ₹1,499 | AC Installation ₹2,499 | AC Uninstallation ₹999 | Gas Refill ₹3,499 | PCB Repair ₹4,999 | AC Jet Wash ₹1,299\n\n**Appliances Repair (Service Visit ₹499 compulsory):** Washing Machine ₹699 onwards | Refrigerator ₹799 onwards | Microwave ₹699 onwards | TV Repair ₹999 onwards | Geyser Repair ₹699 onwards | Chimney Service ₹1,299 | Hob Repair ₹1,499\n\n**Add-on Options (all services):** Same Day Emergency +₹999 | Sunday/Holiday +₹799 | Warranty Certificate – Included",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-a-very-soft-fade-up-entrance-animation-opacity-0-1-translatey-20px-0-to-each-major-section-on-the-home-page-when-it-enters-the-viewport-using-intersectionobserver-the-animation-must-only-trigger-once-per-section-and-must-not-affect-block-or-modify-the-user-s-scroll-behaviour-in-any-way-no-scroll-locking-no-snap-no-programmatic-movement",
-      "title": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+      "id": "feature-for-pest-control-s-commercial-and-construction-subcategories-show-an-inline-square-footage-calculator-inside-the-expanded-card-panel-the-user-enters-a-sq-ft-value-and-the-total-price-is-computed-in-real-time-e-g-800-sq-ft-6-4-800-display-the-computed-total-prominently-alongside-a-book-now-whatsapp-button",
+      "title": "For Pest Control's Commercial and Construction subcategories, show an inline square footage calculator inside the expanded card panel. The user enters a sq.ft value and the total price is computed in real time (e.g., 800 sq.ft × ₹6 = ₹4,800). Display the computed total prominently alongside a Book Now / WhatsApp button.",
       "reqIds": [
         "REQ-4"
       ],
       "version": 1
     },
     {
-      "id": "feature-in-the-services-page-remove-the-view-all-options-button-entirely-from-all-service-category-sections-when-a-main-service-category-is-clicked-all-subcategory-service-cards-must-expand-and-display-instantly-with-no-extra-click-required-no-dropdown-toggle-button-or-any-similar-control-should-remain",
-      "title": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+      "id": "feature-display-add-on-options-same-day-emergency-999-sunday-holiday-799-warranty-certificate-included-as-selectable-checkboxes-or-toggle-chips-inside-every-expanded-service-card-panel-when-selected-add-on-costs-must-be-reflected-in-the-total-shown-and-included-in-any-whatsapp-or-booking-message",
+      "title": "Display Add-on Options (Same Day Emergency +₹999, Sunday/Holiday +₹799, Warranty Certificate – Included) as selectable checkboxes or toggle chips inside every expanded service card panel. When selected, add-on costs must be reflected in the total shown and included in any WhatsApp or booking message.",
       "reqIds": [
         "REQ-5"
       ],
       "version": 1
     }
   ],
-  "new_feature_requests": [],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Main page: all 8 service cards with scroll-triggered water waves pop-up animation, one by one",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Service card click opens categories and pricing directly (no extra navigation step)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Pest Control: sq.ft wise pricing calculator for Commercial and Construction subcategories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Full service pricing data for all 8 services including add-on options",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
   "gameProjectType": "none",
-  "projectName": "TrustFix",
+  "projectName": "TrustFix Home Services",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

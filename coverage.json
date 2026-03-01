@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-28T20:42:58.725Z",
+  "generatedAt": "2026-03-01T16:55:09.628Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,71 +12,69 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
+        "summary": "Update the Home page to display all 8 service cards (Pest Control, Deep Cleaning, Painting, Electrical, Plumbing, Carpentry, AC Services, Appliances Repair) in a vertical stacked layout. Each card must animate into view one at a time as the user scrolls — using a water-waves / ripple pop-up effect (scale from below with a wave-like easing, not a plain fade). Cards should appear sequentially with a staggered delay so they pop up one after another.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/components/ServiceCardWithExpansion.tsx",
+          "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx"
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/components/ServiceCardWithExpansion.tsx",
+          "frontend/src/index.css"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
+        "summary": "Clicking any service card on the Home page must immediately open that service's full categories and pricing inline or as an expanded panel/modal — with no intermediate navigation step or extra page. All subcategories and prices for the selected service must be visible directly upon card click.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx"
+          "frontend/src/components/ServiceCardWithExpansion.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx"
+          "frontend/src/components/ServiceCardWithExpansion.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
+        "summary": "Update the services data in frontend/src/data/services.ts to include the complete pricing for all 8 services as provided:\n\n**Pest Control – Residential (flat):** General Pest Control ₹1,499 | Cockroach Control ₹1,299 | Ant Control ₹1,099 | Bed Bug Treatment ₹3,499 | Mosquito Control ₹1,799 | Termite Treatment ₹5,999\n**Pest Control – Commercial (₹/sq.ft):** Office ₹6 | Shop ₹6 | Warehouse ₹5 | Restaurant ₹6\n**Pest Control – Construction (₹/sq.ft):** Pre-Construction Anti-Termite ₹6 | Post-Construction Anti-Termite ₹5\n\n**Deep Cleaning:** 1BHK ₹3,499 | 2BHK ₹4,999 | 3BHK ₹6,499 | 4BHK ₹7,999 | Kitchen Deep Cleaning ₹2,499 | Bathroom Deep Cleaning ₹1,499 | Sofa Cleaning ₹799/seat | Mattress Cleaning ₹799 | Carpet Cleaning ₹18/sq.ft | Water Tank Cleaning ₹2,499 | Office Deep Cleaning ₹8/sq.ft\n\n**Painting:** Interior Basic ₹18/sq.ft | Interior Premium ₹25/sq.ft | Luxury Finish ₹35/sq.ft | Exterior Painting ₹22/sq.ft | Single Room ₹6,999 | Waterproof Coating ₹28/sq.ft | Texture Painting ₹45/sq.ft\n\n**Electrical (Service Visit ₹499 compulsory):** Wiring Repair ₹699 | Switch/Socket ₹299 | Fan Installation ₹499 | Light Installation ₹299 | MCB Replacement ₹799 | Inverter Installation ₹1,499 | DB Board Installation ₹2,999 | Earthing ₹3,999\n\n**Plumbing (Service Visit ₹499 compulsory):** Leak Repair ₹699 | Tap Installation ₹499 | Pipe Replacement ₹799 | Drain Block Removal ₹999 | Bathroom Fittings ₹1,499 | Motor Installation ₹2,499 | Borewell Connection ₹3,999\n\n**Carpentry (Service Visit ₹499 compulsory):** Door Repair ₹799 | Cupboard Repair ₹999 | Furniture Assembly ₹1,299 | Modular Kitchen Repair ₹2,999 | Wood Polishing ₹35/sq.ft | New Wardrobe Installation ₹8,999 onwards\n\n**AC Services (Service Visit ₹499 compulsory):** AC General Service ₹799 | AC Deep Service ₹1,499 | AC Installation ₹2,499 | AC Uninstallation ₹999 | Gas Refill ₹3,499 | PCB Repair ₹4,999 | AC Jet Wash ₹1,299\n\n**Appliances Repair (Service Visit ₹499 compulsory):** Washing Machine ₹699 onwards | Refrigerator ₹799 onwards | Microwave ₹699 onwards | TV Repair ₹999 onwards | Geyser Repair ₹699 onwards | Chimney Service ₹1,299 | Hob Repair ₹1,499\n\n**Add-on Options (all services):** Same Day Emergency +₹999 | Sunday/Holiday +₹799 | Warranty Certificate – Included",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx"
+          "frontend/src/data/services.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/ServiceCarousel.tsx",
-          "frontend/src/components/FeaturedReviewsCarousel.tsx"
+          "frontend/src/data/services.ts"
         ]
       },
       {
         "id": "REQ-4",
-        "summary": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+        "summary": "For Pest Control's Commercial and Construction subcategories, show an inline square footage calculator inside the expanded card panel. The user enters a sq.ft value and the total price is computed in real time (e.g., 800 sq.ft × ₹6 = ₹4,800). Display the computed total prominently alongside a Book Now / WhatsApp button.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useFadeUpOnScroll.ts",
-          "frontend/src/index.css",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/components/PricingCalculator.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useFadeUpOnScroll.ts",
-          "frontend/src/index.css",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/components/PricingCalculator.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx"
         ]
       },
       {
         "id": "REQ-5",
-        "summary": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+        "summary": "Display Add-on Options (Same Day Emergency +₹999, Sunday/Holiday +₹799, Warranty Certificate – Included) as selectable checkboxes or toggle chips inside every expanded service card panel. When selected, add-on costs must be reflected in the total shown and included in any WhatsApp or booking message.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/Services.tsx"
+          "frontend/src/components/AddOnOptions.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx",
+          "frontend/src/utils/whatsappHelper.ts"
         ],
         "matchedFiles": [
-          "frontend/src/pages/Services.tsx"
+          "frontend/src/components/AddOnOptions.tsx",
+          "frontend/src/components/ExpandedServicePanel.tsx",
+          "frontend/src/utils/whatsappHelper.ts"
         ]
       }
     ]
@@ -86,12 +84,15 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/FeaturedReviewsCarousel.tsx",
-    "frontend/src/components/ServiceCarousel.tsx",
-    "frontend/src/hooks/useFadeUpOnScroll.ts",
+    "frontend/src/components/AddOnOptions.tsx",
+    "frontend/src/components/ExpandedServicePanel.tsx",
+    "frontend/src/components/PricingCalculator.tsx",
+    "frontend/src/components/ServiceCardWithExpansion.tsx",
+    "frontend/src/data/services.ts",
     "frontend/src/index.css",
     "frontend/src/pages/Home.tsx",
     "frontend/src/pages/Services.tsx",
+    "frontend/src/utils/whatsappHelper.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

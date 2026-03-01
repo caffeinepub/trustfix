@@ -34,14 +34,14 @@ export function useSearchServices(query: string): SearchResult[] {
       for (const service of category.services) {
         if (
           service.name.toLowerCase().includes(q) ||
-          service.description.toLowerCase().includes(q)
+          (service.description?.toLowerCase().includes(q) ?? false)
         ) {
           results.push({
-            id: service.id,
+            id: service.id ?? service.name,
             name: service.name,
             category: category.name,
             categoryId: category.id,
-            image: service.image,
+            image: service.image ?? category.image,
           });
         }
       }
@@ -49,10 +49,12 @@ export function useSearchServices(query: string): SearchResult[] {
 
     // Deduplicate by id
     const seen = new Set<string>();
-    return results.filter((r) => {
-      if (seen.has(r.id)) return false;
-      seen.add(r.id);
-      return true;
-    }).slice(0, 8);
+    return results
+      .filter((r) => {
+        if (seen.has(r.id)) return false;
+        seen.add(r.id);
+        return true;
+      })
+      .slice(0, 8);
   }, [query]);
 }

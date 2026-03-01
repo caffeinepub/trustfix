@@ -1,104 +1,135 @@
-import { useState, useEffect, useRef } from 'react';
-import { Phone, CalendarCheck } from 'lucide-react';
-import { ServiceItem } from '../data/services';
+import { useRef, useEffect, useState } from "react";
+import { MessageCircle, Calendar } from "lucide-react";
+import { getWhatsAppLink } from "../data/services";
 
-const WHATSAPP_URL = 'https://wa.me/918884447229';
-
-interface SubcategoryCardProps {
-  service: ServiceItem;
-  categoryName: string;
-  index?: number;
-  onBookNow?: (serviceName: string) => void;
+interface SubcategoryService {
+  id?: string;
+  name: string;
+  description?: string;
+  price?: number | string;
+  priceUnit?: string;
+  priceType?: string;
+  image?: string;
+  features?: string[];
+  category?: string;
+  [key: string]: unknown;
 }
 
-export default function SubcategoryCard({ service, categoryName, index = 0, onBookNow }: SubcategoryCardProps) {
+interface SubcategoryCardProps {
+  service: SubcategoryService;
+  onBookNow?: () => void;
+}
+
+function useScrollRevealOnce() {
+  const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => setIsVisible(true), index * 80);
-            observer.unobserve(entry.target);
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+      { threshold: 0.1 }
     );
-    if (cardRef.current) observer.observe(cardRef.current);
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [index]);
+  }, []);
+  return { ref, isVisible };
+}
 
-  const openWhatsApp = () => {
-    const message = `Hi, I need ${service.name} (${categoryName}) service. Price: ${service.price}. Please provide a quote.`;
-    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(message)}`, '_blank');
+function formatPrice(service: SubcategoryService): string {
+  if (!service.price) return "Contact for price";
+  const price = service.price;
+  const unit = service.priceUnit || "";
+  if (unit === "per sq.ft" || unit === "sqft") {
+    return `₹${price}/sq.ft`;
+  }
+  return `₹${price}`;
+}
+
+export default function SubcategoryCard({ service, onBookNow }: SubcategoryCardProps) {
+  const { ref, isVisible } = useScrollRevealOnce();
+
+  const handleWhatsApp = () => {
+    const link = getWhatsAppLink(`I'm interested in ${service.name}`);
+    window.open(link, "_blank");
   };
 
   const handleBookNow = () => {
     if (onBookNow) {
-      onBookNow(`${service.name} (${categoryName})`);
+      onBookNow();
     } else {
-      openWhatsApp();
+      handleWhatsApp();
     }
   };
 
   return (
     <div
-      ref={cardRef}
+      ref={ref}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0px)' : 'translateY(40px)',
-        transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)`,
+        transform: isVisible ? "translateY(0)" : "translateY(36px)",
+        transition: "opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1)",
+        willChange: "opacity, transform",
       }}
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col"
+      className="bg-card border border-border rounded-2xl overflow-hidden shadow-soft hover:shadow-md transition-shadow duration-300"
     >
-      {/* Image */}
-      <div className="relative h-44 overflow-hidden">
-        <img
-          src={service.image}
-          alt={service.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute top-3 right-3 bg-brand-blue text-white text-sm font-bold px-3 py-1 rounded-full shadow">
-          {service.price}
+      {service.image && (
+        <div className="h-44 overflow-hidden">
+          <img
+            src={service.image}
+            alt={service.name}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
+          />
         </div>
-      </div>
+      )}
+      <div className="p-4">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="font-semibold text-foreground text-base leading-tight">
+            {service.name}
+          </h3>
+          <span className="flex-shrink-0 bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full whitespace-nowrap">
+            {formatPrice(service)}
+          </span>
+        </div>
 
-      {/* Content */}
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-bold text-gray-800 text-base mb-1">{service.name}</h3>
-        {service.priceNote && (
-          <p className="text-xs text-gray-500 mb-2">{service.priceNote}</p>
+        {service.description && (
+          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+            {service.description}
+          </p>
         )}
-        {service.features && (
-          <ul className="space-y-1 mb-3 flex-1">
-            {service.features.slice(0, 3).map((feature, i) => (
-              <li key={i} className="flex items-center gap-2 text-xs text-gray-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-blue flex-shrink-0" />
-                {feature}
+
+        {service.features && service.features.length > 0 && (
+          <ul className="mb-3 space-y-1">
+            {(service.features as string[]).slice(0, 3).map((f, i) => (
+              <li key={i} className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                {f}
               </li>
             ))}
           </ul>
         )}
-        <p className="text-xs text-gray-500 mb-3 line-clamp-2">{service.description}</p>
 
-        {/* Buttons */}
-        <div className="mt-auto flex gap-2">
+        <div className="flex gap-2 mt-3">
           <button
-            onClick={openWhatsApp}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-gray-100 text-gray-700 text-xs font-semibold py-2.5 px-3 rounded-xl hover:bg-gray-200 transition-colors"
+            onClick={handleWhatsApp}
+            className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 px-3 rounded-xl transition-colors"
           >
-            <Phone size={13} />
-            Get Quote
+            <MessageCircle className="w-4 h-4" />
+            WhatsApp
           </button>
           <button
             onClick={handleBookNow}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-brand-blue text-white text-xs font-semibold py-2.5 px-3 rounded-xl hover:bg-brand-blue/90 transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium py-2 px-3 rounded-xl transition-colors"
           >
-            <CalendarCheck size={13} />
+            <Calendar className="w-4 h-4" />
             Book Now
           </button>
         </div>
