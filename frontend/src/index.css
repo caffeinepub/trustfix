@@ -67,6 +67,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    /* No scroll-snap, no scroll-locking */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -94,26 +95,34 @@
     animation: whatsapp-pulse 2s ease-out infinite;
   }
 
-  /* Wave section for cleaning */
-  .wave-section {
-    position: relative;
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .wave-section::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -100vw;
-    right: -100vw;
-    height: 60px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23EFF6FF' d='M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E") no-repeat center;
-    background-size: cover;
-    pointer-events: none;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
 @layer utilities {
-  /* Scroll animations */
+  /* Fade-up scroll animation — CSS only, no JS scroll manipulation */
+  .fade-up-section {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .fade-up-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Legacy animation utilities */
   .fade-in-up {
     animation: fadeInUp 0.6s ease forwards;
   }

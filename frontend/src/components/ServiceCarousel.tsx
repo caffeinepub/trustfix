@@ -1,143 +1,54 @@
-import { useState } from 'react';
-import { categoryOrder, servicesData } from '../data/services';
+import { servicesData, categoryOrder } from '@/data/services';
 
-const WHATSAPP_URL = 'https://wa.me/918884447229';
-
-const serviceImages: Record<string, string[]> = {
-  'pest-control': [
-    '/assets/generated/pest-control-category.dim_400x300.png',
-    '/assets/generated/pest-control-category.dim_800x500.jpg',
-    '/assets/generated/pest-control.dim_800x600.png',
-  ],
-  'cleaning': [
-    '/assets/generated/cleaning-category.dim_400x300.png',
-    '/assets/generated/cleaning-category.dim_800x500.jpg',
-    '/assets/generated/cleaning.dim_800x600.png',
-  ],
-  'painting': [
-    '/assets/generated/painting-category.dim_400x300.png',
-    '/assets/generated/painting-category.dim_800x500.jpg',
-    '/assets/generated/painting.dim_800x600.png',
-  ],
-  'electrical': [
-    '/assets/generated/electrical-category.dim_400x300.png',
-    '/assets/generated/electrical-category.dim_800x500.jpg',
-    '/assets/generated/electrical.dim_800x600.png',
-  ],
-  'carpentry': [
-    '/assets/generated/carpentry-category.dim_400x300.png',
-    '/assets/generated/carpentry-category.dim_800x500.jpg',
-    '/assets/generated/carpentry.dim_800x600.png',
-  ],
-  'ac-services': [
-    '/assets/generated/ac-services-category.dim_400x300.png',
-    '/assets/generated/ac-services-category.dim_800x500.jpg',
-    '/assets/generated/ac-services.dim_800x600.png',
-  ],
-  'appliances-repair': [
-    '/assets/generated/appliances-repair-category.dim_400x300.png',
-    '/assets/generated/appliances-repair-category.dim_800x500.jpg',
-    '/assets/generated/appliances-repair.dim_800x600.png',
-  ],
-  'plumbing': [
-    '/assets/generated/plumbing-category.dim_400x300.png',
-    '/assets/generated/plumbing-category.dim_800x500.jpg',
-    '/assets/generated/plumbing.dim_800x600.png',
-  ],
-};
-
-interface ServiceCardItemProps {
-  categoryId: string;
-}
-
-function ServiceCardItem({ categoryId }: ServiceCardItemProps) {
-  const category = servicesData[categoryId];
-  const [imgIndex, setImgIndex] = useState(0);
-
-  const images = serviceImages[categoryId] || [];
-  const currentImage = images[imgIndex] || category?.image || '';
-
-  const handleImageError = () => {
-    if (imgIndex < images.length - 1) {
-      setImgIndex((prev) => prev + 1);
-    }
-  };
-
-  const handleClick = () => {
-    const url = new URL(window.location.href);
-    url.pathname = '/services';
-    url.searchParams.set('category', categoryId);
-    window.location.href = url.toString();
-  };
-
-  if (!category) return null;
-
-  return (
-    <div
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group border border-gray-100 hover:-translate-y-1 w-full"
-      onClick={handleClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
-      aria-label={`View ${category.name} services`}
-    >
-      <div className="relative overflow-hidden h-44">
-        <img
-          src={currentImage}
-          alt={category.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          onError={handleImageError}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute bottom-3 left-3">
-          <span className="bg-white/90 backdrop-blur-sm text-brand-blue text-xs font-semibold px-2 py-1 rounded-full">
-            {category.services.length} Services
-          </span>
-        </div>
-      </div>
-      <div className="p-4">
-        <h3 className="font-bold text-gray-800 text-base mb-1 group-hover:text-brand-blue transition-colors">
-          {category.name}
-        </h3>
-        <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed">
-          {category.description}
-        </p>
-        <div className="mt-3 flex items-center justify-between">
-          <span className="text-brand-blue text-xs font-medium">View Services →</span>
-        </div>
-      </div>
-    </div>
-  );
-}
+const WHATSAPP_NUMBER = '918884447229';
 
 export default function ServiceCarousel() {
+  const handleCategoryClick = (categoryId: string) => {
+    window.location.href = `/services?category=${categoryId}`;
+  };
+
+  const handleWhatsApp = () => {
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20TrustFix!%20I%20need%20help%20with%20a%20home%20service.`,
+      '_blank'
+    );
+  };
+
   return (
-    <section className="py-12 px-4">
-      <div className="max-w-lg mx-auto sm:max-w-xl md:max-w-2xl">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-gray-800 mb-3">Our Services</h2>
-          <p className="text-gray-500 text-base max-w-xl mx-auto">
-            Professional home services at your doorstep. Trusted by thousands of happy customers.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          {categoryOrder.map((categoryId) => (
-            <ServiceCardItem key={categoryId} categoryId={categoryId} />
-          ))}
-        </div>
-
-        <div className="text-center mt-8">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-brand-blue text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-blue/90 transition-colors shadow-md"
-          >
-            Book Any Service on WhatsApp
-          </a>
-        </div>
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {categoryOrder.map((categoryId) => {
+          const category = servicesData[categoryId];
+          if (!category) return null;
+          return (
+            <button
+              key={categoryId}
+              onClick={() => handleCategoryClick(categoryId)}
+              className="group flex flex-col items-center gap-3 p-4 rounded-2xl bg-white shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-gray-100 cursor-pointer text-center"
+            >
+              <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <span className="text-sm font-semibold text-gray-700 group-hover:text-brand-blue transition-colors duration-200 leading-tight">
+                {category.name}
+              </span>
+            </button>
+          );
+        })}
       </div>
-    </section>
+
+      <div className="flex justify-center mt-2">
+        <button
+          onClick={handleWhatsApp}
+          className="flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-200"
+        >
+          💬 Chat on WhatsApp
+        </button>
+      </div>
+    </div>
   );
 }

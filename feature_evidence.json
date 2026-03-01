@@ -2,10 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-the-servicecarousel-component-remove-the-circular-up-down-arrow-navigation-button-the-pagination-dots-indicator-and-the-1-8-counter-text-entirely-from-the-rendered-output",
-      "featureTitle": "In the ServiceCarousel component, remove the circular up/down arrow navigation button, the pagination dots indicator, and the '1 / 8' counter text entirely from the rendered output.",
+      "featureId": "feature-remove-all-snap-scroll-behaviour-from-the-entire-app-eliminate-any-css-scroll-snap-properties-scroll-snap-type-scroll-snap-align-javascript-driven-scroll-locking-programmatic-scroll-jumps-and-any-auto-scroll-or-auto-advance-movement-across-all-components-and-pages",
+      "featureTitle": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
       "files": [
-        "frontend/src/components/ServiceCarousel.tsx"
+        "frontend/src/components/FeaturedReviewsCarousel.tsx",
+        "frontend/src/components/ServiceCarousel.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -21,9 +23,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-remove-all-carousel-slider-logic-from-servicecarousel-eliminate-touch-swipe-event-handlers-scroll-snap-hidden-overflow-and-any-state-tracking-for-the-active-slide-index-convert-the-component-to-a-simple-vertically-stacked-list-of-service-category-cards-with-normal-block-flow",
-      "featureTitle": "Remove all carousel/slider logic from ServiceCarousel: eliminate touch/swipe event handlers, scroll-snap, hidden overflow, and any state tracking for the active slide index. Convert the component to a simple vertically stacked list of service category cards with normal block flow.",
+      "featureId": "feature-remove-all-scroll-control-ui-overlays-pagination-dots-middle-center-arrow-icons-and-any-carousel-navigation-overlays-from-every-component-in-the-app-including-servicecarousel-featuredreviewscarousel-and-any-other-carousel-or-slider-components",
+      "featureTitle": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
       "files": [
+        "frontend/src/components/FeaturedReviewsCarousel.tsx",
         "frontend/src/components/ServiceCarousel.tsx"
       ],
       "components": [
@@ -40,9 +43,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-preserve-the-visual-appearance-of-each-service-category-card-exactly-keep-the-card-images-titles-descriptions-view-services-links-card-design-colors-fonts-and-spacing-between-cards-unchanged",
-      "featureTitle": "Preserve the visual appearance of each service category card exactly: keep the card images, titles, descriptions, 'View Services' links, card design, colors, fonts, and spacing between cards unchanged.",
+      "featureId": "feature-convert-any-carousel-or-slider-components-servicecarousel-featuredreviewscarousel-into-plain-static-layouts-servicecarousel-should-render-as-a-vertically-stacked-or-simple-grid-list-and-featuredreviewscarousel-should-render-all-reviews-in-a-static-grid-or-list-with-no-auto-advance-remove-all-swipe-handlers-interval-timers-and-navigation-state-from-these-components",
+      "featureTitle": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
       "files": [
+        "frontend/src/components/FeaturedReviewsCarousel.tsx",
         "frontend/src/components/ServiceCarousel.tsx"
       ],
       "components": [
@@ -55,6 +59,46 @@
       ],
       "testIds": [
         "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-very-soft-fade-up-entrance-animation-opacity-0-1-translatey-20px-0-to-each-major-section-on-the-home-page-when-it-enters-the-viewport-using-intersectionobserver-the-animation-must-only-trigger-once-per-section-and-must-not-affect-block-or-modify-the-user-s-scroll-behaviour-in-any-way-no-scroll-locking-no-snap-no-programmatic-movement",
+      "featureTitle": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+      "files": [
+        "frontend/src/hooks/useFadeUpOnScroll.ts",
+        "frontend/src/index.css",
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-in-the-services-page-remove-the-view-all-options-button-entirely-from-all-service-category-sections-when-a-main-service-category-is-clicked-all-subcategory-service-cards-must-expand-and-display-instantly-with-no-extra-click-required-no-dropdown-toggle-button-or-any-similar-control-should-remain",
+      "featureTitle": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+      "files": [
+        "frontend/src/pages/Services.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
       ],
       "confidence": "high"
     }

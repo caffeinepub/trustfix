@@ -1,74 +1,124 @@
 {
   "kind": "build_request",
-  "title": "Remove slider controls and convert ServiceCarousel to static stacked cards",
+  "title": "Remove all scroll controls and implement manual smooth scrolling with fade-up animations",
   "projectName": "TrustFix",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "In the ServiceCarousel component, remove the circular up/down arrow navigation button, the pagination dots indicator, and the '1 / 8' counter text entirely from the rendered output.",
+      "text": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-recent"
         ],
         "quotes": [
-          "Remove These Elements Completely: 1️⃣ The circular up/down arrow button (centered above image) 2️⃣ The dots indicator (pagination dots) 3️⃣ The '1 / 8' counter text"
+          "No snap scroll",
+          "No auto movement",
+          "Scroll must be fully manual and smooth",
+          "Remove completely: Snap scroll, Auto/programmatic scroll movement, Scroll locking behaviour"
         ]
       },
       "acceptanceCriteria": [
-        "No circular arrow button is visible on the page",
-        "No pagination dots are rendered",
-        "No '1 / 8' or any slide counter text is visible"
+        "No scroll-snap-type or scroll-snap-align CSS rules exist anywhere in the frontend",
+        "No JavaScript programmatically calls window.scrollTo with smooth/instant or element.scrollIntoView in a way that hijacks user scrolling",
+        "Page scrolls freely at the user's own pace with no jumps, speed boosts, or locking"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Remove all carousel/slider logic from ServiceCarousel: eliminate touch/swipe event handlers, scroll-snap, hidden overflow, and any state tracking for the active slide index. Convert the component to a simple vertically stacked list of service category cards with normal block flow.",
+      "text": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-recent"
         ],
         "quotes": [
-          "Disable slider functionality completely. Convert services into normal vertical stacked cards. Allow full smooth page scrolling. No swipe. No snap. No hidden overflow."
+          "No pagination dots",
+          "No arrow icon",
+          "Remove completely: Pagination dots, Middle arrow icon, Any scroll control overlay"
         ]
       },
       "acceptanceCriteria": [
-        "All service category cards are rendered in a single vertically stacked layout with no carousel wrapper",
-        "Page scrolls smoothly through the cards without snapping or jumping",
-        "No touch/swipe gesture handling interferes with normal page scroll",
-        "No overflow:hidden or scroll-snap CSS is applied to the cards container"
+        "No pagination dot indicators are rendered anywhere on any page",
+        "No arrow/chevron navigation icons appear for scrolling or sliding",
+        "No overlay controls for scroll or carousel navigation are visible"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Preserve the visual appearance of each service category card exactly: keep the card images, titles, descriptions, 'View Services' links, card design, colors, fonts, and spacing between cards unchanged.",
+      "text": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-recent"
         ],
         "quotes": [
-          "Keep: • Service cards • Images • Titles • Descriptions • View Services link • Same spacing between cards",
-          "DO NOT change layout, DO NOT change card design, DO NOT change spacing, DO NOT change colors, DO NOT change fonts"
+          "No auto movement",
+          "Scroll must be fully manual and smooth",
+          "Any scroll control overlay"
         ]
       },
       "acceptanceCriteria": [
-        "Each card displays its image, title, description, and 'View Services' link identical to the previous design",
-        "Card spacing, colors, and fonts are visually unchanged from the version before slider removal"
+        "ServiceCarousel renders as a static stacked/grid list with no sliding or auto-advance",
+        "FeaturedReviewsCarousel renders all fetched reviews statically with no auto-advance interval",
+        "No setInterval or setTimeout driving scroll/slide movement exists in these components"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "Only very soft fade-up animation when section enters viewport",
+          "Animation must not interfere with scrolling",
+          "Sections must appear from bottom → top, Smooth pop-up animation, Soft water-wave style entrance"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each home page section fades in softly from slightly below its natural position when it enters the viewport",
+        "Animation uses CSS transitions or keyframes only — no JS scroll manipulation",
+        "Scrolling remains 100% manual and smooth at all times during and after animations",
+        "Animation triggers once per section and does not re-trigger on scroll up"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent"
+        ],
+        "quotes": [
+          "View All Options button must be fully removed",
+          "No dropdown control should remain",
+          "All subcategory services must expand instantly",
+          "Show all services directly, No extra click required"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No 'View All Options' button or equivalent toggle is rendered anywhere on the Services page",
+        "Clicking a main service category immediately shows all its subcategory cards without any secondary interaction",
+        "All subcategory services are visible directly after the first click on the parent category"
       ]
     }
   ],
   "constraints": [
-    "Do not change any card design, layout, colors, fonts, or spacing",
-    "Do not modify any backend files",
-    "Do not alter any other components outside of ServiceCarousel"
+    "Do not change any layout, colors, spacing, fonts, buttons, or visual design",
+    "Do not redesign any page or component",
+    "Do not modify backend logic or data structures",
+    "Animation must never interfere with manual scrolling"
   ],
   "nonGoals": [
-    "Redesigning the service section in any way",
-    "Adding any new navigation or interaction patterns",
-    "Changing any other page or component"
+    "Adding new pages or features",
+    "Changing the visual theme or branding",
+    "Modifying backend Motoko code",
+    "Adding any new scroll-based navigation patterns"
   ],
   "imageRequirements": {
     "required": [],

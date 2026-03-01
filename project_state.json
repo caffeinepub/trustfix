@@ -1,34 +1,52 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Web project with service cards section. Removing slider/carousel UI controls (circular arrow button, pagination dots, 1/8 counter) and converting to normal vertically stacked scrollable cards with no swipe, snap, or hidden overflow.",
+  "summary": "TrustFix app — removing snap scroll, auto movement, pagination dots, arrow icons, and scroll overlays. Implementing fully manual smooth scrolling with soft fade-up viewport animations. Also removing 'View All Options' button so subcategory services expand instantly on click.",
   "architectural_notes": [
-    "Services section uses normal vertical stacked cards — no slider, no carousel, no swipe, no snap, no hidden overflow"
+    "Scrolling must be 100% manual — no snap scroll, no auto movement, no scroll locking, no pagination dots, no arrow icons, no scroll control overlays",
+    "Sections animate with soft fade-up when entering viewport; animation must not interfere with scrolling",
+    "'View All Options' button fully removed; all subcategory services expand instantly when main service is clicked"
   ],
   "known_issues": [],
   "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-in-the-servicecarousel-component-remove-the-circular-up-down-arrow-navigation-button-the-pagination-dots-indicator-and-the-1-8-counter-text-entirely-from-the-rendered-output",
-      "title": "In the ServiceCarousel component, remove the circular up/down arrow navigation button, the pagination dots indicator, and the '1 / 8' counter text entirely from the rendered output.",
+      "id": "feature-remove-all-snap-scroll-behaviour-from-the-entire-app-eliminate-any-css-scroll-snap-properties-scroll-snap-type-scroll-snap-align-javascript-driven-scroll-locking-programmatic-scroll-jumps-and-any-auto-scroll-or-auto-advance-movement-across-all-components-and-pages",
+      "title": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties (scroll-snap-type, scroll-snap-align), JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-remove-all-carousel-slider-logic-from-servicecarousel-eliminate-touch-swipe-event-handlers-scroll-snap-hidden-overflow-and-any-state-tracking-for-the-active-slide-index-convert-the-component-to-a-simple-vertically-stacked-list-of-service-category-cards-with-normal-block-flow",
-      "title": "Remove all carousel/slider logic from ServiceCarousel: eliminate touch/swipe event handlers, scroll-snap, hidden overflow, and any state tracking for the active slide index. Convert the component to a simple vertically stacked list of service category cards with normal block flow.",
+      "id": "feature-remove-all-scroll-control-ui-overlays-pagination-dots-middle-center-arrow-icons-and-any-carousel-navigation-overlays-from-every-component-in-the-app-including-servicecarousel-featuredreviewscarousel-and-any-other-carousel-or-slider-components",
+      "title": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app (including ServiceCarousel, FeaturedReviewsCarousel, and any other carousel or slider components).",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-preserve-the-visual-appearance-of-each-service-category-card-exactly-keep-the-card-images-titles-descriptions-view-services-links-card-design-colors-fonts-and-spacing-between-cards-unchanged",
-      "title": "Preserve the visual appearance of each service category card exactly: keep the card images, titles, descriptions, 'View Services' links, card design, colors, fonts, and spacing between cards unchanged.",
+      "id": "feature-convert-any-carousel-or-slider-components-servicecarousel-featuredreviewscarousel-into-plain-static-layouts-servicecarousel-should-render-as-a-vertically-stacked-or-simple-grid-list-and-featuredreviewscarousel-should-render-all-reviews-in-a-static-grid-or-list-with-no-auto-advance-remove-all-swipe-handlers-interval-timers-and-navigation-state-from-these-components",
+      "title": "Convert any carousel or slider components (ServiceCarousel, FeaturedReviewsCarousel) into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance. Remove all swipe handlers, interval timers, and navigation state from these components.",
       "reqIds": [
         "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-very-soft-fade-up-entrance-animation-opacity-0-1-translatey-20px-0-to-each-major-section-on-the-home-page-when-it-enters-the-viewport-using-intersectionobserver-the-animation-must-only-trigger-once-per-section-and-must-not-affect-block-or-modify-the-user-s-scroll-behaviour-in-any-way-no-scroll-locking-no-snap-no-programmatic-movement",
+      "title": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver. The animation must only trigger once per section and must not affect, block, or modify the user's scroll behaviour in any way — no scroll locking, no snap, no programmatic movement.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-services-page-remove-the-view-all-options-button-entirely-from-all-service-category-sections-when-a-main-service-category-is-clicked-all-subcategory-service-cards-must-expand-and-display-instantly-with-no-extra-click-required-no-dropdown-toggle-button-or-any-similar-control-should-remain",
+      "title": "In the Services page, remove the 'View All Options' button entirely from all service category sections. When a main service category is clicked, all subcategory service cards must expand and display instantly with no extra click required. No dropdown toggle button or any similar control should remain.",
+      "reqIds": [
+        "REQ-5"
       ],
       "version": 1
     }

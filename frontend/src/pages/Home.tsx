@@ -1,7 +1,27 @@
-import HeroSection from '../components/HeroSection';
-import ServiceCarousel from '../components/ServiceCarousel';
-import FeaturedReviewsCarousel from '../components/FeaturedReviewsCarousel';
-import { getWhatsAppLink } from '../data/services';
+import { useRef } from 'react';
+import HeroSection from '@/components/HeroSection';
+import ServiceCarousel from '@/components/ServiceCarousel';
+import FeaturedReviewsCarousel from '@/components/FeaturedReviewsCarousel';
+import { useFadeUpOnScroll } from '@/hooks/useFadeUpOnScroll';
+import { getWhatsAppLink } from '@/data/services';
+
+function FadeSection({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const { ref, isVisible } = useFadeUpOnScroll(0.1);
+  return (
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className={`fade-up-section ${isVisible ? 'fade-up-visible' : ''} ${className}`}
+    >
+      {children}
+    </section>
+  );
+}
 
 const trustBadges = [
   { icon: '🏆', title: '5000+', subtitle: 'Happy Customers' },
@@ -13,10 +33,11 @@ const trustBadges = [
 export default function Home() {
   return (
     <div>
+      {/* Hero — always visible, no animation needed */}
       <HeroSection />
 
       {/* Trust Badges */}
-      <section className="bg-brand-blue py-6">
+      <FadeSection className="bg-brand-blue py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {trustBadges.map((badge) => (
@@ -28,13 +49,23 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </FadeSection>
 
       {/* Service Carousel */}
-      <ServiceCarousel />
+      <FadeSection className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-800 mb-3">Our Services</h2>
+            <p className="text-gray-500 text-base max-w-xl mx-auto">
+              Professional home services at your doorstep. Trusted by thousands of happy customers.
+            </p>
+          </div>
+          <ServiceCarousel />
+        </div>
+      </FadeSection>
 
       {/* Why Choose Us */}
-      <section className="py-12 bg-gray-50">
+      <FadeSection className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Why Choose TrustFix?</h2>
@@ -59,13 +90,21 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </FadeSection>
 
       {/* Reviews */}
-      <FeaturedReviewsCarousel />
+      <FadeSection className="py-12 bg-blue-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">What Our Customers Say</h2>
+            <p className="text-gray-500 text-sm">Trusted by thousands of happy customers in Bangalore</p>
+          </div>
+          <FeaturedReviewsCarousel />
+        </div>
+      </FadeSection>
 
       {/* CTA Banner */}
-      <section className="py-12 bg-brand-blue">
+      <FadeSection className="py-12 bg-brand-blue">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Ready to Book a Service?
@@ -82,7 +121,7 @@ export default function Home() {
             📲 Book on WhatsApp
           </a>
         </div>
-      </section>
+      </FadeSection>
     </div>
   );
 }

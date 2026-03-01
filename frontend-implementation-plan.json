@@ -1,53 +1,126 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Remove slider controls and convert ServiceCarousel to static stacked cards",
+  "title": "Remove all scroll controls and implement manual smooth scrolling with fade-up animations",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Remove all navigation controls from ServiceCarousel including the circular arrow button, pagination dots, and slide counter text",
+      "summary": "Remove all snap scroll behaviour from the entire app — eliminate any CSS scroll-snap properties, JavaScript-driven scroll locking, programmatic scroll jumps, and any auto-scroll or auto-advance movement across all components and pages",
       "acceptanceCriteria": [
-        "No circular arrow button is visible on the page",
-        "No pagination dots are rendered",
-        "No '1 / 8' or any slide counter text is visible"
+        "No scroll-snap-type or scroll-snap-align CSS rules exist anywhere in the frontend",
+        "No JavaScript programmatically calls window.scrollTo with smooth/instant or element.scrollIntoView in a way that hijacks user scrolling",
+        "Page scrolls freely at the user's own pace with no jumps, speed boosts, or locking"
       ],
       "file_operations": [
         {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Remove all scroll-snap-type, scroll-snap-align, and any scroll-behavior CSS properties from all selectors. Ensure no global scroll locking or snap rules exist."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Remove any scroll-snap utilities or scroll behavior configurations from Tailwind config if present."
+        },
+        {
           "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "Remove the circular up/down arrow navigation button, pagination dots indicator, and the '1 / 8' counter text from the component's JSX. Delete all associated state variables, event handlers, and CSS classes related to these navigation elements."
+          "description": "Remove any programmatic scrollTo, scrollIntoView, or scroll position manipulation logic that creates snap or auto-scroll behavior."
+        },
+        {
+          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
+          "operation": "modify",
+          "description": "Remove any programmatic scrollTo, scrollIntoView, or scroll position manipulation logic that creates snap or auto-scroll behavior."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Review and remove or modify the scroll-to-top-on-route-change behavior if it uses instant/programmatic scrolling that hijacks user control. Ensure it does not interfere with manual scrolling."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Convert ServiceCarousel from a swipeable carousel to a simple vertically stacked list without any slider functionality",
+      "summary": "Remove all scroll control UI overlays: pagination dots, middle/center arrow icons, and any carousel navigation overlays from every component in the app",
       "acceptanceCriteria": [
-        "All service category cards are rendered in a single vertically stacked layout with no carousel wrapper",
-        "Page scrolls smoothly through the cards without snapping or jumping",
-        "No touch/swipe gesture handling interferes with normal page scroll",
-        "No overflow:hidden or scroll-snap CSS is applied to the cards container"
+        "No pagination dot indicators are rendered anywhere on any page",
+        "No arrow/chevron navigation icons appear for scrolling or sliding",
+        "No overlay controls for scroll or carousel navigation are visible"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "Remove all carousel/slider logic: eliminate touch/swipe event handlers (onTouchStart, onTouchMove, onTouchEnd, onMouseDown, onMouseMove, onMouseUp), remove scroll-snap CSS properties, remove overflow:hidden styles, and delete any state tracking for active slide index. Replace the carousel container with a simple flex column layout that displays all service category cards in a vertically stacked format with normal block flow. Preserve all card content and onClick navigation handlers."
+          "description": "Remove all pagination dots, arrow icons, and navigation overlay UI elements from the component render output."
+        },
+        {
+          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
+          "operation": "modify",
+          "description": "Remove all pagination dots, arrow icons, and navigation control overlays from the component render output."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Preserve the exact visual appearance of each service category card including images, titles, descriptions, links, design, colors, fonts, and spacing",
+      "summary": "Convert any carousel or slider components into plain static layouts — ServiceCarousel should render as a vertically stacked or simple grid list, and FeaturedReviewsCarousel should render all reviews in a static grid or list with no auto-advance",
       "acceptanceCriteria": [
-        "Each card displays its image, title, description, and 'View Services' link identical to the previous design",
-        "Card spacing, colors, and fonts are visually unchanged from the version before slider removal"
+        "ServiceCarousel renders as a static stacked/grid list with no sliding or auto-advance",
+        "FeaturedReviewsCarousel renders all fetched reviews statically with no auto-advance interval",
+        "No setInterval or setTimeout driving scroll/slide movement exists in these components"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/ServiceCarousel.tsx",
           "operation": "modify",
-          "description": "Ensure all existing card styling (background colors, shadows, border radius, hover effects, transitions), card content (service category images using fallback cycling logic, titles, descriptions, 'View Services' link text), typography (font families, sizes, weights), and spacing (gaps, padding, margins) remain completely unchanged. Only modify the container layout structure while keeping individual card JSX and styling identical."
+          "description": "Convert the carousel into a static vertically stacked or grid layout. Remove all swipe handlers, navigation state (current index), interval timers, and any auto-advance logic. Render all service category cards in a plain static list."
+        },
+        {
+          "path": "frontend/src/components/FeaturedReviewsCarousel.tsx",
+          "operation": "modify",
+          "description": "Convert the carousel into a static grid or list layout. Remove all interval timers (setInterval/setTimeout), navigation state, swipe handlers, and auto-advance logic. Render all fetched reviews statically without any sliding or cycling."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a very soft fade-up entrance animation (opacity 0→1, translateY 20px→0) to each major section on the Home page when it enters the viewport using IntersectionObserver",
+      "acceptanceCriteria": [
+        "Each home page section fades in softly from slightly below its natural position when it enters the viewport",
+        "Animation uses CSS transitions or keyframes only — no JS scroll manipulation",
+        "Scrolling remains 100% manual and smooth at all times during and after animations",
+        "Animation triggers once per section and does not re-trigger on scroll up"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useFadeUpOnScroll.ts",
+          "operation": "create",
+          "description": "Create a custom hook that uses IntersectionObserver to detect when an element enters the viewport and applies a fade-up animation class. The hook must trigger once per element and must not interfere with scroll behavior in any way."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add CSS for a soft fade-up animation (opacity 0→1, translateY 20px→0) with smooth transitions. Define initial hidden state and visible state classes for the animation."
+        },
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Apply the useFadeUpOnScroll hook to each major section (hero, trust badges, service carousel section, why choose us, featured reviews, CTA banner). Ensure animations trigger once per section as they enter the viewport without affecting scroll behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "In the Services page, remove the 'View All Options' button entirely from all service category sections and expand all subcategory service cards instantly when a main service category is clicked",
+      "acceptanceCriteria": [
+        "No 'View All Options' button or equivalent toggle is rendered anywhere on the Services page",
+        "Clicking a main service category immediately shows all its subcategory cards without any secondary interaction",
+        "All subcategory services are visible directly after the first click on the parent category"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Services.tsx",
+          "operation": "modify",
+          "description": "Remove the 'View All Options' button and any equivalent dropdown toggle controls from all service category sections. Modify the expand/collapse logic so that clicking a main service category immediately displays all subcategory cards with no extra click or button required. Ensure all subcategories are visible instantly after the first category click."
         }
       ]
     }
